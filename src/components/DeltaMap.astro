@@ -1,0 +1,116 @@
+---
+/**
+ * Illustrated (not to scale) watercolour map of Tierra's stretch of the
+ * Karnataka coast: Udupi to the north, Mangalore to the south, the river
+ * delta at Hejamadi in the middle.
+ */
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+
+<svg viewBox="0 0 600 760" class={cls} role="img" aria-labelledby="map-title map-desc" data-map>
+  <title id="map-title">Illustrated map of Tierra's location</title>
+  <desc id="map-desc">Tierra sits at Hejamadi on the delta where the river meets the Arabian Sea, near the beach and 1.1 km from NH 66, between Udupi to the north and Mangaluru to the south.</desc>
+  <defs>
+    <filter id="wc" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" />
+      <feDisplacementMap in="SourceGraphic" scale="14" />
+      <feGaussianBlur stdDeviation="2.2" />
+    </filter>
+    <linearGradient id="sea" x1="0" x2="1">
+      <stop offset="0" stop-color="var(--color-sea)" stop-opacity="0.55" />
+      <stop offset="0.6" stop-color="var(--color-lagoon)" stop-opacity="0.4" />
+      <stop offset="1" stop-color="var(--color-mist)" stop-opacity="0.55" />
+    </linearGradient>
+    <radialGradient id="land" cx="0.7" cy="0.5" r="0.7">
+      <stop offset="0" stop-color="var(--color-sage)" stop-opacity="0.45" />
+      <stop offset="1" stop-color="var(--color-sage)" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- land wash -->
+  <rect x="250" y="0" width="350" height="760" fill="url(#land)" filter="url(#wc)" />
+
+  <!-- Arabian Sea -->
+  <path filter="url(#wc)" fill="url(#sea)"
+    d="M0 0 H292 C 286 70 300 140 290 210 C 282 270 296 330 288 400 C 280 440 270 452 262 470 C 254 500 270 560 262 620 C 256 680 266 720 258 760 H0 Z" />
+  <!-- surf line -->
+  <path fill="none" stroke="var(--color-paper)" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round" opacity="0.9"
+    d="M282 0 C 276 70 290 140 280 210 C 272 270 286 330 278 400 C 270 440 260 452 252 470 C 244 500 260 560 252 620 C 246 680 256 720 248 760" />
+
+  <!-- River / backwater (draws on scroll) -->
+  <path data-draw-path fill="none" stroke="var(--color-lagoon)" stroke-width="14" stroke-linecap="round" opacity="0.55" filter="url(#wc)"
+    d="M600 520 C 540 530 520 488 470 494 C 420 500 410 540 370 528 C 336 518 340 470 300 462 C 286 459 276 462 266 466" />
+  <path data-draw-path fill="none" stroke="var(--color-lagoon)" stroke-width="3" stroke-linecap="round"
+    d="M600 520 C 540 530 520 488 470 494 C 420 500 410 540 370 528 C 336 518 340 470 300 462 C 286 459 276 462 266 466" />
+  <!-- a second, northern arm of the backwater -->
+  <path data-draw-path fill="none" stroke="var(--color-lagoon)" stroke-width="2" stroke-linecap="round" opacity="0.8"
+    d="M372 528 C 392 560 440 572 470 612 C 492 642 540 650 600 640" />
+
+  <!-- NH 66 -->
+  <path fill="none" stroke="var(--color-clay)" stroke-width="1.6" stroke-dasharray="8 6" opacity="0.7"
+    d="M352 0 C 346 120 362 240 350 360 C 342 440 356 520 344 620 C 338 680 346 720 340 760" />
+  <text x="358" y="250" class="map-small" fill="var(--color-clay)" transform="rotate(88 358 250)">NH 66</text>
+  <!-- link road from the highway to Tierra -->
+  <path fill="none" stroke="var(--color-clay)" stroke-width="1.4" stroke-dasharray="3 4" d="M348 430 C 340 436 332 442 324 446" />
+  <text x="360" y="436" class="map-small" fill="var(--color-clay)">1.1 km</text>
+
+  <!-- little trees -->
+  <g fill="var(--color-leaf)" opacity="0.55">
+    <circle cx="420" cy="420" r="5" /><circle cx="432" cy="428" r="4" /><circle cx="470" cy="440" r="5" />
+    <circle cx="520" cy="410" r="4" /><circle cx="500" cy="570" r="5" /><circle cx="540" cy="580" r="4" />
+    <circle cx="410" cy="600" r="4" /><circle cx="560" cy="460" r="5" /><circle cx="330" cy="560" r="4" />
+  </g>
+
+  <!-- Places -->
+  <g class="map-place" fill="var(--color-ink)">
+    <circle cx="330" cy="70" r="4" fill="var(--color-ink)" />
+    <text x="342" y="75" class="map-label">Udupi</text>
+    <text x="342" y="92" class="map-small">≈ 30 min</text>
+
+    <circle cx="316" cy="300" r="4" fill="var(--color-ink)" />
+    <text x="306" y="290" text-anchor="end" class="map-label" fill="var(--color-paper)">Padubidri</text>
+    <text x="306" y="306" text-anchor="end" class="map-small" fill="var(--color-paper)">Blue Flag beach · 3 km</text>
+
+    <circle cx="300" cy="420" r="3" fill="var(--color-ink)" />
+    <text x="290" y="416" text-anchor="end" class="map-small" fill="var(--color-paper)">Surf club · 200 m</text>
+
+    <circle cx="300" cy="610" r="4" fill="var(--color-ink)" />
+    <text x="312" y="615" class="map-label">Mulki</text>
+
+    <circle cx="296" cy="720" r="4" fill="var(--color-ink)" />
+    <text x="308" y="725" class="map-label">Mangaluru ↓</text>
+
+    <path d="M470 690 l 10 -6 l -2 12 z" fill="var(--color-ink)" />
+    <text x="488" y="695" class="map-small">Airport ≈ 45 min</text>
+  </g>
+
+  <text x="120" y="380" class="map-sea" fill="var(--color-paper)">Arabian</text>
+  <text x="140" y="412" class="map-sea" fill="var(--color-paper)">Sea</text>
+  <text x="470" y="485" class="map-small" fill="var(--color-sea)" font-style="italic">backwaters</text>
+
+  <!-- Tierra pin -->
+  <g class="map-pin" transform="translate(318 448)">
+    <circle r="22" fill="var(--color-lime)" opacity="0.35" class="map-pulse" />
+    <circle r="9" fill="var(--color-forest)" stroke="var(--color-paper)" stroke-width="3" />
+    <text x="16" y="-16" class="map-tierra" fill="var(--color-forest)">Tierra</text>
+  </g>
+
+  <!-- Compass -->
+  <g transform="translate(90 660)" fill="none" stroke="var(--color-ink)" stroke-width="1" opacity="0.7">
+    <circle r="26" stroke-dasharray="2 4" />
+    <path d="M0 -36 L6 0 L0 36 L-6 0 Z" fill="var(--color-paper)" />
+    <path d="M0 -36 L6 0 L-6 0 Z" fill="var(--color-ink)" />
+    <text y="-44" text-anchor="middle" class="map-small" fill="var(--color-ink)" stroke="none">N</text>
+  </g>
+</svg>
+
+<style>
+  /* fill comes from the parent <g> (ink) or the element's own fill attribute */
+  .map-label { font-family: var(--font-display); font-size: 22px; }
+  .map-small { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.06em; }
+  .map-sea { font-family: var(--font-display); font-style: italic; font-size: 34px; letter-spacing: 0.08em; opacity: 0.9; }
+  .map-tierra { font-family: var(--font-display); font-size: 34px; font-style: italic; }
+  .map-pulse { transform-origin: center; animation: pulse 2.6s var(--ease-out-expo) infinite; }
+  @keyframes pulse { 0% { transform: scale(0.6); opacity: 0.6; } 100% { transform: scale(2.2); opacity: 0; } }
+</style>

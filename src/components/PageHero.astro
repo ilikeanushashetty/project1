@@ -1,0 +1,27 @@
+---
+import type { ImageMetadata } from 'astro';
+import Photo from './Photo.astro';
+import PaperEdge from './PaperEdge.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  image: ImageMetadata;
+  alt: string;
+}
+const { eyebrow, title, intro, image, alt } = Astro.props;
+---
+
+<section data-hero class="relative flex h-[78svh] min-h-[520px] items-end overflow-hidden bg-night text-paper">
+  <div class="absolute inset-0" data-hero-media>
+    <Photo src={image} alt={alt} priority sizes="100vw" class="h-full" />
+  </div>
+  <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(19_38_27/0.5)_0%,rgb(19_38_27/0.1)_40%,rgb(19_38_27/0.75)_100%)]"></div>
+  <div class="container-x relative z-[3] pb-[clamp(6rem,11vw,9rem)]">
+    <p class="eyebrow mb-5 text-lime" data-fade>{eyebrow}</p>
+    <h1 class="max-w-4xl text-[clamp(3rem,7.5vw,7rem)] leading-[0.95]" data-split set:html={title} />
+    {intro && <p class="mt-8 max-w-xl text-base leading-relaxed text-paper/85 md:text-lg" data-fade>{intro}</p>}
+  </div>
+  <PaperEdge />
+</section>

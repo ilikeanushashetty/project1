@@ -1,0 +1,108 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import Photo from '@/components/Photo.astro';
+import Icon from '@/components/Icon.astro';
+import { getImage } from 'astro:assets';
+import { img, gallery } from '@/data/site';
+
+const tags = ['All', ...new Set(gallery.map((g) => g.tag))];
+// full-size versions for the lightbox
+const large = await Promise.all(gallery.map((g) => getImage({ src: g.image, width: Math.min(1920, g.image.width), format: 'webp' })));
+const shapes = ['aspect-[4/5]', 'aspect-square', 'aspect-[3/4]', 'aspect-[4/3]'];
+---
+
+<Base title="Gallery" description="Photos of Tierra: A-frame cottages, riverside tents, the pool, gardens and evenings by the river.">
+  <PageHero eyebrow="Gallery" title="Glimpses of <em>Tierra</em>" image={img.hero} alt="Tierra resort and pool" />
+
+  <section class="py-[clamp(4rem,8vw,7rem)]">
+    <div class="container-x">
+      <div class="mb-12 flex flex-wrap justify-center gap-2" role="tablist" aria-label="Filter photos" data-fade>
+        {tags.map((t, i) => (
+          <button role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-filter={t}
+            class="filter-btn rounded-full border border-forest/25 px-5 py-2 text-xs font-semibold tracking-[0.14em] uppercase transition-colors duration-500">{t}</button>
+        ))}
+      </div>
+
+      <ul class="columns-1 gap-5 sm:columns-2 lg:columns-3" id="gallery-grid">
+        {gallery.map((g, i) => (
+          <li class="gallery-item mb-5 break-inside-avoid" data-tag={g.tag}>
+            <button class="group relative block w-full cursor-zoom-in overflow-hidden" data-full={large[i].src} data-alt={g.alt} aria-label={`Open photo: ${g.alt}`}>
+              <Photo src={g.image} alt={g.alt} reveal class={shapes[i % shapes.length]} sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                imgClass="transition-transform duration-[1.4s] ease-[var(--ease-out-expo)] group-hover:scale-105" />
+              <span class="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-night/70 to-transparent p-5 text-left text-paper opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                <span class="font-display text-2xl">{g.alt}</span>
+                <span class="eyebrow text-[0.6rem] text-lime">{g.tag}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <dialog id="lightbox" class="m-0 h-full max-h-none w-full max-w-none bg-night/95 p-0 text-paper backdrop:bg-transparent">
+    <div class="flex h-full w-full items-center justify-center p-4 md:p-12">
+      <img id="lightbox-img" alt="" class="max-h-full max-w-full object-contain" />
+    </div>
+    <p id="lightbox-cap" class="absolute bottom-6 left-1/2 -translate-x-1/2 font-display text-2xl"></p>
+    <button id="lightbox-close" class="absolute top-5 right-5 grid size-12 place-items-center rounded-full border border-paper/30 transition-colors hover:bg-paper hover:text-night" aria-label="Close"><Icon name="close" class="size-5" /></button>
+    <button id="lightbox-prev" class="absolute top-1/2 left-4 grid size-12 -translate-y-1/2 rotate-180 place-items-center rounded-full border border-paper/30 transition-colors hover:bg-paper hover:text-night" aria-label="Previous photo"><Icon name="arrow" class="size-5" /></button>
+    <button id="lightbox-next" class="absolute top-1/2 right-4 grid size-12 -translate-y-1/2 place-items-center rounded-full border border-paper/30 transition-colors hover:bg-paper hover:text-night" aria-label="Next photo"><Icon name="arrow" class="size-5" /></button>
+  </dialog>
+</Base>
+
+<style>
+  .filter-btn[aria-selected='true'] { background: var(--color-forest); border-color: var(--color-forest); color: var(--color-paper); }
+  .filter-btn:not([aria-selected='true']):hover { background: color-mix(in oklab, var(--color-forest) 10%, transparent); }
+  .gallery-item.is-hidden { display: none; }
+  #lightbox[open] { animation: lb-in 0.5s var(--ease-out-expo); }
+  @keyframes lb-in { from { opacity: 0; } }
+</style>
+
+<script>
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const items = Array.from(document.querySelectorAll<HTMLLIElement>('.gallery-item'));
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter-btn'));
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+      items.forEach((it) => {
+        it.classList.toggle('is-hidden', tag !== 'All' && it.dataset.tag !== tag);
+        it.querySelector<HTMLElement>('.reveal-img')?.style.setProperty('clip-path', 'none');
+      });
+      ScrollTrigger.refresh();
+    }),
+  );
+
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement;
+  const big = document.getElementById('lightbox-img') as HTMLImageElement;
+  const cap = document.getElementById('lightbox-cap')!;
+  let index = 0;
+  const visible = () => items.filter((it) => !it.classList.contains('is-hidden'));
+  const show = (i: number) => {
+    const list = visible();
+    index = (i + list.length) % list.length;
+    const b = list[index].querySelector<HTMLButtonElement>('button')!;
+    big.src = b.dataset.full!;
+    big.alt = b.dataset.alt!;
+    cap.textContent = b.dataset.alt!;
+  };
+  items.forEach((it) =>
+    it.querySelector('button')!.addEventListener('click', () => {
+      show(visible().indexOf(it));
+      dlg.showModal();
+    }),
+  );
+  document.getElementById('lightbox-close')!.addEventListener('click', () => dlg.close());
+  document.getElementById('lightbox-prev')!.addEventListener('click', () => show(index - 1));
+  document.getElementById('lightbox-next')!.addEventListener('click', () => show(index + 1));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg || (e.target as HTMLElement).tagName === 'DIV') dlg.close(); });
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') show(index + 1);
+    if (e.key === 'ArrowLeft') show(index - 1);
+  });
+</script>

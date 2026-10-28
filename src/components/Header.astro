@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import { nav, site, img } from '@/data/site';
+
+interface Props {
+  /** 'light' = white text over a dark hero image, 'dark' = ink text on paper */
+  theme?: 'light' | 'dark';
+}
+const { theme = 'light' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header id="site-header" data-theme={theme} class="fixed inset-x-0 top-0 z-50 transition-[transform,background-color,color,box-shadow] duration-700 ease-[var(--ease-out-expo)]">
+  <div class="container-x flex h-20 items-center justify-between gap-6 md:h-24">
+    <a href="/" class="logo relative z-10 block h-14 w-[98px] md:h-16 md:w-[112px]" aria-label={`${site.fullName}, home`}>
+      <Image src={img.logoLight} alt="" widths={[112, 224]} sizes="112px" loading="eager" class="logo-light absolute inset-0 h-full w-full object-contain transition-opacity duration-500" />
+      <Image src={img.logo} alt="" widths={[112, 224]} sizes="112px" loading="eager" class="logo-color absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500" />
+      <span class="sr-only">{site.fullName}</span>
+    </a>
+
+    <nav class="hidden items-center gap-9 lg:flex" aria-label="Main">
+      {nav.map((l) => (
+        <a href={l.href} class:list={['link-u text-[0.8rem] font-medium tracking-[0.12em] uppercase', path === l.href && 'is-active']} aria-current={path === l.href ? 'page' : undefined}>
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="relative z-10 flex items-center gap-3">
+      <a href={site.phoneHref} class="hidden text-[0.8rem] font-medium tracking-[0.08em] xl:block">{site.phone}</a>
+      <a href="/contact#book" class="btn btn-line header-cta hidden !px-5 !py-3 sm:inline-flex">Book a stay</a>
+      <button id="menu-toggle" class="relative grid size-11 place-items-center lg:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span class="menu-bar absolute h-px w-6 -translate-y-1 bg-current transition-transform duration-500"></span>
+        <span class="menu-bar absolute h-px w-6 translate-y-1 bg-current transition-transform duration-500"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="fixed inset-0 -z-0 flex flex-col bg-forest text-paper opacity-0 [visibility:hidden] lg:hidden" aria-hidden="true">
+    <nav class="container-x mt-28 flex flex-col gap-2" aria-label="Mobile">
+      <a href="/" class="mm-link font-display text-5xl">Home</a>
+      {nav.map((l) => <a href={l.href} class="mm-link font-display text-5xl">{l.label}</a>)}
+    </nav>
+    <div class="container-x mt-auto mb-10 flex flex-col gap-2 text-sm text-paper/80">
+      <a href={site.phoneHref} class="mm-link">{site.phone}</a>
+      <a href={`mailto:${site.email}`} class="mm-link">{site.email}</a>
+      <a href="/contact#book" class="mm-link btn btn-line mt-4 self-start">Book a stay</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  #site-header { color: var(--color-paper); }
+  #site-header[data-theme='dark'] { color: var(--color-ink); }
+  #site-header.is-solid {
+    color: var(--color-ink);
+    background: color-mix(in oklab, var(--color-paper) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 1px 0 rgb(22 48 47 / 0.08);
+  }
+  #site-header.is-solid .logo-light,
+  #site-header[data-theme='dark'] .logo-light { opacity: 0; }
+  #site-header.is-solid .logo-color,
+  #site-header[data-theme='dark'] .logo-color { opacity: 1; }
+  #site-header.menu-open .logo-light { opacity: 1; }
+  #site-header.menu-open .logo-color { opacity: 0; }
+  #site-header.is-solid .header-cta:hover { color: var(--color-paper); }
+  #site-header.is-solid .header-cta::before,
+  #site-header[data-theme='dark'] .header-cta::before { background: var(--color-forest); }
+  #site-header[data-theme='dark'] .header-cta:hover { color: var(--color-paper); border-color: var(--color-forest); }
+  #site-header.is-hidden { transform: translateY(-100%); }
+  #site-header .is-active { background-size: 100% 1px; }
+
+  #site-header.menu-open { color: var(--color-paper); background: transparent; box-shadow: none; backdrop-filter: none; transform: none; }
+  #site-header.menu-open .menu-bar:first-child { transform: rotate(45deg); }
+  #site-header.menu-open .menu-bar:last-child { transform: rotate(-45deg); }
+  #site-header.menu-open .header-cta { opacity: 0; pointer-events: none; }
+</style>

@@ -1,0 +1,228 @@
+---
+import Base from '@/layouts/Base.astro';
+import Photo from '@/components/Photo.astro';
+import PaperEdge from '@/components/PaperEdge.astro';
+import Botanical from '@/components/Botanical.astro';
+import DeltaMap from '@/components/DeltaMap.astro';
+import Icon from '@/components/Icon.astro';
+import { site, img, stays, amenities, day, reviews } from '@/data/site';
+---
+
+<Base>
+  <!-- ============ HERO ============ -->
+  <section data-hero class="relative flex h-[100svh] min-h-[640px] items-end overflow-hidden bg-night text-paper">
+    <div class="absolute inset-0" data-hero-media>
+      <Photo src={img.hero} alt="Infinity pool, palms and the sea at Tierra" priority sizes="100vw" class="h-full" />
+    </div>
+    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(19_38_27/0.55)_0%,rgb(19_38_27/0.05)_35%,rgb(19_38_27/0.25)_60%,rgb(19_38_27/0.8)_100%)]"></div>
+
+    <div class="container-x relative z-[3] pb-[clamp(7rem,14vw,11rem)]">
+      <p class="eyebrow mb-6 text-lime" data-fade>Hejamadi · Udupi–Mangalore coast</p>
+      <h1 class="max-w-5xl text-[clamp(3rem,8.4vw,8.5rem)] leading-[0.92]" data-split>
+        Rooted in <em class="text-lime/95">earth,</em> where the river meets the <em class="text-mist">sea</em>
+      </h1>
+      <div class="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <p class="max-w-md text-base leading-relaxed text-paper/85 md:text-lg" data-fade>
+          A riverside eco-retreat of A-frame cottages, tents and gardens at the edge of the Arabian Sea.
+        </p>
+        <div class="flex flex-wrap gap-3" data-fade>
+          <a href="/contact#book" class="btn btn-fill">Book your stay <Icon name="arrow" class="size-4" /></a>
+          <a href="/stays" class="btn btn-line">Explore stays</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-[clamp(4rem,8vw,7rem)] left-1/2 z-[3] hidden -translate-x-1/2 flex-col items-center gap-3 lg:flex" aria-hidden="true">
+      <span class="eyebrow text-[0.6rem] text-paper/70">Scroll</span>
+      <span class="relative h-12 w-px overflow-hidden bg-paper/25"><span class="absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_2.2s_ease-in-out_infinite] bg-paper"></span></span>
+    </div>
+    <PaperEdge />
+  </section>
+
+  <!-- ============ MEANING / INTRO ============ -->
+  <section class="relative overflow-hidden py-[clamp(5rem,12vw,10rem)]">
+    <Botanical class="pointer-events-none absolute top-10 -left-16 w-[220px] text-forest/15 md:w-[320px]" />
+    <Botanical kind="fern" class="pointer-events-none absolute -right-6 bottom-0 w-[160px] text-leaf/20 md:w-[240px]" />
+
+    <div class="container-x relative">
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="mb-8 font-display text-xl italic text-clay" data-fade>
+          tierra <span class="not-italic text-ink/50">/ˈtjɛ.ra/</span> · <span class="text-ink/60">noun</span> · earth, land, ground
+        </p>
+        <p class="font-display text-[clamp(1.8rem,3.6vw,3.2rem)] leading-[1.2] text-ink" data-words>
+          Tierra means earth. Ours is a small patch of it, at the delta where a slow river spills into the Arabian Sea. Old trees, open lawns, timber cottages and the sound of water, kept simple on purpose.
+        </p>
+        <a href="/story" class="btn btn-line on-light mt-12" data-fade>Our story <Icon name="arrow" class="size-4" /></a>
+      </div>
+
+      <dl class="mx-auto mt-[clamp(4rem,8vw,7rem)] grid max-w-5xl grid-cols-2 gap-y-10 border-t border-ink/10 pt-10 md:grid-cols-4" data-stagger>
+        <div class="text-center" data-fade><dt class="eyebrow order-2 mt-2 text-ink/60">to Blue Flag beach</dt><dd class="font-display text-6xl text-forest"><span data-count="3">3</span><span class="text-3xl"> km</span></dd></div>
+        <div class="text-center" data-fade><dt class="eyebrow mt-2 text-ink/60">to the surf club</dt><dd class="font-display text-6xl text-forest"><span data-count="200">200</span><span class="text-3xl"> m</span></dd></div>
+        <div class="text-center" data-fade><dt class="eyebrow mt-2 text-ink/60">ways to stay</dt><dd class="font-display text-6xl text-forest"><span data-count="4">4</span></dd></div>
+        <div class="text-center" data-fade><dt class="eyebrow mt-2 text-ink/60">from Mangaluru airport</dt><dd class="font-display text-6xl text-forest"><span data-count="45">45</span><span class="text-3xl"> min</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ STAYS (horizontal on desktop) ============ -->
+  <section data-hscroll class="relative overflow-hidden bg-sand/60 py-[clamp(5rem,10vw,8rem)] lg:flex lg:h-screen lg:flex-col lg:justify-center lg:py-0">
+    <div class="container-x mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end lg:mb-14">
+      <div>
+        <p class="eyebrow mb-4 text-clay" data-fade>Stays</p>
+        <h2 class="text-[clamp(2.6rem,5.5vw,5rem)]" data-split>Four ways to <em>sleep</em> by the water</h2>
+      </div>
+      <a href="/stays" class="btn btn-line on-light self-start md:self-auto" data-fade>All stays <Icon name="arrow" class="size-4" /></a>
+    </div>
+
+    <div data-hscroll-track class="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[clamp(1.25rem,4vw,3.5rem)] pb-4 [scrollbar-width:none] lg:snap-none lg:overflow-visible lg:pb-0 lg:pl-[max(clamp(1.25rem,4vw,3.5rem),calc((100vw-88rem)/2+3.5rem))]">
+      {stays.map((s, i) => (
+        <a href={`/stays#${s.slug}`} class="group relative w-[82vw] shrink-0 snap-start sm:w-[60vw] lg:w-[34vw] xl:w-[30vw]">
+          <Photo src={s.image} alt={s.name} sizes="(min-width:1024px) 34vw, 82vw" class="aspect-[4/5] rounded-[2px]" imgClass="transition-transform duration-[1.6s] ease-[var(--ease-out-expo)] group-hover:scale-105" />
+          <div class="mt-5 flex items-baseline justify-between gap-4">
+            <div>
+              <p class="eyebrow mb-2 text-[0.62rem] text-clay">0{i + 1} · {s.kicker}</p>
+              <h3 class="text-3xl md:text-4xl">{s.name}</h3>
+            </div>
+            <span class="grid size-11 shrink-0 place-items-center rounded-full border border-ink/20 transition-colors duration-500 group-hover:border-forest group-hover:bg-forest group-hover:text-paper"><Icon name="arrow" class="size-4" /></span>
+          </div>
+        </a>
+      ))}
+      <div class="hidden w-[10vw] shrink-0 lg:block" aria-hidden="true"></div>
+    </div>
+
+    <div class="container-x mt-10 hidden lg:block" aria-hidden="true">
+      <div class="h-px w-full bg-ink/10"><div data-hscroll-bar class="h-px origin-left bg-forest"></div></div>
+    </div>
+  </section>
+
+  <!-- ============ A DAY AT TIERRA ============ -->
+  <section data-day class="relative py-[clamp(5rem,10vw,9rem)]">
+    <div class="container-x">
+      <div class="mb-16 max-w-2xl">
+        <p class="eyebrow mb-4 text-clay" data-fade>A day at Tierra</p>
+        <h2 class="text-[clamp(2.6rem,5.5vw,5rem)]" data-split>From river mist to <em>firelight</em></h2>
+      </div>
+
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <!-- sticky photo stack -->
+        <div class="hidden lg:col-span-6 lg:block">
+          <div class="sticky top-[14vh] aspect-[4/5] max-h-[72vh] w-full overflow-hidden rounded-[2px]">
+            {day.map((d, i) => (
+              <div data-day-frame class="day-frame absolute inset-0">
+                <Photo src={d.image} alt={d.title} sizes="45vw" class="h-full" />
+              </div>
+            ))}
+            <div class="absolute bottom-6 left-6 rounded-full bg-paper/90 px-5 py-2 font-display text-2xl text-forest backdrop-blur" data-day-clock>06:30</div>
+          </div>
+        </div>
+
+        <!-- steps -->
+        <ol class="lg:col-span-5 lg:col-start-8">
+          {day.map((d) => (
+            <li data-day-step data-time={d.time} class="day-step border-t border-ink/10 py-10 lg:flex lg:min-h-[60vh] lg:flex-col lg:justify-center lg:py-0">
+              <Photo src={d.image} alt={d.title} sizes="100vw" class="mb-6 aspect-[16/10] lg:hidden" />
+              <p class="font-display text-5xl text-clay md:text-6xl">{d.time}</p>
+              <h3 class="mt-3 text-3xl md:text-4xl">{d.title}</h3>
+              <p class="mt-4 max-w-md leading-relaxed text-ink/70">{d.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AMENITIES ============ -->
+  <section class="relative overflow-hidden bg-forest py-[clamp(8rem,14vw,12rem)] text-paper">
+    <PaperEdge position="top" variant={2} />
+    <Botanical class="pointer-events-none absolute top-24 right-0 w-[260px] text-paper/10 md:w-[380px]" />
+    <div class="container-x relative">
+      <div class="mb-16 grid gap-8 md:grid-cols-2 md:items-end">
+        <div>
+          <p class="eyebrow mb-4 text-lime" data-fade>At the resort</p>
+          <h2 class="text-[clamp(2.6rem,5.5vw,5rem)]" data-split>Unhurried comforts, <em>naturally</em></h2>
+        </div>
+        <p class="max-w-md leading-relaxed text-paper/75 md:justify-self-end" data-fade>Everything you need for a slow few days, and nothing that gets in the way of the view.</p>
+      </div>
+      <ul class="grid gap-px overflow-hidden rounded-[2px] bg-paper/10 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {amenities.map((a) => (
+          <li class="group bg-forest p-8 transition-colors duration-700 hover:bg-[#2a5429] md:p-10" data-fade>
+            <Icon name={a.icon} class="size-9 text-lime transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:-translate-y-1" />
+            <h3 class="mt-8 text-3xl">{a.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-paper/70">{a.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <PaperEdge />
+  </section>
+
+  <!-- ============ MAP ============ -->
+  <section class="relative overflow-hidden py-[clamp(5rem,10vw,9rem)]">
+    <div class="container-x grid items-center gap-14 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow mb-4 text-clay" data-fade>Find us</p>
+        <h2 class="text-[clamp(2.6rem,5.5vw,5rem)]" data-split>On the <em>delta,</em> between Udupi &amp; Mangaluru</h2>
+        <p class="mt-8 max-w-md leading-relaxed text-ink/70" data-fade>
+          Tierra sits at Hejamadi, close to the beach and just 1.1 km off NH 66, where the backwaters meet the Arabian Sea. Easy to drive in, yet far enough for the highway noise to fade.
+        </p>
+        <ul class="mt-10 divide-y divide-ink/10 border-y border-ink/10" data-stagger>
+          {[['NH 66 highway', '1.1 km'], ['Surf club', '200 m'], ['Padubidri Blue Flag beach', '3 km'], ['Udupi', '≈ 30 min'], ['Mangaluru airport', '≈ 45 min']].map(([k, v]) => (
+            <li class="flex justify-between py-4 text-sm" data-fade><span>{k}</span><span class="font-display text-xl text-forest">{v}</span></li>
+          ))}
+        </ul>
+        <a href={site.mapsUrl} target="_blank" rel="noopener" class="btn btn-fill mt-10" data-fade>Get directions <Icon name="arrow" class="size-4" /></a>
+      </div>
+      <div class="relative lg:col-span-6 lg:col-start-7">
+        <div class="relative mx-auto max-w-[560px] rounded-[2px] bg-paper p-4 shadow-[0_30px_80px_-40px_rgb(29_53_35/0.45)] md:p-6" data-fade>
+          <DeltaMap class="h-auto w-full" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section class="relative bg-sand/60 py-[clamp(5rem,10vw,9rem)]">
+    <div class="container-x">
+      <p class="eyebrow mb-4 text-center text-clay" data-fade>Guest words</p>
+      <h2 class="mx-auto mb-16 max-w-3xl text-center text-[clamp(2.4rem,5vw,4.5rem)]" data-split>Stories our guests <em>take home</em></h2>
+      <div class="grid gap-6 md:grid-cols-3" data-stagger>
+        {reviews.map((r) => (
+          <figure class="flex flex-col justify-between rounded-[2px] bg-paper p-8 md:p-10" data-fade>
+            <blockquote class="font-display text-2xl leading-snug text-ink md:text-[1.7rem]">
+              <span class="block font-display text-6xl leading-none text-leaf">“</span>
+              {r.quote}
+            </blockquote>
+            <figcaption class="mt-8 text-sm"><span class="font-semibold">{r.name}</span> <span class="text-ink/50">· {r.from}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="relative flex min-h-[80vh] items-center overflow-hidden bg-night text-paper">
+    <PaperEdge position="top" fill="var(--color-sand)" />
+    <div class="absolute -inset-y-[15%] inset-x-0" data-parallax="0.3">
+      <Photo src={img.pool} alt="Pool at dusk" sizes="100vw" class="h-full" />
+    </div>
+    <div class="absolute inset-0 bg-night/55"></div>
+    <div class="container-x relative z-[3] py-32 text-center">
+      <p class="eyebrow mb-6 text-lime" data-fade>Your escape awaits</p>
+      <h2 class="mx-auto max-w-4xl text-[clamp(2.8rem,7vw,6.5rem)]" data-split>Come home to <em>the earth</em></h2>
+      <div class="mt-12 flex flex-wrap justify-center gap-3" data-fade>
+        <a href="/contact#book" class="btn btn-fill">Book your stay <Icon name="arrow" class="size-4" /></a>
+        <a href={site.phoneHref} class="btn btn-line">Call {site.phone}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .day-frame { opacity: 0; transform: scale(1.06); transition: opacity 1s var(--ease-out-expo), transform 1.6s var(--ease-out-expo); }
+  .day-frame.is-active { opacity: 1; transform: scale(1); }
+  @media (min-width: 1024px) {
+    .day-step { opacity: 0.3; transition: opacity 0.6s; }
+    .day-step.is-active { opacity: 1; }
+  }
+  @keyframes scrollcue { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
+</style>

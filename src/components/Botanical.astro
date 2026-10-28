@@ -1,0 +1,39 @@
+---
+/** Hand-drawn style palm frond line art. Paths draw themselves on scroll (data-draw). */
+interface Props {
+  class?: string;
+  kind?: 'palm' | 'fern';
+}
+const { class: cls = '', kind = 'palm' } = Astro.props;
+---
+
+{kind === 'palm' ? (
+  <svg aria-hidden="true" viewBox="0 0 300 420" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" class={cls} data-draw>
+    <path d="M150 415 C 152 330 146 250 160 150 C 168 100 182 60 200 22" />
+    <path d="M160 150 C 120 120 70 118 22 140" />
+    <path d="M160 150 C 128 100 84 78 34 76" />
+    <path d="M162 140 C 150 90 120 50 80 26" />
+    <path d="M166 128 C 176 82 196 50 236 30" />
+    <path d="M164 146 C 206 112 248 108 290 122" />
+    <path d="M162 156 C 210 152 252 170 282 204" />
+    <path d="M158 160 C 116 160 74 180 44 214" />
+    <path d="M120 128 l -14 18 M96 124 l -16 20 M72 124 l -16 22 M50 130 l -14 22" />
+    <path d="M132 104 l -20 6 M110 90 l -20 8 M86 82 l -20 8 M62 78 l -20 8" />
+    <path d="M200 120 l 10 20 M226 116 l 12 20 M252 116 l 12 22 M274 120 l 10 20" />
+    <path d="M196 156 l -4 22 M222 162 l -2 24 M246 172 l 0 24 M266 186 l 2 22" />
+  </svg>
+) : (
+  <svg aria-hidden="true" viewBox="0 0 240 360" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" class={cls} data-draw>
+    <path d="M120 355 C 118 260 124 160 118 8" />
+    {Array.from({ length: 11 }).map((_, i) => {
+      const y = 320 - i * 28;
+      const w = 90 - i * 6;
+      return (
+        <>
+          <path d={`M120 ${y} C ${120 - w * 0.4} ${y - 8} ${120 - w * 0.8} ${y - 20} ${120 - w} ${y - 34}`} />
+          <path d={`M120 ${y - 6} C ${120 + w * 0.4} ${y - 14} ${120 + w * 0.8} ${y - 26} ${120 + w} ${y - 40}`} />
+        </>
+      );
+    })}
+  </svg>
+)}

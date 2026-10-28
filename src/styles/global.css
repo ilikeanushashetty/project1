@@ -1,0 +1,123 @@
+@import 'tailwindcss';
+
+/* ---------- Design tokens ---------- */
+@theme {
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans: 'Manrope Variable', system-ui, sans-serif;
+
+  /* Palette drawn from the Tierra logo (forest line-work, sage + lime
+     watercolour leaves) plus earth and coast. */
+  --color-ink: #1d3523;        /* deep forest, body text */
+  --color-forest: #2f5e2e;     /* logo line-work green */
+  --color-leaf: #7db544;       /* logo leaf green */
+  --color-lime: #dcdf3c;       /* logo highlight yellow-green, use sparingly */
+  --color-sage: #9fc4a2;       /* logo soft sage */
+  --color-sea: #12494d;        /* Arabian Sea */
+  --color-lagoon: #4a8a82;     /* river / backwater */
+  --color-mist: #bcdad3;       /* shallow water */
+  --color-paper: #f6f1e6;      /* watercolour paper */
+  --color-sand: #eadfc8;       /* beach sand */
+  --color-clay: #a65f38;       /* laterite earth - "tierra" */
+  --color-sun: #d8a646;        /* sunset gold */
+  --color-night: #13261b;      /* forest at night */
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body { font-family: var(--font-sans); overflow-x: clip; }
+  ::selection { background: var(--color-forest); color: var(--color-paper); }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; line-height: 1.05; letter-spacing: -0.01em; }
+  img { user-select: none; }
+  :focus-visible { outline: 2px solid var(--color-clay); outline-offset: 3px; }
+}
+
+/* ---------- Lenis ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ---------- Utilities ---------- */
+@utility container-x {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+@utility paper-texture {
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgb(255 255 255 / 0.55), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgb(232 220 198 / 0.5), transparent 45%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Buttons ---------- */
+@utility btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.5s var(--ease-out-expo), background-color 0.5s var(--ease-out-expo), border-color 0.5s;
+}
+
+.btn-fill { background: var(--color-forest); color: var(--color-paper); }
+.btn-fill::before,
+.btn-line::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease-out-expo);
+}
+.btn-fill::before { background: var(--color-clay); }
+.btn-fill:hover::before, .btn-line:hover::before { transform: translateY(0); }
+
+.btn-line { border: 1px solid currentColor; }
+.btn-line::before { background: var(--color-paper); }
+.btn-line:hover { color: var(--color-forest); border-color: var(--color-paper); }
+.btn-line.on-light::before { background: var(--color-forest); }
+.btn-line.on-light:hover { color: var(--color-paper); border-color: var(--color-forest); }
+
+.link-u { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.5s var(--ease-out-expo); }
+.link-u:hover { background-size: 100% 1px; }
+
+/* ---------- Motion primitives (JS adds .is-ready) ---------- */
+.split-line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.split-line > span { display: block; will-change: transform; }
+
+.reveal-img { clip-path: inset(100% 0 0 0); }
+.no-js .reveal-img, .reduced .reveal-img { clip-path: none; }
+
+/* Hide motion targets only when JS is running and motion is allowed */
+.js:not(.reduced) [data-fade] { opacity: 0; transform: translateY(24px); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

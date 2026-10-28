@@ -1,0 +1,93 @@
+---
+import '@fontsource/cormorant-garamond/400.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource-variable/manrope';
+import '@/styles/global.css';
+import { getImage } from 'astro:assets';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import FloatingContact from '@/components/FloatingContact.astro';
+import { site, img } from '@/data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  headerTheme?: 'light' | 'dark';
+}
+
+const { title, description = site.description, headerTheme = 'light' } = Astro.props;
+const pageTitle = title ? `${title} · ${site.fullName}` : `${site.fullName} · ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = await getImage({ src: img.hero, width: 1200, height: 630, format: 'jpg' });
+const favicon = await getImage({ src: img.logoMark, width: 64, format: 'png' });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Resort',
+  name: site.fullName,
+  description: site.description,
+  url: Astro.site?.toString(),
+  telephone: site.phone,
+  email: site.email,
+  image: new URL(ogImage.src, Astro.site).toString(),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address[0],
+    addressLocality: 'Hejamadi',
+    addressRegion: 'Karnataka',
+    postalCode: '574103',
+    addressCountry: 'IN',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+  checkinTime: '12:00',
+  checkoutTime: '11:00',
+  petsAllowed: true,
+  amenityFeature: ['Swimming pool', 'Free Wi-Fi', 'Free parking', 'Café'].map((n) => ({
+    '@type': 'LocationFeatureSpecification',
+    name: n,
+    value: true,
+  })),
+};
+---
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reduced');
+    </script>
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#2f5e2e" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.fullName} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage.src, Astro.site)} />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="paper-texture">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-paper focus:px-4 focus:py-2">Skip to content</a>
+    <Header theme={headerTheme} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingContact />
+    <script>
+      import '@/scripts/motion';
+    </script>
+  </body>
+</html>
