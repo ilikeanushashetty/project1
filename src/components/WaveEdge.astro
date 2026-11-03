@@ -1,0 +1,30 @@
+---
+/**
+ * A soft, slowly drifting wave edge between two sections (after munjoh.com).
+ * The area under the curve is filled with `fill`, the colour of the section
+ * below, so put it at the bottom of the upper section. Two layers drift in
+ * opposite directions; it stays still for reduced-motion visitors.
+ */
+interface Props {
+  fill: string;
+  class?: string;
+}
+const { fill, class: cls = '' } = Astro.props;
+// one full swell every 1440 units, drawn twice so a -50% drift loops seamlessly
+const d = 'M0 40 C240 0 480 0 720 40 S1200 80 1440 40 S1920 0 2160 40 S2640 80 2880 40 V80 H0Z';
+---
+
+<div class:list={['wave-edge pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden', cls]} aria-hidden="true">
+  <svg class="wave-back" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d={d} style={`fill:${fill}`} opacity="0.45" /></svg>
+  <svg class="wave-front" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d={d} style={`fill:${fill}`} /></svg>
+</div>
+
+<style>
+  .wave-edge { height: clamp(36px, 5vw, 72px); }
+  .wave-edge svg { position: absolute; bottom: -1px; left: 0; width: 200%; height: 100%; }
+  .wave-front { animation: wave-drift 22s linear infinite; }
+  .wave-back { height: 115% !important; animation: wave-drift 34s linear infinite reverse; }
+  @keyframes wave-drift { to { transform: translateX(-50%); } }
+  :global(.reduced) .wave-edge svg { animation: none; }
+  @media (prefers-reduced-motion: reduce) { .wave-edge svg { animation: none; } }
+</style>

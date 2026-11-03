@@ -1,79 +1,111 @@
 ---
+/**
+ * White header in the style of munjoh.com: Check Availability on the left, the logo
+ * centred, round contact icons on the right, and the page links centred on a second row.
+ * Below 1280px: menu button left, logo centre, call icon right (links move into the menu).
+ * The header is fixed; Base pads the page by --hh (its height) so nothing hides under it.
+ */
 import { Image } from 'astro:assets';
-import { nav, site, img } from '@/data/site';
+import { nav, site, img, waLink } from '@/data/site';
+import Icon from './Icon.astro';
 
 interface Props {
-  /** 'light' = white text over a dark hero image, 'dark' = ink text on paper */
+  /** kept for older pages; the header is always white now */
   theme?: 'light' | 'dark';
 }
-const { theme = 'light' } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const icons = [
+  { label: 'Chat on WhatsApp', icon: 'whatsapp', href: waLink(), external: true },
+  { label: 'Instagram', icon: 'instagram', href: site.instagram, external: true },
+  { label: `Call ${site.phone}`, icon: 'phone', href: site.phoneHref },
+].filter((i) => i.href !== '#');
 ---
 
-<header id="site-header" data-theme={theme} class="fixed inset-x-0 top-0 z-50 transition-[transform,background-color,color,box-shadow] duration-700 ease-[var(--ease-out-expo)]">
-  <div class="container-x flex h-20 items-center justify-between gap-6 md:h-24">
-    <a href="/" class="logo relative z-10 block h-14 w-[98px] md:h-16 md:w-[112px]" aria-label={`${site.fullName}, home`}>
-      <Image src={img.logoLight} alt="" widths={[112, 224]} sizes="112px" loading="eager" class="logo-light absolute inset-0 h-full w-full object-contain transition-opacity duration-500" />
-      <Image src={img.logo} alt="" widths={[112, 224]} sizes="112px" loading="eager" class="logo-color absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500" />
-      <span class="sr-only">{site.fullName}</span>
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 bg-white text-ink transition-shadow duration-500">
+  <!-- top row -->
+  <div class="hdr-top container-x relative z-10 grid h-[4.5rem] grid-cols-[1fr_auto_1fr] items-center gap-4 bg-white xl:h-[6.5rem]">
+    <div class="flex items-center">
+      <button id="menu-toggle" class="relative -ml-2 grid size-11 place-items-center xl:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span class="menu-bar absolute h-[1.5px] w-6 -translate-y-[6px] bg-current transition-all duration-500"></span>
+        <span class="menu-bar menu-mid absolute h-[1.5px] w-6 bg-current transition-all duration-500"></span>
+        <span class="menu-bar absolute h-[1.5px] w-6 translate-y-[6px] bg-current transition-all duration-500"></span>
+      </button>
+      <a href="/contact#enquire" data-book="" class="header-cta btn btn-line on-light hidden !px-7 !py-3 xl:inline-flex">Check Availability</a>
+    </div>
+
+    <a href="/" class="logo flex items-center" aria-label={`${site.fullName}, home`}>
+      <Image src={img.logo} alt="" widths={[120, 240]} sizes="120px" loading="eager" class="h-12 w-auto object-contain xl:h-[4.6rem]" />
     </a>
 
-    <nav class="hidden items-center gap-9 lg:flex" aria-label="Main">
-      {nav.map((l) => (
-        <a href={l.href} class:list={['link-u text-[0.8rem] font-medium tracking-[0.12em] uppercase', path === l.href && 'is-active']} aria-current={path === l.href ? 'page' : undefined}>
-          {l.label}
-        </a>
+    <ul class="flex items-center justify-end gap-2.5 xl:gap-3">
+      {icons.map((i) => (
+        <li class:list={[i.icon !== 'phone' && 'hidden xl:block']}>
+          <a href={i.href} aria-label={i.label} target={i.external ? '_blank' : undefined} rel={i.external ? 'noopener' : undefined}
+            class="hdr-icon grid size-11 place-items-center rounded-full">
+            <Icon name={i.icon} class="size-[1.1rem]" />
+          </a>
+        </li>
       ))}
-    </nav>
-
-    <div class="relative z-10 flex items-center gap-3">
-      <a href={site.phoneHref} class="hidden text-[0.8rem] font-medium tracking-[0.08em] xl:block">{site.phone}</a>
-      <a href="/contact#book" class="btn btn-line header-cta hidden !px-5 !py-3 sm:inline-flex">Book a stay</a>
-      <button id="menu-toggle" class="relative grid size-11 place-items-center lg:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
-        <span class="menu-bar absolute h-px w-6 -translate-y-1 bg-current transition-transform duration-500"></span>
-        <span class="menu-bar absolute h-px w-6 translate-y-1 bg-current transition-transform duration-500"></span>
-      </button>
-    </div>
+    </ul>
   </div>
 
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="fixed inset-0 -z-0 flex flex-col bg-forest text-paper opacity-0 [visibility:hidden] lg:hidden" aria-hidden="true">
-    <nav class="container-x mt-28 flex flex-col gap-2" aria-label="Mobile">
-      <a href="/" class="mm-link font-display text-5xl">Home</a>
-      {nav.map((l) => <a href={l.href} class="mm-link font-display text-5xl">{l.label}</a>)}
-    </nav>
-    <div class="container-x mt-auto mb-10 flex flex-col gap-2 text-sm text-paper/80">
-      <a href={site.phoneHref} class="mm-link">{site.phone}</a>
-      <a href={`mailto:${site.email}`} class="mm-link">{site.email}</a>
-      <a href="/contact#book" class="mm-link btn btn-line mt-4 self-start">Book a stay</a>
+  <!-- page links (wide screens) -->
+  <nav class="hidden border-t border-ink/10 xl:block" aria-label="Main">
+    <ul class="container-x flex h-12 items-center justify-center gap-10">
+      {nav.map((l) => {
+        const active = path === l.href;
+        return (
+          <li><a href={l.href} class:list={['hdr-link', active && 'is-active']} aria-current={active ? 'page' : undefined}>{l.label}</a></li>
+        );
+      })}
+    </ul>
+  </nav>
+
+  <!-- menu (below 1280px), opens under the header -->
+  <div id="mobile-menu" class="fixed inset-x-0 top-[var(--hh)] bottom-0 overflow-y-auto border-t border-ink/10 bg-white text-ink opacity-0 [visibility:hidden]" aria-hidden="true">
+    <div class="container-x grid gap-10 py-10 md:grid-cols-2">
+      <nav class="flex flex-col" aria-label="Menu">
+        {nav.map((l) => (
+          <a href={l.href} class:list={['mm-link border-b border-ink/10 py-4 font-display text-[1.7rem] leading-tight md:text-4xl', path === l.href && 'text-gold-deep']}>{l.label}</a>
+        ))}
+      </nav>
+      <div class="flex flex-col gap-2 self-end text-[0.95rem] text-ink-muted">
+        <p class="mm-link eyebrow mb-2 text-gold-deep">Contact</p>
+        <a href={site.phoneHref} class="mm-link">{site.phone}</a>
+        <a href={site.phoneAltHref} class="mm-link">{site.phoneAlt}</a>
+        <a href={`mailto:${site.email}`} class="mm-link">{site.email}</a>
+        <p class="mm-link mt-2">{site.address[0]} {site.address[1]}</p>
+        <a href="/contact#enquire" data-book="" class="mm-link btn btn-fill mt-6 self-start">Check Availability</a>
+      </div>
     </div>
   </div>
 </header>
 
 <style>
-  #site-header { color: var(--color-paper); }
-  #site-header[data-theme='dark'] { color: var(--color-ink); }
-  #site-header.is-solid {
-    color: var(--color-ink);
-    background: color-mix(in oklab, var(--color-paper) 88%, transparent);
-    backdrop-filter: blur(14px) saturate(1.2);
-    box-shadow: 0 1px 0 rgb(22 48 47 / 0.08);
+  /* after scrolling: a soft shadow under the white bar */
+  #site-header.is-solid { box-shadow: 0 10px 30px -22px rgb(34 48 46 / 0.45); }
+  /* wide screens: the top row slims down after scrolling, giving the page more room */
+  .hdr-top, .logo img { transition: height 0.5s var(--ease-out-expo); }
+  @media (min-width: 1280px) {
+    #site-header.is-solid .hdr-top { height: 5rem; }
+    #site-header.is-solid .logo img { height: 3.4rem; }
   }
-  #site-header.is-solid .logo-light,
-  #site-header[data-theme='dark'] .logo-light { opacity: 0; }
-  #site-header.is-solid .logo-color,
-  #site-header[data-theme='dark'] .logo-color { opacity: 1; }
-  #site-header.menu-open .logo-light { opacity: 1; }
-  #site-header.menu-open .logo-color { opacity: 0; }
-  #site-header.is-solid .header-cta:hover { color: var(--color-paper); }
-  #site-header.is-solid .header-cta::before,
-  #site-header[data-theme='dark'] .header-cta::before { background: var(--color-forest); }
-  #site-header[data-theme='dark'] .header-cta:hover { color: var(--color-paper); border-color: var(--color-forest); }
-  #site-header.is-hidden { transform: translateY(-100%); }
-  #site-header .is-active { background-size: 100% 1px; }
 
-  #site-header.menu-open { color: var(--color-paper); background: transparent; box-shadow: none; backdrop-filter: none; transform: none; }
+  /* links: Montserrat light capitals, sand gold for the current page */
+  .hdr-link { position: relative; display: inline-block; padding: 0.4rem 0; font-size: 0.86rem; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.3s; }
+  .hdr-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transition: transform 0.5s var(--ease-out-expo); }
+  .hdr-link:hover { color: var(--color-sea); }
+  .hdr-link:hover::after { transform: scaleX(1); }
+  .hdr-link.is-active { color: var(--color-gold-deep); font-weight: 400; }
+
+  /* round contact icons on a pale sand disc */
+  .hdr-icon { background: var(--color-sand); color: var(--color-gold-deep); transition: background-color 0.3s, color 0.3s; }
+  .hdr-icon:hover { background: var(--color-sea); color: #fff; }
+
+  .header-cta { font-weight: 500; letter-spacing: 0.16em; }
+
+  #site-header.menu-open .menu-bar { translate: 0 0; }
   #site-header.menu-open .menu-bar:first-child { transform: rotate(45deg); }
+  #site-header.menu-open .menu-mid { opacity: 0; }
   #site-header.menu-open .menu-bar:last-child { transform: rotate(-45deg); }
-  #site-header.menu-open .header-cta { opacity: 0; pointer-events: none; }
 </style>

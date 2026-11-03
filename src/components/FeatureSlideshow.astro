@@ -1,0 +1,89 @@
+---
+/**
+ * Large crossfading photo slideshow with an overlapping text card.
+ * Auto-advances while on screen (not for reduced-motion visitors);
+ * prev / next buttons and a live counter.
+ */
+import type { ImageMetadata } from 'astro';
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;          // may contain <em>
+  text: string;
+  href: string;
+  linkLabel: string;
+  images: { src: ImageMetadata; alt: string }[];
+  reverse?: boolean;
+  tone?: 'shell' | 'sage' | 'peach';
+}
+const { eyebrow, title, text, href, linkLabel, images, reverse = false, tone = 'shell' } = Astro.props;
+const card = { shell: 'bg-paper', sage: 'bg-sand', peach: 'bg-peach' }[tone];
+---
+
+<article class="feature relative" data-slideshow>
+  <div class:list={['grid items-center lg:grid-cols-12']}>
+    <!-- slides -->
+    <!-- both columns are pinned to row 1 so the card can overlap the photo -->
+    <div class:list={['relative lg:col-span-8 lg:row-start-1', reverse ? 'lg:col-start-5' : 'lg:col-start-1']}>
+      <div class="relative aspect-[4/3] overflow-hidden rounded-[2px] lg:aspect-[16/10]" aria-roledescription="carousel" aria-label={eyebrow}>
+        {images.map((im, i) => (
+          <div class:list={['slide absolute inset-0', i === 0 && 'is-active']} aria-hidden={i === 0 ? 'false' : 'true'} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${images.length}`}>
+            <Photo src={im.src} alt={im.alt} sizes="(min-width:1024px) 66vw, 100vw" class="h-full" />
+          </div>
+        ))}
+      </div>
+      <div class="mt-4 flex items-center gap-4">
+        <button type="button" class="slide-prev grid size-11 place-items-center rounded-none border border-ink/25 transition-colors hover:border-mangrove hover:bg-mangrove hover:text-shell" aria-label="Previous photo"><Icon name="arrow" class="size-4 rotate-180" /></button>
+        <p class="eyebrow tabular-nums text-clay" aria-live="polite"><span class="slide-index">1</span> / {images.length}</p>
+        <button type="button" class="slide-next grid size-11 place-items-center rounded-none border border-ink/25 transition-colors hover:border-mangrove hover:bg-mangrove hover:text-shell" aria-label="Next photo"><Icon name="arrow" class="size-4" /></button>
+      </div>
+    </div>
+
+    <!-- overlapping text card -->
+    <div class:list={['relative z-[2] mt-5 lg:col-span-5 lg:row-start-1 lg:mt-0 lg:mb-14 lg:px-0', reverse ? 'lg:col-start-1 lg:-mr-10' : 'lg:col-start-8 lg:-ml-10']}>
+      <div class:list={['p-8 shadow-[0_30px_80px_-40px_rgb(23_63_53/0.4)] md:p-12', card]} data-fade>
+        <h2 set:html={title} />
+        <p class="mt-6 leading-relaxed text-ink/80">{text}</p>
+        <a href={href} class="mt-8 inline-flex items-center gap-3 border-b border-mangrove/40 pb-1 text-[0.76rem] font-semibold tracking-[0.18em] uppercase transition-colors hover:border-mangrove">
+          {linkLabel} <Icon name="arrow" class="size-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .slide { opacity: 0; transition: opacity 1.4s var(--ease-out-expo); }
+  .slide :global(img) { transform: scale(1.08); transition: transform 7s linear; }
+  .slide.is-active { opacity: 1; }
+  .slide.is-active :global(img) { transform: scale(1); }
+  @media (prefers-reduced-motion: reduce) { .slide :global(img) { transform: none !important; } }
+</style>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('[data-slideshow]').forEach((root) => {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.slide'));
+    const counter = root.querySelector('.slide-index')!;
+    let i = 0;
+    let timer: number | undefined;
+    const show = (n: number) => {
+      slides[i].classList.remove('is-active');
+      slides[i].setAttribute('aria-hidden', 'true');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('is-active');
+      slides[i].setAttribute('aria-hidden', 'false');
+      counter.textContent = String(i + 1);
+    };
+    const start = () => { if (!reduced && slides.length > 1) { stop(); timer = window.setInterval(() => show(i + 1), 5500); } };
+    const stop = () => window.clearInterval(timer);
+    root.querySelector('.slide-prev')!.addEventListener('click', () => { show(i - 1); start(); });
+    root.querySelector('.slide-next')!.addEventListener('click', () => { show(i + 1); start(); });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop()), { threshold: 0.3 }).observe(root);
+  });
+</script>

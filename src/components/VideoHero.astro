@@ -1,0 +1,88 @@
+---
+/**
+ * Full-screen background video. The poster paints immediately (good LCP);
+ * the video loads after, fades in once playing, pauses off-screen, and is
+ * skipped for reduced-motion / data-saver visitors. Includes a pause control
+ * (WCAG 2.2.2). Content goes in the default slot.
+ */
+import type { ImageMetadata } from 'astro';
+import Photo from './Photo.astro';
+
+interface Props {
+  poster: ImageMetadata;
+  alt: string;
+  desktop: string;   // /videos/hero-1080.mp4
+  mobile: string;    // /videos/hero-720.mp4
+  lazy?: boolean;    // load only when near the viewport (for videos further down the page)
+  priority?: boolean;
+  class?: string;
+  overlay?: string;
+}
+const { poster, alt, desktop, mobile, lazy = false, priority = false, class: cls = '', overlay = '' } = Astro.props;
+---
+
+<div class:list={['video-bg absolute inset-0 overflow-hidden', cls]} data-video-bg data-lazy={lazy ? '' : undefined}>
+  <div class="absolute inset-0" data-hero-media>
+    <Photo src={poster} alt={alt} priority={priority} sizes="100vw" class="h-full" />
+    <video class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-[1.6s]"
+      muted loop playsinline preload="none" aria-hidden="true" disablepictureinpicture
+      data-desktop={desktop} data-mobile={mobile}></video>
+  </div>
+  {overlay && <div class="absolute inset-0" style={`background:${overlay}`}></div>}
+  <button type="button" class="video-toggle absolute bottom-28 left-5 z-[4] hidden size-11 place-items-center rounded-none border border-paper/40 text-paper backdrop-blur-sm transition-colors hover:bg-paper/15 md:bottom-32 md:left-8"
+    aria-label="Pause background video" aria-pressed="false">
+    <svg viewBox="0 0 24 24" class="pause-icon size-4" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
+    <svg viewBox="0 0 24 24" class="play-icon hidden size-4" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+  </button>
+</div>
+
+<style>
+  .video-bg.is-playing video { opacity: 1; }
+  .video-bg.has-video .video-toggle { display: grid; }
+</style>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+
+  document.querySelectorAll<HTMLElement>('[data-video-bg]').forEach((wrap) => {
+    const video = wrap.querySelector('video')!;
+    const toggle = wrap.querySelector<HTMLButtonElement>('.video-toggle')!;
+    if (reduced || saveData) return; // poster only
+
+    let userPaused = false;
+    let loaded = false;
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      // full HD only where it shows: big / sharp screens on a fast connection; 720p everywhere else
+      const net = (navigator as Navigator & { connection?: { effectiveType?: string } }).connection?.effectiveType;
+      const big = innerWidth * Math.min(devicePixelRatio || 1, 2) >= 1800 && innerWidth >= 1024;
+      video.src = big && (!net || net === '4g') ? video.dataset.desktop! : video.dataset.mobile!;
+      video.addEventListener('playing', () => wrap.classList.add('is-playing'), { once: true });
+      video.play().catch(() => {}); // autoplay may be blocked: poster stays
+      wrap.classList.add('has-video');
+    };
+
+    const setPaused = (paused: boolean) => {
+      userPaused = paused;
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.setAttribute('aria-label', paused ? 'Play background video' : 'Pause background video');
+      toggle.querySelector('.pause-icon')!.classList.toggle('hidden', paused);
+      toggle.querySelector('.play-icon')!.classList.toggle('hidden', !paused);
+      paused ? video.pause() : video.play().catch(() => {});
+    };
+    toggle.addEventListener('click', () => setPaused(!userPaused));
+
+    // load (eagerly or when near), and pause whenever off-screen to save battery
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { load(); if (!userPaused) video.play().catch(() => {}); }
+      else if (loaded) video.pause();
+    }, { rootMargin: wrap.hasAttribute('data-lazy') ? '300px 0px' : '0px' });
+    io.observe(wrap);
+    if (!wrap.hasAttribute('data-lazy')) {
+      // start after the page's critical content has painted
+      if (document.readyState === 'complete') load(); else addEventListener('load', load, { once: true });
+    }
+  });
+</script>

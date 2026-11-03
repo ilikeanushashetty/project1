@@ -32,10 +32,12 @@ All copy, phone numbers, address, stays, amenities, reviews and FAQs are in
 ## Before going live
 
 - Set the real domain in `astro.config.mjs` (`site:`) for SEO and the sitemap.
-- Fill in the Instagram / Facebook links in `src/data/site.ts`.
-- **Contact form** emails enquiries via FormSubmit to
-  `tierraresortandvillas@gmail.com`. After deploying, send one test enquiry and
-  click the activation link FormSubmit emails to that inbox.
+- Add the Facebook link in `src/data/site.ts` when the resort has a page (the icon stays hidden until then).
+- **Enquiry form** uses Netlify Forms (no extra service). After the first deploy:
+  Netlify → Site → Forms → enable form detection, then Forms → Notifications →
+  add an email notification to `tierraresortandvillas@gmail.com`. Send one test
+  enquiry from the live site to check it arrives. Off Netlify, the form offers
+  WhatsApp instead.
 
 ## Deploy
 

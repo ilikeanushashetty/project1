@@ -1,0 +1,17 @@
+---
+/** Eyebrow + headline + optional description. `title` may contain <em> for the accent colour. */
+interface Props {
+  eyebrow?: string; // section name, not shown
+  title: string;
+  text?: string;
+  align?: 'left' | 'center';
+  dark?: boolean;
+  class?: string;
+}
+const { title, text, align = 'left', dark = false, class: cls = '' } = Astro.props;
+---
+
+<div class:list={[align === 'center' ? 'mx-auto max-w-3xl text-center' : 'max-w-2xl', cls]}>
+  <h2 data-split set:html={title} />
+  {text && <p class:list={['mt-6 leading-relaxed', dark ? 'text-paper/75' : 'text-ink/70', align === 'center' && 'mx-auto max-w-2xl']} data-fade>{text}</p>}
+</div>

@@ -1,0 +1,157 @@
+---
+/**
+ * "What Awaits You": a calm shoreline seen from above (pale sea → wet sand)
+ * with white foam waves washing in and out, and a frosted-glass panel on top
+ * where the features light up one after another. Waves move with CSS
+ * transforms only; everything pauses off-screen and stays still for
+ * reduced-motion visitors.
+ */
+import Icon from './Icon.astro';
+
+interface Item { title: string; icon: string; text?: string }
+interface Props { items: Item[]; /** section name, not shown */ eyebrow?: string; title: string; text: string; cta: { label: string; href: string; book?: string } }
+const { items, title, text, cta } = Astro.props;
+
+const W = 3200, P = 1600, H = 640; // svg width, wave period (seamless drift), viewBox height
+let seed = 11;
+const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+const edge = (y0: number, amp: number) => {
+  const h = [1, 3, 5, 9].map((k, j) => ({ k, a: amp * [1, 0.5, 0.3, 0.16][j] * (0.7 + rnd() * 0.6), p: rnd() * Math.PI * 2 }));
+  const pts: [number, number][] = [];
+  for (let x = 0; x <= W; x += 20) pts.push([x, y0 + h.reduce((s, { k, a, p }) => s + a * Math.sin((2 * Math.PI * k * x) / P + p), 0)]);
+  return pts;
+};
+const d = (pts: [number, number][]) => pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y.toFixed(1)}`).join(' ');
+
+/* foam waves: leading edge (towards the shore) at y, sheet depth, wash timing */
+const waves = [
+  { y: 130, depth: 80, op: 0.6, drift: 140, wash: 9 },
+  { y: 240, depth: 95, op: 0.7, drift: 110, wash: 8 },
+  { y: 350, depth: 110, op: 0.8, drift: 160, wash: 10 },
+  { y: 460, depth: 130, op: 0.9, drift: 125, wash: 7.5 },
+].map((w) => {
+  const lead = edge(w.y, 26);
+  const back = edge(w.y - w.depth, 14);
+  return { ...w, line: d(lead), sheet: `${d(back)} L${[...lead].reverse().map(([x, y]) => `${x} ${y.toFixed(1)}`).join(' L')}Z` };
+});
+/* the last thin swash sliding up the wet sand */
+const swashLead = edge(560, 12);
+const swash = `M0 ${H + 20} L${swashLead.map(([x, y]) => `${x} ${y.toFixed(1)}`).join(' L')} L${W} ${H + 20}Z`;
+---
+
+<div class="beach relative overflow-hidden" data-awaits-glass>
+  <!-- shoreline -->
+  <div class="absolute inset-0" aria-hidden="true">
+    {waves.map((w, i) => (
+      <div class="foam" style={`--wash:${w.wash}s;--delay:${-i * 1.7}s`}>
+        <svg class:list={['foam-svg', i % 2 && 'rev']} style={`--drift:${w.drift}s`} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+          <defs>
+            <linearGradient id={`fg${i}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity="0" />
+              <stop offset="1" stop-color="#fff" stop-opacity={w.op} />
+            </linearGradient>
+          </defs>
+          <path d={w.sheet} fill={`url(#fg${i})`} />
+          <path d={w.line} fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity="0.95" />
+        </svg>
+      </div>
+    ))}
+    <div class="foam swash" style="--wash:6.5s;--delay:-2s">
+      <svg class="foam-svg" style="--drift:200s" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+        <path d={swash} fill="rgb(255 255 255 / 0.35)" />
+        <path d={d(swashLead)} fill="none" stroke="#fff" stroke-width="2" opacity="0.8" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- glass -->
+  <div class="relative z-[1] px-4 py-[clamp(3rem,8vw,6rem)] md:px-12 lg:px-20">
+    <div class="glass mx-auto grid max-w-[78rem] gap-8 p-5 md:p-10 lg:p-12 xl:grid-cols-12 xl:items-center xl:gap-12">
+      <div class="xl:col-span-4">
+        <!-- one line at every size: the type scales with the column -->
+        <h2 class="text-[clamp(1.15rem,5vw,2.4rem)] leading-[1.1] whitespace-nowrap text-mangrove xl:text-[clamp(1.15rem,1.7vw,1.6rem)]" data-split set:html={title} />
+        <p class="mt-4 max-w-sm leading-relaxed text-mangrove-muted" data-fade>{text}</p>
+        <a href={cta.href} data-book={cta.book} class="btn btn-fill mt-7" data-fade>{cta.label} <Icon name="arrow" class="size-4" /></a>
+      </div>
+      <ul class="points grid grid-cols-2 gap-px xl:col-span-8 md:grid-cols-4">
+        {items.map((a, i) => (
+          <li class="point" style={`--i:${i}`}>
+            <span class="tile"><Icon name={a.icon} draw drawDelay={i * 0.1} class="size-6" /></span>
+            <span class="mt-3 block font-display text-[1.08rem] leading-tight text-mangrove md:text-[1.15rem]">{a.title}</span>
+            {a.text && <span class="mt-1 block text-[0.85rem] leading-snug text-mangrove-muted">{a.text}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .beach {
+    /* this section keeps its original colours (the user asked for them back):
+       turquoise shallows into sand, deep teal tiles, gold-deep labels, emerald button */
+    --color-teal: #05716c;
+    --color-gold-deep: #7a5e28;
+    /* aerial shoreline: clear shallow sea fading into wet sand */
+    background: linear-gradient(180deg, #86c9c4 0%, #a6d9d3 26%, #cfeae5 55%, #ece6d6 78%, #f2e8d6 100%);
+  }
+  .beach .btn-fill { background: #0b3326; }
+  .beach .btn-fill::before { background: #c9a55a; }
+  .beach .btn-fill:hover { color: #0b3326; }
+
+  /* each wave washes in and out (vertical) while drifting sideways (horizontal) */
+  .foam { position: absolute; inset: 0; animation: wash var(--wash) ease-in-out var(--delay) infinite alternate; will-change: transform; }
+  .foam-svg { position: absolute; top: 0; left: 0; width: 3200px; height: 100%; animation: drift var(--drift) linear infinite; will-change: transform; }
+  .foam-svg.rev { animation-direction: reverse; }
+  @keyframes wash { from { transform: translateY(-3.5%); } to { transform: translateY(3%); } }
+  @keyframes drift { to { transform: translateX(-1600px); } }
+
+  /* frosted glass with a slow light sweep */
+  .glass {
+    position: relative; overflow: hidden;
+    background: rgb(255 255 255 / 0.2);
+    backdrop-filter: blur(7px) saturate(1.4); -webkit-backdrop-filter: blur(7px) saturate(1.4);
+    border: 1px solid rgb(255 255 255 / 0.7);
+    box-shadow: 0 30px 70px -35px rgb(23 63 53 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.8);
+  }
+  .glass::after {
+    content: ''; position: absolute; inset: -50% auto -50% -40%; width: 30%; pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
+    transform: rotate(18deg) translateX(-120%); animation: sheen 9s ease-in-out 1.5s infinite;
+  }
+  @keyframes sheen { 0%, 55% { transform: rotate(18deg) translateX(-120%); } 85%, 100% { transform: rotate(18deg) translateX(560%); } }
+
+  /* points: hairline glass cells; one lights up at a time (and on hover) */
+  .points { background: rgb(255 255 255 / 0.6); border: 1px solid rgb(255 255 255 / 0.6); }
+  .point { position: relative; padding: 1.25rem 1rem; background: rgb(246 251 250 / 0.42); backdrop-filter: blur(4px); transition: background 0.6s; }
+  @media (min-width: 768px) { .point { padding: 1.6rem 1.25rem; } }
+  .tile {
+    display: grid; width: 2.75rem; height: 2.75rem; place-items: center;
+    color: var(--color-teal); background: rgb(255 255 255 / 0.6); border: 1px solid rgb(255 255 255 / 0.9);
+    transition: background 0.6s, color 0.6s, transform 0.6s var(--ease-out-expo), box-shadow 0.6s;
+  }
+  .point:is(.is-lit, :hover) { background: rgb(255 255 255 / 0.78); }
+  .point:is(.is-lit, :hover) .tile { color: var(--color-shell); background: var(--color-teal); border-color: var(--color-teal); transform: translateY(-3px); box-shadow: 0 12px 24px -12px rgb(5 113 108 / 0.6); }
+
+  /* pause off-screen; still for reduced motion */
+  .beach.is-off :is(.foam, .foam-svg) { animation-play-state: paused; }
+  .beach.is-off .glass::after { animation-play-state: paused; }
+  :global(.reduced) .beach :is(.foam, .foam-svg) { animation: none; }
+  :global(.reduced) .beach .glass::after { display: none; }
+  @media (prefers-reduced-motion: reduce) { .foam, .foam-svg { animation: none; } .glass::after { display: none; } }
+</style>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('[data-awaits-glass]').forEach((box) => {
+    const points = Array.from(box.querySelectorAll<HTMLElement>('.point'));
+    let i = -1;
+    let timer: number | undefined;
+    const step = () => { points[i]?.classList.remove('is-lit'); i = (i + 1) % points.length; points[i].classList.add('is-lit'); };
+    new IntersectionObserver(([e]) => {
+      box.classList.toggle('is-off', !e.isIntersecting);
+      window.clearInterval(timer);
+      if (e.isIntersecting && !reduced) timer = window.setInterval(step, 1800);
+    }).observe(box);
+  });
+</script>

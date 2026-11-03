@@ -1,0 +1,109 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Photo from '@/components/Photo.astro';
+import PhotoFrame from '@/components/PhotoFrame.astro';
+import CheckList from '@/components/CheckList.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import Icon from '@/components/Icon.astro';
+import { site, img, stays, addOns, waLink } from '@/data/site';
+
+// short, factual answers taken from the FAQ and contact details
+const goodToKnow = [
+  { icon: 'cup', title: 'Breakfast included', text: 'Lunch and dinner can be ordered from our in-house chef whenever you like.' },
+  { icon: 'clock', title: 'Check-in 2:00 PM · Check-out 11:00 AM', text: 'Early check-in or late check-out can be arranged, subject to availability.' },
+  { icon: 'paw', title: 'Pet-friendly', text: 'Furry guests are welcome. Let us know in advance so we can prepare.' },
+  { icon: 'parking', title: 'Free private parking', text: 'Secure parking on the premises for all guests.' },
+  { icon: 'wifi', title: 'Complimentary WiFi', text: 'Across the property, including every cottage and room.' },
+  { icon: 'pin', title: 'Getting here', text: 'Mangalore airport about 35 km · Udupi railway station about 30 km · Blue Flag Beach 3 km. We can arrange taxis and airport transfers.' },
+];
+---
+
+<Base title="Accommodation" description="A-frame cottages, semi A-frame cottages and luxury rooms at Tierra Campsite, on the coastal delta between Udupi and Mangalore.">
+  <PageHero eyebrow="Where You Stay" title="Your Home by the <em>Water</em>" image={img.poolFront} alt="A-frame cottages beside the pool at Tierra"
+    intro="Choose your perfect retreat, from iconic A-frames to luxurious rooms" />
+
+  <section class="py-[clamp(4rem,8vw,7rem)]">
+    <div class="container-x">
+      <SectionHeading eyebrow="Our Stays" title="Find Your <em>Perfect Retreat</em>" text="Each accommodation is designed to offer privacy, comfort, and a connection with nature." align="center" class="mb-[clamp(4rem,8vw,6rem)]" />
+
+      <div class="space-y-[clamp(5rem,10vw,8rem)]">
+        {stays.map((s, i) => (
+          <article id={s.slug} class="grid scroll-mt-28 items-center gap-10 lg:grid-cols-12 lg:gap-16">
+            <div class:list={['lg:col-span-6', i % 2 === 1 && 'lg:order-2 lg:col-start-7']}>
+              <Photo src={s.image} alt={s.name} reveal class="aspect-[5/4]" sizes="(min-width:1024px) 50vw, 100vw" />
+              {s.extra.length > 0 && (
+                <div class="mt-6 grid grid-cols-2 gap-5 px-2">
+                  {s.extra.map((x, j) => (
+                    <PhotoFrame src={x.image} alt={x.alt} sizes="(min-width:1024px) 22vw, 45vw" />
+                  ))}
+                </div>
+              )}
+            </div>
+            <div class:list={['lg:col-span-5', i % 2 === 1 ? 'lg:order-1 lg:col-start-1' : 'lg:col-start-8']}>
+              <h2 data-split>{s.name}</h2>
+              {s.from && <p class="mt-3 text-ink/70" data-fade>From <strong class="font-display text-2xl font-normal text-teal">{s.from}</strong> / night</p>}
+              <!-- quick facts: what people decide on, at a glance -->
+              <ul class="mt-6 flex flex-wrap gap-2" data-fade>
+                {s.guests && <li class="fact"><Icon name="users" class="size-4" />{s.guests}</li>}
+                {s.facts.map((f) => <li class="fact"><Icon name={f.icon} class="size-4" />{f.label}</li>)}
+              </ul>
+              <p class="mt-6 leading-relaxed text-ink/75" data-fade>{s.blurb}</p>
+              <CheckList items={s.features} class="mt-8" />
+              <div class="mt-10 flex flex-wrap gap-3" data-fade>
+                <a href={`/contact?stay=${s.slug}#enquire`} data-book={s.slug} class="btn btn-fill">Book This Stay <Icon name="arrow" class="size-4" /></a>
+                <a href={site.phoneHref} class="btn btn-line on-light">Call to Book</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Good to know: the practical answers people look for before booking -->
+  <section class="pb-[clamp(4rem,8vw,6rem)]">
+    <div class="container-x">
+      <div class="border-y border-ink/10 py-[clamp(2.5rem,5vw,3.5rem)]">
+        <div class="grid gap-8 lg:grid-cols-12">
+          <div class="lg:col-span-3">
+            <h2>Good <em>to Know</em></h2>
+          </div>
+          <ul class="grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-3">
+            {goodToKnow.map((g) => (
+              <li class="flex gap-3">
+                <Icon name={g.icon} class="mt-0.5 size-5 shrink-0 text-teal" />
+                <div><p class="font-semibold text-ink">{g.title}</p><p class="mt-1 text-[0.95rem] leading-relaxed text-ink/70">{g.text}</p></div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add-ons -->
+  <section class="bg-sand/60 py-[clamp(5rem,10vw,8rem)]">
+    <div class="container-x">
+      <SectionHeading eyebrow="Enhance Your Stay" title="Add-Ons &amp; <em>Special Touches</em>" text="Make your stay extra special with our curated add-on experiences." align="center" class="mb-14" />
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+        {addOns.map((a) => (
+          <div class="rounded-[2px] bg-paper p-8 text-center" data-fade>
+            <span class="mx-auto grid size-14 place-items-center rounded-full bg-sand text-gold-deep"><Icon name={a.icon} class="size-6" /></span>
+            <h3 class="mt-6">{a.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/70">{a.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand eyebrow="Ready to Book?" title="Reserve Your <em>Stay Today</em>" text="Contact us to check availability and secure your perfect getaway."
+    actions={[{ label: 'WhatsApp Us', href: waLink(), external: true }, { label: `Call ${site.phone}`, href: site.phoneHref }]} />
+</Base>
+
+<style>
+  .fact { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 0.8rem; background: var(--color-cream); color: var(--color-mangrove); font-size: 0.85rem; font-weight: 600; }
+  .fact :global(svg) { color: var(--color-teal); }
+</style>

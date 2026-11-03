@@ -1,0 +1,158 @@
+---
+/**
+ * Booking enquiry: dates, guests, stay type, name, phone. Three ways to send:
+ * Netlify Forms (email to the resort), WhatsApp (pre-filled message) or a call.
+ * Used on the Contact page and inside the slide-in booking panel; any number per page.
+ * Off Netlify (e.g. local preview) the email send fails and the guest is offered WhatsApp.
+ */
+import Icon from './Icon.astro';
+import { site, stays } from '@/data/site';
+
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+// options; ?stay=slug or data-book="slug" preselects one
+const stayOptions = [...stays.map((s) => ({ value: s.name, slug: s.slug })), { value: 'Destination Wedding', slug: 'wedding' }, { value: 'Event / Celebration', slug: 'event' }, { value: 'Corporate Event', slug: 'corporate' }, { value: 'Not sure yet', slug: '' }];
+const half = compact ? '' : 'sm:col-span-1';
+const full = compact ? '' : 'sm:col-span-2';
+---
+
+<div class="enquiry" data-enquiry>
+  <!-- Netlify Forms picks this form up at deploy; entries appear in the Netlify dashboard (Forms) -->
+  <form name="enquiry" method="POST" data-netlify="true" netlify-honeypot="_honey" class:list={['grid gap-x-6', compact ? 'gap-y-5' : 'gap-y-7 sm:grid-cols-2']} novalidate>
+    <input type="hidden" name="form-name" value="enquiry" />
+    <label class:list={['field', half]}><span>Check-in</span><input name="checkin" type="date" required /></label>
+    <label class:list={['field', half]}><span>Check-out</span><input name="checkout" type="date" required /></label>
+    <label class:list={['field', half]}><span>Guests</span>
+      <select name="guests" required>
+        {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10+', '20+', '50+', '100+'].map((g) => <option value={g} selected={g === '2'}>{g} {g === '1' ? 'guest' : 'guests'}</option>)}
+      </select>
+    </label>
+    <label class:list={['field', half]}><span>Looking for</span>
+      <select name="stay" data-stay>
+        {stayOptions.map((o) => <option value={o.value} data-slug={o.slug}>{o.value}</option>)}
+      </select>
+    </label>
+    <label class:list={['field', half]}><span>Full Name</span><input name="name" required autocomplete="name" placeholder="Your name" /></label>
+    <label class:list={['field', half]}><span>Phone / WhatsApp</span><input name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" /></label>
+    <label class:list={['field', full]}><span>Email (optional)</span><input name="email" type="email" autocomplete="email" placeholder="your@email.com" /></label>
+    <label class:list={['field', full]}><span>Anything we should know? (optional)</span><textarea name="message" rows={compact ? 2 : 3} placeholder="Celebrations, dietary needs, travelling with pets…"></textarea></label>
+    <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+    <div class:list={['actions flex flex-wrap items-center gap-3', full, compact && 'is-sticky']}>
+      <button type="button" class="btn btn-wa" data-wa><Icon name="whatsapp" class="size-4" /> Book on WhatsApp</button>
+      <button type="submit" class="btn btn-line on-light"><span data-label>Send Enquiry</span> <Icon name="arrow" class="size-4" /></button>
+      <a href={site.phoneHref} class="btn btn-line on-light"><Icon name="phone" class="size-4" /> Call</a>
+    </div>
+    <p class:list={['text-sm', full]} data-status role="status" aria-live="polite"></p>
+  </form>
+
+  <!-- shown after a successful send -->
+  <div class="hidden border border-teal/30 bg-cream p-7" tabindex="-1" data-done>
+    <span class="grid size-12 place-items-center bg-teal text-shell"><Icon name="check" class="size-6" /></span>
+    <h3 class="mt-5">Thank you, we've got it.</h3>
+    <p class="mt-2 leading-relaxed text-ink/75">We'll reply within 24 hours with availability for your dates. For anything urgent, call <a href={site.phoneHref} class="font-semibold text-teal underline underline-offset-4">{site.phone}</a>.</p>
+  </div>
+</div>
+
+<style>
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field > span { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-gold-deep); }
+  .field input, .field textarea, .field select {
+    width: 100%; min-height: 2.75rem; background: transparent; border: 0; border-bottom: 1px solid color-mix(in oklab, var(--color-mangrove) 30%, transparent);
+    padding: 0.5rem 0; font-size: 1.02rem; color: var(--color-mangrove); border-radius: 0; transition: border-color 0.4s;
+  }
+  .field select { appearance: none; cursor: pointer; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23173f35' stroke-width='1.6'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right center / 1.1rem; padding-right: 1.6rem; }
+  .field input::placeholder, .field textarea::placeholder { color: color-mix(in oklab, var(--color-mangrove) 45%, transparent); }
+  .field textarea { resize: vertical; }
+  .field :is(input, textarea, select):focus { outline: none; border-color: var(--color-teal); border-bottom-width: 2px; }
+  .field:global(.invalid) :is(input, textarea, select) { border-color: #b3261e; border-bottom-width: 2px; }
+  .field:global(.invalid) > span { color: #b3261e; }
+  /* in the panel the send buttons stay in view at the bottom */
+  .actions.is-sticky { position: sticky; bottom: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); z-index: 2; margin-inline: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); padding: 0.9rem clamp(1.5rem, 4vw, 2.5rem) calc(0.9rem + env(safe-area-inset-bottom)); background: var(--color-shell); box-shadow: 0 -12px 24px -18px rgb(23 63 53 / 0.3); }
+  .actions.is-sticky :global(.btn) { flex: 1 1 auto; justify-content: center; }
+  .btn-wa { background: var(--color-sea); color: #fff; }
+  .btn-wa:hover { background: var(--color-sea-deep); }
+</style>
+
+<script>
+  const WHATSAPP = '919986988887';
+  const iso = (d: Date) => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  const fmt = (v: string) => (v ? new Date(v).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '');
+  const waText = (d: Record<string, string>) =>
+    `Hi Tierra! I'd like to enquire.\n• ${d.stay}\n• ${fmt(d.checkin)} → ${fmt(d.checkout)}\n• ${d.guests} guest(s)\nName: ${d.name}\nPhone: ${d.phone}${d.message ? `\n${d.message}` : ''}`;
+
+  document.querySelectorAll<HTMLElement>('[data-enquiry]').forEach((root) => {
+    const form = root.querySelector('form')!;
+    const done = root.querySelector<HTMLElement>('[data-done]')!;
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
+    const label = form.querySelector<HTMLElement>('[data-label]')!;
+    const submit = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const checkin = form.elements.namedItem('checkin') as HTMLInputElement;
+    const checkout = form.elements.namedItem('checkout') as HTMLInputElement;
+    const staySel = form.querySelector<HTMLSelectElement>('[data-stay]')!;
+
+    // dates: nothing in the past, check-out after check-in
+    const today = new Date();
+    checkin.min = iso(today);
+    checkout.min = iso(new Date(today.getTime() + 864e5));
+    const syncOut = () => {
+      if (!checkin.value) return;
+      const next = new Date(checkin.value);
+      next.setDate(next.getDate() + 1);
+      checkout.min = iso(next);
+      if (!checkout.value || checkout.value <= checkin.value) checkout.value = iso(next);
+    };
+    checkin.addEventListener('change', syncOut);
+
+    const pick = (slug: string | null) => { if (slug != null) [...staySel.options].forEach((o) => { if (o.dataset.slug === slug) o.selected = true; }); };
+    pick(new URLSearchParams(location.search).get('stay'));
+    // the booking panel (and hero bar) prefill through this event
+    root.addEventListener('enquiry:prefill', ((e: CustomEvent<{ stay?: string; checkin?: string; checkout?: string; guests?: string }>) => {
+      const d = e.detail;
+      if (d.stay !== undefined) pick(d.stay);
+      if (d.checkin) { checkin.value = d.checkin; syncOut(); }
+      if (d.checkout) checkout.value = d.checkout;
+      if (d.guests) (form.elements.namedItem('guests') as HTMLSelectElement).value = d.guests;
+    }) as EventListener);
+
+    const validate = () => {
+      let ok = true;
+      form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input:not([type=hidden]):not([name=_honey]), select, textarea').forEach((el) => {
+        const bad = !el.checkValidity();
+        el.closest('.field')?.classList.toggle('invalid', bad);
+        if (bad && ok) { el.focus(); ok = false; }
+      });
+      status.textContent = ok ? '' : 'Please fill in the highlighted fields.';
+      status.className = ok ? 'text-sm' : 'text-sm font-semibold text-[#b3261e]';
+      return ok;
+    };
+    const values = () => Object.fromEntries(new FormData(form)) as Record<string, string>;
+
+    form.querySelector('[data-wa]')!.addEventListener('click', () => {
+      if (!validate()) return;
+      window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waText(values()))}`, '_blank', 'noopener');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+      const data = values();
+      if (data._honey) return;
+      submit.disabled = true;
+      label.textContent = 'Sending…';
+      try {
+        const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() });
+        if (!res.ok) throw new Error(String(res.status));
+        form.classList.add('hidden');
+        done.classList.remove('hidden');
+        done.focus();
+      } catch {
+        status.innerHTML = `Couldn't send right now. <a class="underline font-semibold" target="_blank" rel="noopener" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waText(data))}">Send it on WhatsApp instead</a> or call us.`;
+        status.className = 'text-sm text-mangrove';
+      } finally {
+        submit.disabled = false;
+        label.textContent = 'Send Enquiry';
+      }
+    });
+  });
+</script>

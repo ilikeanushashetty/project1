@@ -30,6 +30,9 @@ let lenis: Lenis | null = null;
 if (!reduced) {
   lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
   lenis.on('scroll', ScrollTrigger.update);
+  // overlays (e.g. the gallery viewer) pause / resume smooth scrolling
+  addEventListener('lenis:stop', () => lenis?.stop());
+  addEventListener('lenis:start', () => lenis?.start());
   gsap.ticker.add((time) => lenis!.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 
@@ -41,7 +44,7 @@ if (!reduced) {
       const target = document.querySelector(url.hash);
       if (!target) return;
       e.preventDefault();
-      lenis!.scrollTo(target as HTMLElement, { offset: -90 });
+      lenis!.scrollTo(target as HTMLElement, { offset: -((document.getElementById('site-header')?.offsetHeight ?? 72) + 16) });
     });
   });
 }
@@ -49,15 +52,19 @@ if (!reduced) {
 /* ---------------- Header ---------------- */
 const header = document.getElementById('site-header');
 if (header) {
-  let lastY = 0;
-  const onScroll = () => {
-    const y = window.scrollY;
-    header.classList.toggle('is-solid', y > 40);
-    header.classList.toggle('is-hidden', y > 300 && y > lastY && !header.classList.contains('menu-open'));
-    lastY = y;
-  };
+  // the header always stays visible; past the top it gains a soft shadow
+  const onScroll = () => header.classList.toggle('is-solid', window.scrollY > 40);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // desktop dropdown (hover handled in CSS; click for touch + keyboard)
+  $$('.nav-drop', header).forEach((drop) => {
+    const toggle = drop.querySelector<HTMLButtonElement>('.nav-drop-btn');
+    const set = (open: boolean) => { drop.classList.toggle('open', open); toggle?.setAttribute('aria-expanded', String(open)); };
+    toggle?.addEventListener('click', () => set(!drop.classList.contains('open')));
+    document.addEventListener('click', (e) => { if (!drop.contains(e.target as Node)) set(false); });
+    drop.addEventListener('keydown', (e) => { if (e.key === 'Escape') { set(false); toggle?.focus(); } });
+  });
 
   // mobile menu
   const btn = document.getElementById('menu-toggle');
@@ -66,7 +73,7 @@ if (header) {
     const links = $$('.mm-link', menu);
     const tl = gsap.timeline({ paused: true })
       .set(menu, { visibility: 'visible' })
-      .fromTo(menu, { clipPath: 'circle(0% at 92% 4%)', opacity: 1 }, { clipPath: 'circle(150% at 92% 4%)', duration: 0.9, ease: 'power3.inOut' })
+      .fromTo(menu, { clipPath: 'inset(0 0 100% 0)', opacity: 1 }, { clipPath: 'inset(0 0 0% 0)', duration: 0.9, ease: 'power3.inOut' })
       .from(links, { yPercent: 60, opacity: 0, stagger: 0.05, duration: 0.6, ease: 'power3.out' }, '-=0.45');
     const toggle = (open: boolean) => {
       header.classList.toggle('menu-open', open);
@@ -154,7 +161,7 @@ if (!reduced) {
 
   /* line art draw-in */
   $$<SVGSVGElement>('svg[data-draw]').forEach((svg) => {
-    const paths = $$<SVGPathElement>('path', svg);
+    const paths = $$<SVGGeometryElement>('path, circle, rect', svg);
     paths.forEach((p) => {
       const len = p.getTotalLength();
       p.style.strokeDasharray = `${len}`;
@@ -162,6 +169,7 @@ if (!reduced) {
     });
     gsap.to(paths, {
       strokeDashoffset: 0, duration: 2.4, ease: 'power2.inOut', stagger: 0.08,
+      delay: parseFloat(svg.dataset.drawDelay || '0'),
       scrollTrigger: { trigger: svg, start: 'top 85%', once: true },
     });
   });
@@ -204,6 +212,15 @@ if (!reduced) {
     });
   });
 
+  /* plaster portal: photo drifts and settles inside the opening, plaster eases back */
+  $$('[data-portal]').forEach((portal) => {
+    const photo = portal.querySelector('[data-portal-photo]');
+    const plaster = portal.querySelector('[data-portal-plaster]');
+    const st = { trigger: portal, start: 'top bottom', end: 'bottom top', scrub: true };
+    if (photo) gsap.fromTo(photo, { scale: 1.22, yPercent: -7 }, { scale: 1.02, yPercent: 7, ease: 'none', scrollTrigger: st });
+    if (plaster) gsap.fromTo(plaster, { scale: 1.07 }, { scale: 1, ease: 'none', scrollTrigger: { ...st, end: 'center center' } });
+  });
+
   /* horizontal scroller (desktop) */
   const mm = gsap.matchMedia();
   mm.add('(min-width: 1024px)', () => {
@@ -244,6 +261,21 @@ $$('[data-day]').forEach((section) => {
       onToggle: (self) => self.isActive && setActive(i),
     });
   });
+});
+
+/* sticky sub-menus: mark the section currently in view, and keep its link visible */
+$$('nav[data-spy]').forEach((nav) => {
+  const links = $$<HTMLAnchorElement>('a[href^="#"]', nav);
+  const targets = links.map((a) => document.querySelector<HTMLElement>(a.getAttribute('href')!)).filter(Boolean) as HTMLElement[];
+  const mark = (id: string) => links.forEach((a) => {
+    const on = a.getAttribute('href') === `#${id}`;
+    a.classList.toggle('is-current', on);
+    if (on) a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) mark(e.target.id); });
+  }, { rootMargin: '-40% 0px -55% 0px' }); // a thin band across the middle of the screen
+  targets.forEach((t) => io.observe(t));
 });
 
 /* fonts/images can shift layout: recalc once everything has loaded */

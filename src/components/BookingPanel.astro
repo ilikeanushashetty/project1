@@ -1,0 +1,59 @@
+---
+/**
+ * Slide-in booking panel, available on every page. Anything with [data-book] opens it
+ * (data-book="slug" preselects a stay or event; data-book="" leaves the choice open).
+ * Links keep href="/contact#enquire" so booking still works without JavaScript.
+ */
+import EnquiryForm from './EnquiryForm.astro';
+import Icon from './Icon.astro';
+import { site } from '@/data/site';
+---
+
+<dialog id="booking-panel" class="book-panel" aria-labelledby="book-title" data-lenis-prevent>
+  <div class="book-sheet">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h2 id="book-title">Plan <em>your escape</em></h2>
+        <p class="mt-2 text-[0.95rem] leading-relaxed text-ink/70">Send your dates on WhatsApp for the quickest reply, or by email. Prefer to talk? Call <a href={site.phoneHref} class="font-semibold text-teal">{site.phone}</a>.</p>
+      </div>
+      <button type="button" class="grid size-11 shrink-0 place-items-center border border-ink/20 transition-colors hover:bg-mangrove hover:text-shell" data-book-close aria-label="Close booking panel"><Icon name="close" class="size-5" /></button>
+    </div>
+    <div class="mt-7"><EnquiryForm compact /></div>
+  </div>
+</dialog>
+
+<style>
+  .book-panel { margin: 0 0 0 auto; width: min(100%, 30rem); max-width: none; height: 100%; max-height: none; padding: 0; border: 0; background: var(--color-shell); color: var(--color-ink); box-shadow: -30px 0 80px -30px rgb(23 63 53 / 0.45); }
+  .book-panel::backdrop { background: rgb(23 63 53 / 0.5); backdrop-filter: blur(4px); }
+  .book-sheet { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.5rem, 4vw, 2.5rem); }
+  .book-panel[open] { animation: book-in 0.55s var(--ease-out-expo); }
+  @keyframes book-in { from { transform: translateX(100%); } }
+  /* phones: a sheet that rises from the bottom */
+  @media (max-width: 639px) {
+    .book-panel { margin: auto 0 0; width: 100%; height: auto; max-height: 92svh; overflow: hidden; box-shadow: 0 -30px 80px -30px rgb(23 63 53 / 0.45); }
+    .book-sheet { max-height: 92svh; }
+    .book-panel[open] { animation-name: book-up; }
+    @keyframes book-up { from { transform: translateY(100%); } }
+  }
+  @media (prefers-reduced-motion: reduce) { .book-panel[open] { animation: none; } }
+</style>
+
+<script>
+  const dlg = document.getElementById('booking-panel') as HTMLDialogElement;
+  const form = dlg.querySelector<HTMLElement>('[data-enquiry]')!;
+  const open = (detail: Record<string, string | undefined>) => {
+    form.dispatchEvent(new CustomEvent('enquiry:prefill', { detail }));
+    dlg.showModal();
+    dispatchEvent(new Event('lenis:stop'));
+  };
+  // event delegation: works for buttons added anywhere on the page
+  document.addEventListener('click', (e) => {
+    const t = (e.target as HTMLElement).closest<HTMLElement>('[data-book]');
+    if (!t) return;
+    e.preventDefault();
+    open({ stay: t.dataset.book || undefined });
+  });
+  dlg.querySelector('[data-book-close]')!.addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', () => dispatchEvent(new Event('lenis:start')));
+</script>

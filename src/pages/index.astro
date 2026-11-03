@@ -1,228 +1,167 @@
 ---
 import Base from '@/layouts/Base.astro';
-import Photo from '@/components/Photo.astro';
-import PaperEdge from '@/components/PaperEdge.astro';
-import Botanical from '@/components/Botanical.astro';
-import DeltaMap from '@/components/DeltaMap.astro';
+import AwaitsBento from '@/components/AwaitsBento.astro';
+import VideoHero from '@/components/VideoHero.astro';
+import ReviewMarquee from '@/components/ReviewMarquee.astro';
+import CategoryBand from '@/components/CategoryBand.astro';
 import Icon from '@/components/Icon.astro';
-import { site, img, stays, amenities, day, reviews } from '@/data/site';
+import { site, img, essentials, reviews, reviewSummary, faqs, waLink, homeStay, homeDining, homeActivities, homeEvents } from '@/data/site';
+
+// Good to know: the answers people look for before booking
+const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport/i.test(f.q));
 ---
 
 <Base>
   <!-- ============ HERO ============ -->
-  <section data-hero class="relative flex h-[100svh] min-h-[640px] items-end overflow-hidden bg-night text-paper">
-    <div class="absolute inset-0" data-hero-media>
-      <Photo src={img.hero} alt="Infinity pool, palms and the sea at Tierra" priority sizes="100vw" class="h-full" />
-    </div>
-    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(19_38_27/0.55)_0%,rgb(19_38_27/0.05)_35%,rgb(19_38_27/0.25)_60%,rgb(19_38_27/0.8)_100%)]"></div>
+  <section data-hero class="relative h-[calc(100svh-var(--hh))] min-h-[560px] overflow-hidden bg-night text-paper">
+    <!-- video shown almost untouched: shade only at the top (nav) and bottom (badge) -->
+    <VideoHero poster={img.heroPoster} alt="Aerial view of Tierra's A-frame cottages, pool and palms beside the backwaters"
+      desktop="/videos/hero-1080.mp4" mobile="/videos/hero-720.mp4" priority
+      overlay="linear-gradient(180deg,rgb(12 38 32/0.35) 0%,rgb(12 38 32/0.12) 30%,rgb(12 38 32/0.28) 55%,rgb(12 38 32/0.1) 80%,rgb(12 38 32/0.4) 100%)" />
 
-    <div class="container-x relative z-[3] pb-[clamp(7rem,14vw,11rem)]">
-      <p class="eyebrow mb-6 text-lime" data-fade>Hejamadi · Udupi–Mangalore coast</p>
-      <h1 class="max-w-5xl text-[clamp(3rem,8.4vw,8.5rem)] leading-[0.92]" data-split>
-        Rooted in <em class="text-lime/95">earth,</em> where the river meets the <em class="text-mist">sea</em>
-      </h1>
-      <div class="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-        <p class="max-w-md text-base leading-relaxed text-paper/85 md:text-lg" data-fade>
-          A riverside eco-retreat of A-frame cottages, tents and gardens at the edge of the Arabian Sea.
-        </p>
-        <div class="flex flex-wrap gap-3" data-fade>
-          <a href="/contact#book" class="btn btn-fill">Book your stay <Icon name="arrow" class="size-4" /></a>
-          <a href="/stays" class="btn btn-line">Explore stays</a>
-        </div>
+    <!-- small framed badge + tracked tagline, just below the middle -->
+    <div class="absolute inset-x-0 top-[60%] z-[3] flex -translate-y-1/2 flex-col items-center px-5 text-center">
+      <div class="wordmark relative">
+        <!-- border draws itself in -->
+        <svg class="wordmark-frame pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="100%" height="100%" pathLength="1" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" style="width:calc(100% - 1px);height:calc(100% - 1px)" />
+        </svg>
+        <!-- small bird perched on the frame, after the bird on the line in the Tierra logo -->
+        <svg class="wordmark-bird absolute top-0 right-[14%] w-[clamp(18px,1.7vw,26px)] -translate-y-[86%]" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M9 30 L14 25.5 C 12.5 19 18 13.5 25 14.5 C 27.5 10.5 33 10.5 35 14 L 39 14.8 L 35.2 16.6 C 35 23.5 29 28.5 21.5 28.2 Z" fill="var(--color-leaf)" />
+          <path d="M17 22.5 C 21 19.2 26.5 19.2 29.5 21.4 C 26.5 25.4 20.6 26.2 17 22.5 Z" fill="#5e9a2e" />
+          <circle cx="31.6" cy="14.4" r="1.15" fill="var(--color-mangrove)" />
+          <path d="M22 28 L21 39.5 M25 27.6 L25.5 39.5" stroke="var(--color-shell)" stroke-width="1.1" stroke-linecap="round" />
+        </svg>
+        <h1 class="px-[clamp(0.9rem,1.3vw,1.3rem)] py-[clamp(0.7rem,1.1vw,1.05rem)] font-normal tracking-normal normal-case">
+          <span class="wm-line block text-[clamp(1.75rem,2.9vw,2.75rem)] leading-[0.95] tracking-[0.14em] uppercase [margin-right:-0.14em]">Tierra</span>
+          <span class="wm-line block text-[clamp(1.16rem,1.92vw,1.82rem)] leading-[1.05] tracking-[0.16em] uppercase [margin-right:-0.16em]">Campsite</span>
+        </h1>
       </div>
+      <p class="tagline mt-[clamp(1.1rem,2.4vh,1.8rem)] font-sans text-[clamp(0.7rem,0.95vw,0.88rem)] leading-[1.9] font-medium text-paper uppercase">
+        Where River Meets Sea, <br class="sm:hidden" />Luxury Finds Its Home
+      </p>
     </div>
 
-    <div class="absolute bottom-[clamp(4rem,8vw,7rem)] left-1/2 z-[3] hidden -translate-x-1/2 flex-col items-center gap-3 lg:flex" aria-hidden="true">
-      <span class="eyebrow text-[0.6rem] text-paper/70">Scroll</span>
-      <span class="relative h-12 w-px overflow-hidden bg-paper/25"><span class="absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_2.2s_ease-in-out_infinite] bg-paper"></span></span>
-    </div>
-    <PaperEdge />
   </section>
 
-  <!-- ============ MEANING / INTRO ============ -->
-  <section class="relative overflow-hidden py-[clamp(5rem,12vw,10rem)]">
-    <Botanical class="pointer-events-none absolute top-10 -left-16 w-[220px] text-forest/15 md:w-[320px]" />
-    <Botanical kind="fern" class="pointer-events-none absolute -right-6 bottom-0 w-[160px] text-leaf/20 md:w-[240px]" />
-
-    <div class="container-x relative">
-      <div class="mx-auto max-w-4xl text-center">
-        <p class="mb-8 font-display text-xl italic text-clay" data-fade>
-          tierra <span class="not-italic text-ink/50">/ˈtjɛ.ra/</span> · <span class="text-ink/60">noun</span> · earth, land, ground
-        </p>
-        <p class="font-display text-[clamp(1.8rem,3.6vw,3.2rem)] leading-[1.2] text-ink" data-words>
-          Tierra means earth. Ours is a small patch of it, at the delta where a slow river spills into the Arabian Sea. Old trees, open lawns, timber cottages and the sound of water, kept simple on purpose.
-        </p>
-        <a href="/story" class="btn btn-line on-light mt-12" data-fade>Our story <Icon name="arrow" class="size-4" /></a>
-      </div>
-
-      <dl class="mx-auto mt-[clamp(4rem,8vw,7rem)] grid max-w-5xl grid-cols-2 gap-y-10 border-t border-ink/10 pt-10 md:grid-cols-4" data-stagger>
-        <div class="text-center" data-fade><dt class="eyebrow order-2 mt-2 text-ink/60">to Blue Flag beach</dt><dd class="font-display text-6xl text-forest"><span data-count="3">3</span><span class="text-3xl"> km</span></dd></div>
-        <div class="text-center" data-fade><dt class="eyebrow mt-2 text-ink/60">to the surf club</dt><dd class="font-display text-6xl text-forest"><span data-count="200">200</span><span class="text-3xl"> m</span></dd></div>
-        <div class="text-center" data-fade><dt class="eyebrow mt-2 text-ink/60">ways to stay</dt><dd class="font-display text-6xl text-forest"><span data-count="4">4</span></dd></div>
-        <div class="text-center" data-fade><dt class="eyebrow mt-2 text-ink/60">from Mangaluru airport</dt><dd class="font-display text-6xl text-forest"><span data-count="45">45</span><span class="text-3xl"> min</span></dd></div>
-      </dl>
-    </div>
+  <!-- ============ WHAT AWAITS YOU (straight after the video) ============ -->
+  <section class="relative">
+    <AwaitsBento items={essentials} eyebrow="What Awaits You" title="Everything for a Perfect Escape"
+      text="A nature and beachside campsite resort in Hejamady, between Udupi and Mangalore, where the backwaters meet the Arabian Sea."
+      cta={{ label: 'Book Your Stay', href: '/contact#enquire', book: '' }} link={{ label: 'Discover our story', href: '/about' }} />
   </section>
 
-  <!-- ============ STAYS (horizontal on desktop) ============ -->
-  <section data-hscroll class="relative overflow-hidden bg-sand/60 py-[clamp(5rem,10vw,8rem)] lg:flex lg:h-screen lg:flex-col lg:justify-center lg:py-0">
-    <div class="container-x mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end lg:mb-14">
-      <div>
-        <p class="eyebrow mb-4 text-clay" data-fade>Stays</p>
-        <h2 class="text-[clamp(2.6rem,5.5vw,5rem)]" data-split>Four ways to <em>sleep</em> by the water</h2>
-      </div>
-      <a href="/stays" class="btn btn-line on-light self-start md:self-auto" data-fade>All stays <Icon name="arrow" class="size-4" /></a>
-    </div>
+  <!-- ============ STAY / DINING / EXPERIENCES / EVENTS (text + labelled photo tiles) ============ -->
+  <CategoryBand eyebrow="Stay" title="Campsite <em>Villas</em>"
+    text="Air-conditioned A-frame cottages, semi A-frames and luxury rooms, each with a private sit-out and views of the pool and backwaters."
+    tiles={homeStay} cta={{ label: 'View Stays', href: '/accommodation' }} />
+  <CategoryBand eyebrow="Dining & Amenities" title="Café &amp; <em>Coastal Kitchen</em>" tone="champagne" reverse
+    text="Breakfast is included. Lunch and dinner are made to order by our in-house chef: fresh seafood, coastal favourites and cuisines from everywhere, served by the pool or on the lawn."
+    tiles={homeDining} cta={{ label: 'Explore Amenities', href: '/experiences#dining' }} />
+  <CategoryBand eyebrow="Experiences" title="Sea, River <em>&amp; Sky</em>"
+    text="Morning yoga by the water, surfing at the club 200 m away, kayaking the backwaters and campfires under the stars, with the beach just a short walk away."
+    tiles={homeActivities} cta={{ label: 'All Experiences', href: '/experiences' }} />
+  <CategoryBand eyebrow="Weddings & Events" title="Celebrate <em>by the Sea</em>" tone="champagne" reverse
+    text="Destination weddings, birthdays, anniversaries, corporate retreats and photoshoots, set between the backwaters and the Arabian Sea. We take care of every detail."
+    tiles={homeEvents} cta={{ label: 'Plan Your Event', href: '/contact#enquire', book: 'event' }} />
 
-    <div data-hscroll-track class="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[clamp(1.25rem,4vw,3.5rem)] pb-4 [scrollbar-width:none] lg:snap-none lg:overflow-visible lg:pb-0 lg:pl-[max(clamp(1.25rem,4vw,3.5rem),calc((100vw-88rem)/2+3.5rem))]">
-      {stays.map((s, i) => (
-        <a href={`/stays#${s.slug}`} class="group relative w-[82vw] shrink-0 snap-start sm:w-[60vw] lg:w-[34vw] xl:w-[30vw]">
-          <Photo src={s.image} alt={s.name} sizes="(min-width:1024px) 34vw, 82vw" class="aspect-[4/5] rounded-[2px]" imgClass="transition-transform duration-[1.6s] ease-[var(--ease-out-expo)] group-hover:scale-105" />
-          <div class="mt-5 flex items-baseline justify-between gap-4">
-            <div>
-              <p class="eyebrow mb-2 text-[0.62rem] text-clay">0{i + 1} · {s.kicker}</p>
-              <h3 class="text-3xl md:text-4xl">{s.name}</h3>
-            </div>
-            <span class="grid size-11 shrink-0 place-items-center rounded-full border border-ink/20 transition-colors duration-500 group-hover:border-forest group-hover:bg-forest group-hover:text-paper"><Icon name="arrow" class="size-4" /></span>
-          </div>
-        </a>
-      ))}
-      <div class="hidden w-[10vw] shrink-0 lg:block" aria-hidden="true"></div>
+  <!-- ============ GUEST REVIEWS (real Google reviews, drifting boxes) ============ -->
+  <section class="reviews relative overflow-hidden pt-[clamp(3rem,6vw,4.5rem)] pb-[clamp(1.5rem,3.5vw,2.5rem)]">
+    <div class="container-x mb-7 text-center">
+      <h2 data-split>What Our <em>Guests Say</em></h2>
     </div>
-
-    <div class="container-x mt-10 hidden lg:block" aria-hidden="true">
-      <div class="h-px w-full bg-ink/10"><div data-hscroll-bar class="h-px origin-left bg-forest"></div></div>
-    </div>
+    <ReviewMarquee reviews={reviews} rating={reviewSummary.rating} count={reviewSummary.count} url={reviewSummary.url} />
   </section>
 
-  <!-- ============ A DAY AT TIERRA ============ -->
-  <section data-day class="relative py-[clamp(5rem,10vw,9rem)]">
-    <div class="container-x">
-      <div class="mb-16 max-w-2xl">
-        <p class="eyebrow mb-4 text-clay" data-fade>A day at Tierra</p>
-        <h2 class="text-[clamp(2.6rem,5.5vw,5rem)]" data-split>From river mist to <em>firelight</em></h2>
-      </div>
-
-      <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
-        <!-- sticky photo stack -->
-        <div class="hidden lg:col-span-6 lg:block">
-          <div class="sticky top-[14vh] aspect-[4/5] max-h-[72vh] w-full overflow-hidden rounded-[2px]">
-            {day.map((d, i) => (
-              <div data-day-frame class="day-frame absolute inset-0">
-                <Photo src={d.image} alt={d.title} sizes="45vw" class="h-full" />
-              </div>
-            ))}
-            <div class="absolute bottom-6 left-6 rounded-full bg-paper/90 px-5 py-2 font-display text-2xl text-forest backdrop-blur" data-day-clock>06:30</div>
-          </div>
-        </div>
-
-        <!-- steps -->
-        <ol class="lg:col-span-5 lg:col-start-8">
-          {day.map((d) => (
-            <li data-day-step data-time={d.time} class="day-step border-t border-ink/10 py-10 lg:flex lg:min-h-[60vh] lg:flex-col lg:justify-center lg:py-0">
-              <Photo src={d.image} alt={d.title} sizes="100vw" class="mb-6 aspect-[16/10] lg:hidden" />
-              <p class="font-display text-5xl text-clay md:text-6xl">{d.time}</p>
-              <h3 class="mt-3 text-3xl md:text-4xl">{d.title}</h3>
-              <p class="mt-4 max-w-md leading-relaxed text-ink/70">{d.text}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ AMENITIES ============ -->
-  <section class="relative overflow-hidden bg-forest py-[clamp(8rem,14vw,12rem)] text-paper">
-    <PaperEdge position="top" variant={2} />
-    <Botanical class="pointer-events-none absolute top-24 right-0 w-[260px] text-paper/10 md:w-[380px]" />
-    <div class="container-x relative">
-      <div class="mb-16 grid gap-8 md:grid-cols-2 md:items-end">
-        <div>
-          <p class="eyebrow mb-4 text-lime" data-fade>At the resort</p>
-          <h2 class="text-[clamp(2.6rem,5.5vw,5rem)]" data-split>Unhurried comforts, <em>naturally</em></h2>
-        </div>
-        <p class="max-w-md leading-relaxed text-paper/75 md:justify-self-end" data-fade>Everything you need for a slow few days, and nothing that gets in the way of the view.</p>
-      </div>
-      <ul class="grid gap-px overflow-hidden rounded-[2px] bg-paper/10 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
-        {amenities.map((a) => (
-          <li class="group bg-forest p-8 transition-colors duration-700 hover:bg-[#2a5429] md:p-10" data-fade>
-            <Icon name={a.icon} class="size-9 text-lime transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:-translate-y-1" />
-            <h3 class="mt-8 text-3xl">{a.title}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-paper/70">{a.text}</p>
-          </li>
+  <!-- ============ LOCATION ============ -->
+  <section class="relative flex min-h-[64vh] items-center overflow-hidden bg-night text-paper">
+    <!-- second video loop, loaded only when the visitor scrolls near it -->
+    <VideoHero poster={img.outroPoster} alt="Tierra from above, between the backwaters and the palms"
+      desktop="/videos/outro-720.mp4" mobile="/videos/outro-720.mp4" lazy overlay="rgb(23 63 53 / 0.62)" />
+    <div class="container-x relative z-[3] py-24 text-center">
+      <!-- framed white title + tracked tagline (same language as the hero badge) -->
+      <h2 class="retreat-box mx-auto inline-block border border-white px-[clamp(1.1rem,2vw,1.8rem)] py-[clamp(0.9rem,1.6vw,1.4rem)] text-white uppercase" data-fade>
+        <span class="block leading-[1] tracking-[0.12em] [margin-right:-0.12em]">Your Coastal</span>
+        <span class="mt-1 block leading-[1] tracking-[0.12em] [margin-right:-0.12em]">Retreat Awaits</span>
+      </h2>
+      <p class="mx-auto mt-7 max-w-3xl font-sans text-[clamp(0.8rem,0.95vw,0.9rem)] leading-[2] font-medium tracking-[0.2em] text-white uppercase" data-fade>Hejamady, on the coastal delta between Udupi and Mangalore</p>
+      <ul class="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-px border border-white/25 bg-white/25 text-white md:grid-cols-5" data-fade>
+        {[['Beach', '2 min walk'], ['Surf Club', '200 m'], ['Blue Flag Beach', '3 km'], ['Mangalore', '29 km'], ['Udupi', '30 km']].map(([k, v]) => (
+          <li class="bg-[rgb(12_38_32/0.55)] px-4 py-4 backdrop-blur-sm"><span class="block font-display text-2xl">{v}</span><span class="mt-1 block text-[0.75rem] font-semibold tracking-[0.12em] uppercase opacity-85">{k}</span></li>
         ))}
       </ul>
-    </div>
-    <PaperEdge />
-  </section>
-
-  <!-- ============ MAP ============ -->
-  <section class="relative overflow-hidden py-[clamp(5rem,10vw,9rem)]">
-    <div class="container-x grid items-center gap-14 lg:grid-cols-12">
-      <div class="lg:col-span-5">
-        <p class="eyebrow mb-4 text-clay" data-fade>Find us</p>
-        <h2 class="text-[clamp(2.6rem,5.5vw,5rem)]" data-split>On the <em>delta,</em> between Udupi &amp; Mangaluru</h2>
-        <p class="mt-8 max-w-md leading-relaxed text-ink/70" data-fade>
-          Tierra sits at Hejamadi, close to the beach and just 1.1 km off NH 66, where the backwaters meet the Arabian Sea. Easy to drive in, yet far enough for the highway noise to fade.
-        </p>
-        <ul class="mt-10 divide-y divide-ink/10 border-y border-ink/10" data-stagger>
-          {[['NH 66 highway', '1.1 km'], ['Surf club', '200 m'], ['Padubidri Blue Flag beach', '3 km'], ['Udupi', '≈ 30 min'], ['Mangaluru airport', '≈ 45 min']].map(([k, v]) => (
-            <li class="flex justify-between py-4 text-sm" data-fade><span>{k}</span><span class="font-display text-xl text-forest">{v}</span></li>
-          ))}
-        </ul>
-        <a href={site.mapsUrl} target="_blank" rel="noopener" class="btn btn-fill mt-10" data-fade>Get directions <Icon name="arrow" class="size-4" /></a>
-      </div>
-      <div class="relative lg:col-span-6 lg:col-start-7">
-        <div class="relative mx-auto max-w-[560px] rounded-[2px] bg-paper p-4 shadow-[0_30px_80px_-40px_rgb(29_53_35/0.45)] md:p-6" data-fade>
-          <DeltaMap class="h-auto w-full" />
-        </div>
+      <div class="mt-10 flex flex-wrap justify-center gap-3" data-fade>
+        <a href="/contact#enquire" data-book="" class="btn btn-lime">Book Your Stay <Icon name="arrow" class="size-4" /></a>
+        <a href={site.mapsUrl} target="_blank" rel="noopener" class="btn btn-line">Get Directions</a>
       </div>
     </div>
   </section>
 
-  <!-- ============ REVIEWS ============ -->
-  <section class="relative bg-sand/60 py-[clamp(5rem,10vw,9rem)]">
-    <div class="container-x">
-      <p class="eyebrow mb-4 text-center text-clay" data-fade>Guest words</p>
-      <h2 class="mx-auto mb-16 max-w-3xl text-center text-[clamp(2.4rem,5vw,4.5rem)]" data-split>Stories our guests <em>take home</em></h2>
-      <div class="grid gap-6 md:grid-cols-3" data-stagger>
-        {reviews.map((r) => (
-          <figure class="flex flex-col justify-between rounded-[2px] bg-paper p-8 md:p-10" data-fade>
-            <blockquote class="font-display text-2xl leading-snug text-ink md:text-[1.7rem]">
-              <span class="block font-display text-6xl leading-none text-leaf">“</span>
-              {r.quote}
-            </blockquote>
-            <figcaption class="mt-8 text-sm"><span class="font-semibold">{r.name}</span> <span class="text-ink/50">· {r.from}</span></figcaption>
-          </figure>
+  <!-- ============ GOOD TO KNOW ============ -->
+  <section class="py-[clamp(3rem,6vw,5rem)]">
+    <div class="container-x grid gap-8 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <h2 data-split>Good <em>to Know</em></h2>
+        <a href="/faq" class="link-u mt-6 inline-block text-sm font-semibold tracking-[0.12em] text-teal uppercase">All questions →</a>
+      </div>
+      <div class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-8">
+        {goodToKnow.map((f) => (
+          <details class="gtk group">
+            <summary class="flex cursor-pointer items-center justify-between gap-6 py-5 font-display text-[1.12rem] text-ink">{f.q}<Icon name="plus" class="size-5 shrink-0 text-teal transition-transform duration-300 group-open:rotate-45" /></summary>
+            <p class="pb-6 leading-relaxed text-ink/75">{f.a}</p>
+          </details>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ============ CTA ============ -->
-  <section class="relative flex min-h-[80vh] items-center overflow-hidden bg-night text-paper">
-    <PaperEdge position="top" fill="var(--color-sand)" />
-    <div class="absolute -inset-y-[15%] inset-x-0" data-parallax="0.3">
-      <Photo src={img.pool} alt="Pool at dusk" sizes="100vw" class="h-full" />
-    </div>
-    <div class="absolute inset-0 bg-night/55"></div>
-    <div class="container-x relative z-[3] py-32 text-center">
-      <p class="eyebrow mb-6 text-lime" data-fade>Your escape awaits</p>
-      <h2 class="mx-auto max-w-4xl text-[clamp(2.8rem,7vw,6.5rem)]" data-split>Come home to <em>the earth</em></h2>
-      <div class="mt-12 flex flex-wrap justify-center gap-3" data-fade>
-        <a href="/contact#book" class="btn btn-fill">Book your stay <Icon name="arrow" class="size-4" /></a>
-        <a href={site.phoneHref} class="btn btn-line">Call {site.phone}</a>
+  <!-- ============ BOOK ============ -->
+  <section class="border-t border-gold/40 bg-champagne py-[clamp(3.5rem,7vw,5.5rem)] text-center text-ink">
+    <div class="container-x">
+      <h2 data-split>Your Escape <em>Starts Here</em></h2>
+      <p class="mx-auto mt-4 max-w-xl text-ink/75" data-fade>Message us on WhatsApp for the quickest reply, send an enquiry, or simply call.</p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3" data-fade>
+        <a href={waLink()} target="_blank" rel="noopener" class="btn btn-fill"><Icon name="whatsapp" class="size-4" /> WhatsApp</a>
+        <a href="/contact#enquire" data-book="" class="btn btn-line on-light">Send Enquiry</a>
+        <a href={site.phoneHref} class="btn btn-line on-light">Call {site.phone}</a>
       </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .day-frame { opacity: 0; transform: scale(1.06); transition: opacity 1s var(--ease-out-expo), transform 1.6s var(--ease-out-expo); }
-  .day-frame.is-active { opacity: 1; transform: scale(1); }
-  @media (min-width: 1024px) {
-    .day-step { opacity: 0.3; transition: opacity 0.6s; }
-    .day-step.is-active { opacity: 1; }
-  }
+  /* reviews: plain white */
+  .reviews { background: #fff; }
+  .gtk summary { list-style: none; }
+  .gtk summary::-webkit-details-marker { display: none; }
   @keyframes scrollcue { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
+
+  /* ---- hero wordmark ---- */
+  .wordmark { color: var(--color-shell); }
+  .wordmark-frame rect { stroke-dasharray: 1; stroke-dashoffset: 0; opacity: 0.85; }
+  .tagline { letter-spacing: 0.2em; text-shadow: 0 1px 18px rgb(12 38 32 / 0.5); }
+  @media (min-width: 640px) { .tagline { letter-spacing: 0.32em; } }
+  .wordmark h1 { text-shadow: 0 2px 30px rgb(12 38 32 / 0.35); }
+
+  /* entrance sequence: frame draws, words rise, tagline tracks in, bird hops on */
+  :global(.js:not(.reduced)) .wordmark-frame rect { stroke-dashoffset: 1; animation: frame-draw 1.8s var(--ease-in-out-quart) 0.3s forwards; }
+  :global(.js:not(.reduced)) .wm-line { opacity: 0; transform: translateY(35%); animation: wm-rise 1.4s var(--ease-out-expo) forwards; }
+  :global(.js:not(.reduced)) .wm-line:nth-child(1) { animation-delay: 0.9s; }
+  :global(.js:not(.reduced)) .wm-line:nth-child(2) { animation-delay: 1.1s; }
+  :global(.js:not(.reduced)) .tagline { opacity: 0; animation: track-in 2s var(--ease-out-expo) 1.6s forwards; }
+  :global(.js:not(.reduced)) .wordmark-bird { opacity: 0; animation: bird-hop 1s var(--ease-out-expo) 2.4s forwards; }
+  :global(.js:not(.reduced)) .scroll-cue { opacity: 0; animation: fade-in 1s ease 2.8s forwards; }
+
+  @keyframes frame-draw { to { stroke-dashoffset: 0; } }
+  @keyframes wm-rise { to { opacity: 1; transform: none; } }
+  @keyframes track-in { from { opacity: 0; letter-spacing: 0.55em; } to { opacity: 1; letter-spacing: 0.32em; } }
+  @keyframes bird-hop {
+    0% { opacity: 0; transform: translate(18px, -70%) rotate(-10deg); }
+    55% { opacity: 1; transform: translate(0, 8%) rotate(3deg); }
+    100% { opacity: 1; transform: none; }
+  }
+  @keyframes fade-in { to { opacity: 1; } }
+  /* small screens: no letter-spacing animation (avoids re-wrapping mid-animation) */
+  @media (max-width: 639px) { @keyframes track-in { from { opacity: 0; } to { opacity: 1; } } }
 </style>

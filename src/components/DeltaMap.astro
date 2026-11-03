@@ -18,9 +18,9 @@ const { class: cls = '' } = Astro.props;
       <feGaussianBlur stdDeviation="2.2" />
     </filter>
     <linearGradient id="sea" x1="0" x2="1">
-      <stop offset="0" stop-color="var(--color-sea)" stop-opacity="0.55" />
-      <stop offset="0.6" stop-color="var(--color-lagoon)" stop-opacity="0.4" />
-      <stop offset="1" stop-color="var(--color-mist)" stop-opacity="0.55" />
+      <stop offset="0" stop-color="var(--color-sky)" stop-opacity="0.75" />
+      <stop offset="0.6" stop-color="var(--color-sky)" stop-opacity="0.5" />
+      <stop offset="1" stop-color="var(--color-sky)" stop-opacity="0.3" />
     </linearGradient>
     <radialGradient id="land" cx="0.7" cy="0.5" r="0.7">
       <stop offset="0" stop-color="var(--color-sage)" stop-opacity="0.45" />
@@ -66,32 +66,30 @@ const { class: cls = '' } = Astro.props;
   <g class="map-place" fill="var(--color-ink)">
     <circle cx="330" cy="70" r="4" fill="var(--color-ink)" />
     <text x="342" y="75" class="map-label">Udupi</text>
-    <text x="342" y="92" class="map-small">≈ 30 min</text>
+    <text x="342" y="92" class="map-small">30 km</text>
 
     <circle cx="316" cy="300" r="4" fill="var(--color-ink)" />
-    <text x="306" y="290" text-anchor="end" class="map-label" fill="var(--color-paper)">Padubidri</text>
-    <text x="306" y="306" text-anchor="end" class="map-small" fill="var(--color-paper)">Blue Flag beach · 3 km</text>
+    <text x="306" y="290" text-anchor="end" class="map-label" fill="var(--color-mangrove)">Padubidri</text>
+    <text x="306" y="306" text-anchor="end" class="map-small" fill="var(--color-mangrove)">Blue Flag beach · 3 km</text>
 
     <circle cx="300" cy="420" r="3" fill="var(--color-ink)" />
-    <text x="290" y="416" text-anchor="end" class="map-small" fill="var(--color-paper)">Surf club · 200 m</text>
+    <text x="290" y="416" text-anchor="end" class="map-small" fill="var(--color-mangrove)">Surf club · 200 m</text>
 
     <circle cx="300" cy="610" r="4" fill="var(--color-ink)" />
     <text x="312" y="615" class="map-label">Mulki</text>
 
     <circle cx="296" cy="720" r="4" fill="var(--color-ink)" />
-    <text x="308" y="725" class="map-label">Mangaluru ↓</text>
-
-    <path d="M470 690 l 10 -6 l -2 12 z" fill="var(--color-ink)" />
-    <text x="488" y="695" class="map-small">Airport ≈ 45 min</text>
+    <text x="308" y="725" class="map-label">Mangalore ↓</text>
+    <text x="308" y="742" class="map-small">29 km</text>
   </g>
 
-  <text x="120" y="380" class="map-sea" fill="var(--color-paper)">Arabian</text>
-  <text x="140" y="412" class="map-sea" fill="var(--color-paper)">Sea</text>
+  <text x="56" y="352" class="map-sea" fill="var(--color-mangrove)">Arabian</text>
+  <text x="56" y="384" class="map-sea" fill="var(--color-mangrove)">Sea</text>
   <text x="470" y="485" class="map-small" fill="var(--color-sea)" font-style="italic">backwaters</text>
 
   <!-- Tierra pin -->
   <g class="map-pin" transform="translate(318 448)">
-    <circle r="22" fill="var(--color-lime)" opacity="0.35" class="map-pulse" />
+    <circle r="22" fill="var(--color-caramel)" opacity="0.4" class="map-pulse" />
     <circle r="9" fill="var(--color-forest)" stroke="var(--color-paper)" stroke-width="3" />
     <text x="16" y="-16" class="map-tierra" fill="var(--color-forest)">Tierra</text>
   </g>
@@ -107,10 +105,10 @@ const { class: cls = '' } = Astro.props;
 
 <style>
   /* fill comes from the parent <g> (ink) or the element's own fill attribute */
-  .map-label { font-family: var(--font-display); font-size: 22px; }
+  .map-label { font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.04em; }
   .map-small { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.06em; }
-  .map-sea { font-family: var(--font-display); font-style: italic; font-size: 34px; letter-spacing: 0.08em; opacity: 0.9; }
-  .map-tierra { font-family: var(--font-display); font-size: 34px; font-style: italic; }
+  .map-sea { font-family: var(--font-mono); font-size: 21px; letter-spacing: 0.3em; opacity: 0.9; }
+  .map-tierra { font-family: var(--font-display); font-size: 28px; }
   .map-pulse { transform-origin: center; animation: pulse 2.6s var(--ease-out-expo) infinite; }
   @keyframes pulse { 0% { transform: scale(0.6); opacity: 0.6; } 100% { transform: scale(2.2); opacity: 0; } }
 </style>

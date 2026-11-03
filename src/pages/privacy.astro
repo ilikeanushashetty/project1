@@ -1,0 +1,33 @@
+---
+import Base from '@/layouts/Base.astro';
+import { site } from '@/data/site';
+// A plain-language notice describing what this website actually does with visitor data.
+// The resort should review it (and add anything about on-site guest records) before launch.
+---
+
+<Base title="Privacy Policy" headerTheme="dark" description="How Tierra Resort & Villas handles the details you share through this website.">
+  <section class="pt-[clamp(2.5rem,5vw,4rem)] pb-[clamp(3rem,7vw,5rem)]">
+    <div class="container-x max-w-3xl">
+      <h1>Your details, <em>kept simple</em></h1>
+      <div class="legal mt-8 space-y-6 leading-relaxed text-ink/80">
+        <p>This notice explains what happens to the information you share through the {site.fullName} website.</p>
+        <h2>What we collect</h2>
+        <p>Only what you choose to send us through the enquiry form: your name, phone number, email (optional), travel dates, number of guests, stay type and any message. We don't ask for payment details on this website.</p>
+        <h2>How it's used</h2>
+        <p>Your enquiry is stored by our website host, Netlify, and forwarded to our email inbox ({site.email}) so that our team can reply about availability and your stay. If you choose “Send on WhatsApp”, the message opens in your own WhatsApp app and is sent by you, under WhatsApp's own privacy terms.</p>
+        <p>We use your details only to respond to you and to arrange your stay. We don't sell them or use them for unrelated marketing.</p>
+        <h2>Maps and other services</h2>
+        <p>The contact page shows an embedded Google Map, which Google may use to set its own cookies. This website itself doesn't use advertising or tracking cookies.</p>
+        <h2>Your choices</h2>
+        <p>To see, correct or delete the details you've sent us, write to <a href={`mailto:${site.email}`}>{site.email}</a> or call <a href={site.phoneHref}>{site.phone}</a>.</p>
+        <h2>Contact</h2>
+        <p>{site.fullName}, {site.address[0]} {site.address[1]}</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal h2 { margin-top: 2.25rem; font-size: var(--fs-h3); color: var(--color-ink); }
+  .legal a { color: var(--color-teal); text-decoration: underline; text-underline-offset: 0.2em; }
+</style>

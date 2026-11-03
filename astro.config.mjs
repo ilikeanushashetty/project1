@@ -7,6 +7,12 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://tierraresort.com',
   integrations: [sitemap()],
+  // pages merged in the Nov 2026 restructure
+  redirects: {
+    '/facilities': '/experiences',
+    '/corporate': '/weddings-events',
+    '/events': '/weddings-events',
+  },
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   image: {
     responsiveStyles: true,

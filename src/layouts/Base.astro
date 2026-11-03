@@ -1,13 +1,12 @@
 ---
-import '@fontsource/cormorant-garamond/400.css';
-import '@fontsource/cormorant-garamond/500.css';
-import '@fontsource/cormorant-garamond/400-italic.css';
-import '@fontsource-variable/manrope';
+import '@fontsource-variable/playfair-display/wght.css';
+import '@fontsource-variable/montserrat/wght.css';
 import '@/styles/global.css';
 import { getImage } from 'astro:assets';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import FloatingContact from '@/components/FloatingContact.astro';
+import BookingPanel from '@/components/BookingPanel.astro';
 import { site, img } from '@/data/site';
 
 interface Props {
@@ -17,9 +16,9 @@ interface Props {
 }
 
 const { title, description = site.description, headerTheme = 'light' } = Astro.props;
-const pageTitle = title ? `${title} · ${site.fullName}` : `${site.fullName} · ${site.tagline}`;
+const pageTitle = title ? `${title} · ${site.fullName}` : site.title;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = await getImage({ src: img.hero, width: 1200, height: 630, format: 'jpg' });
+const ogImage = await getImage({ src: img.poolReflection, width: 1200, height: 630, format: 'jpg' });
 const favicon = await getImage({ src: img.logoMark, width: 64, format: 'png' });
 
 const jsonLd = {
@@ -40,7 +39,7 @@ const jsonLd = {
     addressCountry: 'IN',
   },
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
-  checkinTime: '12:00',
+  checkinTime: '14:00',
   checkoutTime: '11:00',
   petsAllowed: true,
   amenityFeature: ['Swimming pool', 'Free Wi-Fi', 'Free parking', 'Café'].map((n) => ({
@@ -65,7 +64,7 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href={favicon.src} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#2f5e2e" />
+    <meta name="theme-color" content="#173f35" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.fullName} />
@@ -81,11 +80,12 @@ const jsonLd = {
   <body class="paper-texture">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-paper focus:px-4 focus:py-2">Skip to content</a>
     <Header theme={headerTheme} />
-    <main id="main">
+    <main id="main" class="pt-[var(--hh)]">
       <slot />
     </main>
     <Footer />
     <FloatingContact />
+    <BookingPanel />
     <script>
       import '@/scripts/motion';
     </script>
