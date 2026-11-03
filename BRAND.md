@@ -86,10 +86,11 @@ No script, no italics; square cards, round header icons only.
 - **Earth over grey:** surfaces use Sand and Ink, never neutral grey or pure black.
 - **Headings and paragraphs** never leave a single word on the last line.
 - **Footer:** white and compact, a hairline above it; the Sand band sits above.
-- **Home reviews:** white section; square clear-glass cards (almost transparent,
-  fine edge, bright top line) over two faint drifting sand and turquoise glows that
-  show through. Reviewer initials sit in plain white squares with a sand-gold edge:
-  turquoise is for actions only.
+- **Home reviews:** the section sits on an animated aerial shoreline (Shoreline.astro:
+  turquoise sea into sand, white foam waves washing and drifting). Review cards are
+  square frosted glass like an iOS widget: light white veil, strong blur, bright edge.
+  Ink text on the glass (12:1). Initials in plain white squares; the Google card is a
+  brighter glass pane. No mask on the scrolling row (it would stop the blur).
 - **No small labels above headings** ("No. 01", "Our Story", "Stay" and so
   on): the heading stands alone, with its paragraph below.
 - The band above the footer is Sand; the footer is white, so they never merge.
