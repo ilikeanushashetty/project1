@@ -23,7 +23,7 @@ import breakfastLawn from '@/assets/images/breakfast-lawn.jpg';
 import kayakAerial from '@/assets/images/kayak-aerial.jpg';
 // first frames of the background videos (instant paint while the video loads)
 import heroPoster from '@/assets/images/hero-poster.jpg';
-import resortOverview from '@/assets/images/resort-overview.webp';
+import resortDusk from '@/assets/images/resort-dusk.webp';
 import outroPoster from '@/assets/images/outro-poster.jpg';
 import logo from '@/assets/images/logo-color.png';
 import logoLight from '@/assets/images/logo-light.png';
@@ -43,7 +43,7 @@ export const img = {
   room, garden,
   aFrameExterior, aFrameInterior, aFrameView, cafeFood,
   aerial, poolReflection, poolFront, aFrameRow, breakfastLawn, kayakAerial,
-  heroPoster, outroPoster, resortOverview,
+  heroPoster, outroPoster, resortDusk,
   logo, logoLight, logoGold, logoMark, aboutSunset, contactDusk,
   sampleYoga, sampleCampfire, sampleSurfing, sampleWedding, sampleCelebration, sampleSeafood,
 };
