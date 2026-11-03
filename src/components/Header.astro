@@ -94,13 +94,13 @@ const icons = [
   /* links: Montserrat light capitals, sand gold for the current page */
   .hdr-link { position: relative; display: inline-block; padding: 0.4rem 0; font-size: 0.86rem; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.3s; }
   .hdr-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transition: transform 0.5s var(--ease-out-expo); }
-  .hdr-link:hover { color: var(--color-sea); }
+  .hdr-link:hover { color: var(--color-sea-ink); }
   .hdr-link:hover::after { transform: scaleX(1); }
   .hdr-link.is-active { color: var(--color-gold-deep); font-weight: 400; }
 
   /* round contact icons on a pale sand disc */
   .hdr-icon { background: var(--color-sand); color: var(--color-gold-deep); transition: background-color 0.3s, color 0.3s; }
-  .hdr-icon:hover { background: var(--color-sea); color: #fff; }
+  .hdr-icon:hover { background: var(--color-sea); color: var(--color-ink); }
 
   .header-cta { font-weight: 500; letter-spacing: 0.16em; }
 

@@ -17,7 +17,8 @@ No script, no italics; square cards, round header icons only.
 | Some | **Sand** | `#F6F1E7` | Alternate sections, the band above the footer, header icon discs |
 | Some | **Mist** | `#E6F4F1` | Palest turquoise: cards, gallery filter bar |
 | Text | **Ink** | `#22302E` | Headings and text; the few dark panels |
-| Action | **Lagoon** | `#0F6B66` | Buttons, links, icons (hover `#0A524E`) |
+| Action | **Turquoise** | `#86C9C4` | Every button and active fill, always with Ink text (hover `#6FB9B3`) |
+| Action text | **Deep Turquoise** | `#2A7680` | Links, icons, outline buttons and accent numbers on light backgrounds |
 | Accent | **Sand Gold** | `#84693F` | Small labels (contact details, reviewers), current page in the menu |
 
 ### Supporting
@@ -35,8 +36,8 @@ No script, no italics; square cards, round header icons only.
 | Pairing | Ratio | Result |
 |---|---|---|
 | Ink on White / Sand / Mist | 13.7 / 12.2 / 12.1 :1 | AAA |
-| White on Lagoon (button) | 6.33:1 | AA |
-| Lagoon on White / Sand / Mist | 6.33 / 5.63 / 5.60 :1 | AA |
+| Ink on Turquoise (button) | 7.30:1 | AAA |
+| Deep Turquoise on White / Sand | 5.25 / 4.6 :1 | AA |
 | Sand Gold on White / Sand | 5.16 / 4.58 :1 | AA |
 | Ink Muted on White / Sand | 6.35 / 5.64 :1 | AA |
 | Ink on Turquoise (button on dark) | 7.30:1 | AAA |
@@ -44,7 +45,7 @@ No script, no italics; square cards, round header icons only.
 
 ### Rules of use
 
-- **Light sections:** primary button = Lagoon + white; secondary = Lagoon outline.
+- **One action colour (3 Nov 2026):** primary button = Turquoise + Ink everywhere; secondary = Deep Turquoise outline. No dark green anywhere; shades over photos are neutral slate, not green.
 - **Dark panels and photos:** primary button = Turquoise + Ink.
 - **Headlines are one colour** (Ink on light, white on photos): no gold
   words, no italics, script or cursive.
@@ -65,7 +66,7 @@ No script, no italics; square cards, round header icons only.
   headline, a sentence that lights up word by word with scroll, and a bento grid
   of rounded tiles (20px), compact, max 68rem wide, that rise in one after another. Large beach tile keeps
   the original shoreline gradient with a drifting wave and a "2 min" stat; "3 km"
-  (Sand) and "200 m" (Mist) count up; "Backwater meets sea" is the one Lagoon
+  (Sand) and "200 m" (Mist) count up; "Backwater meets sea" is the one Turquoise
   tile; eight small pale tiles for the rest.
 - **One hero for every inner page** (PageHero): full photo, centred title and
   line over an even shade, the drifting wave edge into white. About, Stay,
@@ -73,7 +74,7 @@ No script, no italics; square cards, round header icons only.
   (the user prefers the photos straight away; the title is there for screen readers).
 - **Desktop header slims after scrolling** (153 → 129px); sticky sub-menus follow
   it (`--hh-now`) and mark the section in view.
-- **Repeated row buttons are outlined** (feature rows); solid Lagoon is kept for the
+- **Repeated row buttons are outlined** (feature rows); solid Turquoise is kept for the
   main action of a section.
 - **Body text is Montserrat 400** (was 350) for easier reading on phones.
 - **Icons sit on pale Sand discs** with Sand Gold strokes everywhere (no dark squares).
@@ -136,7 +137,7 @@ areas about 44px.
 ## 5. Logo
 
 - Full-colour logo on **White** (header), **Mist** and the white footer.
-- On **Ink, Lagoon, photos and video**, use the light version.
+- On **Ink, photos and video**, use the light version.
 - The brushed-gold version is retired with the gold palette.
 - Clear space at least the height of the bird.
 - A vector file (SVG / AI / PDF) from the artist is still needed for print.

@@ -17,7 +17,7 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     <!-- video shown almost untouched: shade only at the top (nav) and bottom (badge) -->
     <VideoHero poster={img.heroPoster} alt="Aerial view of Tierra's A-frame cottages, pool and palms beside the backwaters"
       desktop="/videos/hero-1080.mp4" mobile="/videos/hero-720.mp4" priority
-      overlay="linear-gradient(180deg,rgb(12 38 32/0.35) 0%,rgb(12 38 32/0.12) 30%,rgb(12 38 32/0.28) 55%,rgb(12 38 32/0.1) 80%,rgb(12 38 32/0.4) 100%)" />
+      overlay="linear-gradient(180deg,rgb(16 24 28/0.35) 0%,rgb(16 24 28/0.12) 30%,rgb(16 24 28/0.28) 55%,rgb(16 24 28/0.1) 80%,rgb(16 24 28/0.4) 100%)" />
 
     <!-- small framed badge + tracked tagline, just below the middle -->
     <div class="absolute inset-x-0 top-[60%] z-[3] flex -translate-y-1/2 flex-col items-center px-5 text-center">
@@ -78,7 +78,7 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
   <section class="relative flex min-h-[64vh] items-center overflow-hidden bg-night text-paper">
     <!-- second video loop, loaded only when the visitor scrolls near it -->
     <VideoHero poster={img.outroPoster} alt="Tierra from above, between the backwaters and the palms"
-      desktop="/videos/outro-720.mp4" mobile="/videos/outro-720.mp4" lazy overlay="rgb(23 63 53 / 0.62)" />
+      desktop="/videos/outro-720.mp4" mobile="/videos/outro-720.mp4" lazy overlay="rgb(22 32 38 / 0.62)" />
     <div class="container-x relative z-[3] py-24 text-center">
       <!-- framed white title + tracked tagline (same language as the hero badge) -->
       <h2 class="retreat-box mx-auto inline-block border border-white px-[clamp(1.1rem,2vw,1.8rem)] py-[clamp(0.9rem,1.6vw,1.4rem)] text-white uppercase" data-fade>
@@ -88,7 +88,7 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
       <p class="mx-auto mt-7 max-w-3xl font-sans text-[clamp(0.8rem,0.95vw,0.9rem)] leading-[2] font-medium tracking-[0.2em] text-white uppercase" data-fade>Hejamady, on the coastal delta between Udupi and Mangalore</p>
       <ul class="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-px border border-white/25 bg-white/25 text-white md:grid-cols-5" data-fade>
         {[['Beach', '2 min walk'], ['Surf Club', '200 m'], ['Blue Flag Beach', '3 km'], ['Mangalore', '29 km'], ['Udupi', '30 km']].map(([k, v]) => (
-          <li class="bg-[rgb(12_38_32/0.55)] px-4 py-4 backdrop-blur-sm"><span class="block font-display text-2xl">{v}</span><span class="mt-1 block text-[0.75rem] font-semibold tracking-[0.12em] uppercase opacity-85">{k}</span></li>
+          <li class="bg-[rgb(16_24_28/0.55)] px-4 py-4 backdrop-blur-sm"><span class="block font-display text-2xl">{v}</span><span class="mt-1 block text-[0.75rem] font-semibold tracking-[0.12em] uppercase opacity-85">{k}</span></li>
         ))}
       </ul>
       <div class="mt-10 flex flex-wrap justify-center gap-3" data-fade>
@@ -140,9 +140,9 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
   /* ---- hero wordmark ---- */
   .wordmark { color: var(--color-shell); }
   .wordmark-frame rect { stroke-dasharray: 1; stroke-dashoffset: 0; opacity: 0.85; }
-  .tagline { letter-spacing: 0.2em; text-shadow: 0 1px 18px rgb(12 38 32 / 0.5); }
+  .tagline { letter-spacing: 0.2em; text-shadow: 0 1px 18px rgb(16 24 28 / 0.5); }
   @media (min-width: 640px) { .tagline { letter-spacing: 0.32em; } }
-  .wordmark h1 { text-shadow: 0 2px 30px rgb(12 38 32 / 0.35); }
+  .wordmark h1 { text-shadow: 0 2px 30px rgb(16 24 28 / 0.35); }
 
   /* entrance sequence: frame draws, words rise, tagline tracks in, bird hops on */
   :global(.js:not(.reduced)) .wordmark-frame rect { stroke-dashoffset: 1; animation: frame-draw 1.8s var(--ease-in-out-quart) 0.3s forwards; }

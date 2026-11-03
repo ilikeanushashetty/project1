@@ -26,9 +26,9 @@ const { title, intro, image, alt, focus = '', nowrap = false } = Astro.props;
     <Photo src={image} alt={alt} priority sizes="100vw" class="h-full" imgClass={focus} />
   </div>
   <!-- an even shade, a little deeper in the middle where the words sit -->
-  <div class="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_50%,rgb(12_38_32/0.5),rgb(12_38_32/0.28))]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_50%,rgb(16_24_28/0.5),rgb(16_24_28/0.28))]"></div>
   <div class="container-x relative z-[3] pb-10 text-center">
-    <h1 class:list={['mx-auto [text-shadow:0_2px_30px_rgb(12_38_32/0.45)]', nowrap ? 'text-[clamp(1.2rem,7vw,4.25rem)] whitespace-nowrap' : 'max-w-4xl']} data-split set:html={title} />
+    <h1 class:list={['mx-auto [text-shadow:0_2px_30px_rgb(16_24_28/0.45)]', nowrap ? 'text-[clamp(1.2rem,7vw,4.25rem)] whitespace-nowrap' : 'max-w-4xl']} data-split set:html={title} />
     {intro && <p class="mx-auto mt-5 max-w-xl text-base leading-relaxed text-paper/90 md:text-lg" data-fade>{intro}</p>}
     {Astro.slots.has('default') && <div class="mt-8 flex flex-wrap justify-center gap-3" data-fade><slot /></div>}
   </div>

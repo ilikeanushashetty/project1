@@ -58,9 +58,9 @@ const { id, title, text, tiles, cta, reverse = false, tone = 'shell' } = Astro.p
   .tile { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; background: var(--color-ocean-deep); }
   .tile :global(img) { transition: transform 1.2s var(--ease-out-expo); }
   .tile:hover :global(img) { transform: scale(1.06); }
-  .tile-ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgb(23 63 53 / 0.7);
+  .tile-ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgb(22 32 38 / 0.7);
     background: linear-gradient(160deg, #c2d5d3, #a0c1bd 55%, #86b1af); }
   .tile-label { position: absolute; inset: auto 0 0 0; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 3rem 1.1rem 1rem; color: #fff;
-    background: linear-gradient(transparent, rgb(23 63 53 / 0.8)); font-family: var(--font-display); font-size: 1.3rem; line-height: 1.15; }
+    background: linear-gradient(transparent, rgb(22 32 38 / 0.8)); font-family: var(--font-display); font-size: 1.3rem; line-height: 1.15; }
   .tile:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
 </style>

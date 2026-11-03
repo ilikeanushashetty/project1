@@ -43,7 +43,7 @@ const card = { shell: 'bg-paper', sage: 'bg-sand', peach: 'bg-peach' }[tone];
 
     <!-- overlapping text card -->
     <div class:list={['relative z-[2] mt-5 lg:col-span-5 lg:row-start-1 lg:mt-0 lg:mb-14 lg:px-0', reverse ? 'lg:col-start-1 lg:-mr-10' : 'lg:col-start-8 lg:-ml-10']}>
-      <div class:list={['p-8 shadow-[0_30px_80px_-40px_rgb(23_63_53/0.4)] md:p-12', card]} data-fade>
+      <div class:list={['p-8 shadow-[0_30px_80px_-40px_rgb(22_32_38/0.4)] md:p-12', card]} data-fade>
         <h2 set:html={title} />
         <p class="mt-6 leading-relaxed text-ink/80">{text}</p>
         <a href={href} class="mt-8 inline-flex items-center gap-3 border-b border-mangrove/40 pb-1 text-[0.76rem] font-semibold tracking-[0.18em] uppercase transition-colors hover:border-mangrove">

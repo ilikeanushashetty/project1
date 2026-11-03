@@ -48,7 +48,7 @@ const full = compact ? '' : 'sm:col-span-2';
 
   <!-- shown after a successful send -->
   <div class="hidden border border-teal/30 bg-cream p-7" tabindex="-1" data-done>
-    <span class="grid size-12 place-items-center bg-teal text-shell"><Icon name="check" class="size-6" /></span>
+    <span class="grid size-12 place-items-center bg-sea text-ink"><Icon name="check" class="size-6" /></span>
     <h3 class="mt-5">Thank you, we've got it.</h3>
     <p class="mt-2 leading-relaxed text-ink/75">We'll reply within 24 hours with availability for your dates. For anything urgent, call <a href={site.phoneHref} class="font-semibold text-teal underline underline-offset-4">{site.phone}</a>.</p>
   </div>
@@ -68,9 +68,9 @@ const full = compact ? '' : 'sm:col-span-2';
   .field:global(.invalid) :is(input, textarea, select) { border-color: #b3261e; border-bottom-width: 2px; }
   .field:global(.invalid) > span { color: #b3261e; }
   /* in the panel the send buttons stay in view at the bottom */
-  .actions.is-sticky { position: sticky; bottom: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); z-index: 2; margin-inline: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); padding: 0.9rem clamp(1.5rem, 4vw, 2.5rem) calc(0.9rem + env(safe-area-inset-bottom)); background: var(--color-shell); box-shadow: 0 -12px 24px -18px rgb(23 63 53 / 0.3); }
+  .actions.is-sticky { position: sticky; bottom: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); z-index: 2; margin-inline: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); padding: 0.9rem clamp(1.5rem, 4vw, 2.5rem) calc(0.9rem + env(safe-area-inset-bottom)); background: var(--color-shell); box-shadow: 0 -12px 24px -18px rgb(22 32 38 / 0.3); }
   .actions.is-sticky :global(.btn) { flex: 1 1 auto; justify-content: center; }
-  .btn-wa { background: var(--color-sea); color: #fff; }
+  .btn-wa { background: var(--color-sea); color: var(--color-ink); }
   .btn-wa:hover { background: var(--color-sea-deep); }
 </style>
 

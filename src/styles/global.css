@@ -15,8 +15,9 @@
   --color-mist: #e6f4f1;         /* palest turquoise: the band above the footer, cards (ink 12:1) */
   --color-sand: #f6f1e7;         /* pale sand: alternate sections (ink 12.2:1) */
   --color-turquoise: #86c9c4;    /* the shallows: lines, decoration, actions on dark (7.3:1 on ink) */
-  --color-sea: #0f6b66;          /* Lagoon: buttons, links, icons (6.3:1 on white, white text 6.3:1) */
-  --color-sea-deep: #0a524e;     /* Lagoon hover */
+  --color-sea: #86c9c4;          /* Turquoise: every action fill (buttons, active states); Ink text on it 7.3:1 */
+  --color-sea-deep: #6fb9b3;     /* Turquoise hover (Ink text 6.3:1) */
+  --color-sea-ink: #2a7680;      /* Deep turquoise: links, icons and accent text on light backgrounds (5.3:1 on white) */
   --color-sea-light: var(--color-turquoise);
   --color-sand-gold: #84693f;    /* labels and headline emphasis on light (5.2:1 white, 4.6:1 sand) */
   --color-sand-light: #d9c49a;   /* sand gold on dark panels and photos (8:1 on ink), hairlines */
@@ -26,7 +27,7 @@
   --color-sea-teal: #5b9794;     /* map water: decoration only */
 
   /* earlier names kept as aliases so every component follows the beach palette */
-  --color-teal: var(--color-sea);
+  --color-teal: var(--color-sea-ink);
   --color-mangrove: var(--color-ink);
   --color-mangrove-muted: var(--color-ink-muted);
   --color-emerald: var(--color-ink);
@@ -143,12 +144,12 @@ html.lenis, html.lenis body { height: auto; }
   transition: color 0.5s var(--ease-out-expo), background-color 0.5s var(--ease-out-expo), border-color 0.5s;
 }
 
-/* Light sections: .btn-fill = Lagoon + white (6.3:1), deeper lagoon on hover.
-   Dark sections + photos: .btn-lime = turquoise + ink (7.3:1), white on hover. */
+/* One action colour everywhere: Turquoise with Ink text (7.3:1).
+   .btn-fill deepens on hover (light pages); .btn-lime turns white on hover (photos, dark panels). */
 /* the smallest phones: long labels ("Plan a Corporate Event") may wrap rather than overflow */
 @media (max-width: 359px) { .btn { white-space: normal; } }
 
-.btn-fill { background: var(--color-sea); color: var(--color-shell); }
+.btn-fill { background: var(--color-sea); color: var(--color-ink); }
 .btn-lime { background: var(--color-sea-light); color: var(--color-ink); }
 .btn-fill::before,
 .btn-lime::before,
@@ -168,12 +169,12 @@ html.lenis, html.lenis body { height: auto; }
 .btn-line { border: 1px solid currentColor; }
 .btn-line::before { background: var(--color-gold); }
 .btn-line:hover { color: var(--color-mangrove); border-color: var(--color-gold); }
-.btn-line.on-light { color: var(--color-sea); }
+.btn-line.on-light { color: var(--color-sea-ink); }
 .btn-line.on-light::before { background: var(--color-sea); }
-.btn-line.on-light:hover { color: var(--color-shell); border-color: var(--color-sea); }
+.btn-line.on-light:hover { color: var(--color-ink); border-color: var(--color-sea); }
 
 /* sticky sub-menus: the section you are reading is marked (motion.ts sets .is-current) */
-.spy-link.is-current { color: var(--color-sea); }
+.spy-link.is-current { color: var(--color-sea-ink); }
 .spy-link::after { content: ''; position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0; height: 2px; background: var(--color-sea); transform: scaleX(0); transition: transform 0.4s var(--ease-out-expo); }
 .spy-link.is-current::after { transform: scaleX(1); }
 

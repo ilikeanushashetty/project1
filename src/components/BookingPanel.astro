@@ -23,14 +23,14 @@ import { site } from '@/data/site';
 </dialog>
 
 <style>
-  .book-panel { margin: 0 0 0 auto; width: min(100%, 30rem); max-width: none; height: 100%; max-height: none; padding: 0; border: 0; background: var(--color-shell); color: var(--color-ink); box-shadow: -30px 0 80px -30px rgb(23 63 53 / 0.45); }
-  .book-panel::backdrop { background: rgb(23 63 53 / 0.5); backdrop-filter: blur(4px); }
+  .book-panel { margin: 0 0 0 auto; width: min(100%, 30rem); max-width: none; height: 100%; max-height: none; padding: 0; border: 0; background: var(--color-shell); color: var(--color-ink); box-shadow: -30px 0 80px -30px rgb(22 32 38 / 0.45); }
+  .book-panel::backdrop { background: rgb(22 32 38 / 0.5); backdrop-filter: blur(4px); }
   .book-sheet { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.5rem, 4vw, 2.5rem); }
   .book-panel[open] { animation: book-in 0.55s var(--ease-out-expo); }
   @keyframes book-in { from { transform: translateX(100%); } }
   /* phones: a sheet that rises from the bottom */
   @media (max-width: 639px) {
-    .book-panel { margin: auto 0 0; width: 100%; height: auto; max-height: 92svh; overflow: hidden; box-shadow: 0 -30px 80px -30px rgb(23 63 53 / 0.45); }
+    .book-panel { margin: auto 0 0; width: 100%; height: auto; max-height: 92svh; overflow: hidden; box-shadow: 0 -30px 80px -30px rgb(22 32 38 / 0.45); }
     .book-sheet { max-height: 92svh; }
     .book-panel[open] { animation-name: book-up; }
     @keyframes book-up { from { transform: translateY(100%); } }

@@ -31,7 +31,7 @@ const rest = items.filter((i) => ![beach, blueFlag, surf, delta].includes(i));
       <p class="aw-lead mx-auto mt-6 max-w-[52rem] text-[clamp(1.1rem,1.6vw,1.4rem)] leading-[1.55] text-ink" data-words>{text}</p>
       <div class="mt-9 flex flex-wrap items-center justify-center gap-x-8 gap-y-4" data-fade>
         <a href={cta.href} data-book={cta.book} class="btn btn-fill">{cta.label} <Icon name="arrow" class="size-4" /></a>
-        {link && <a href={link.href} class="link-u inline-flex items-center gap-2 py-3 text-[0.95rem] font-medium text-sea">{link.label} <Icon name="arrow" class="size-4" /></a>}
+        {link && <a href={link.href} class="link-u inline-flex items-center gap-2 py-3 text-[0.95rem] font-medium text-teal">{link.label} <Icon name="arrow" class="size-4" /></a>}
       </div>
     </div>
 
@@ -47,25 +47,25 @@ const rest = items.filter((i) => ![beach, blueFlag, surf, delta].includes(i));
         <WaveEdge fill="rgb(255 255 255 / 0.55)" />
       </li>
       <li class="tile bg-sand" style="--i:1">
-        <Icon name={blueFlag.icon} class="size-6 text-sea" />
-        <p class="stat mt-auto pt-6 text-[clamp(2rem,3vw,2.6rem)] text-sea"><span data-count="3">3</span> km</p>
+        <Icon name={blueFlag.icon} class="size-6 text-teal" />
+        <p class="stat mt-auto pt-6 text-[clamp(2rem,3vw,2.6rem)] text-teal"><span data-count="3">3</span> km</p>
         <h3 class="mt-1.5">{blueFlag.title}</h3>
       </li>
       <li class="tile bg-mist" style="--i:2">
-        <Icon name={surf.icon} class="size-6 text-sea" />
-        <p class="stat mt-auto pt-6 text-[clamp(2rem,3vw,2.6rem)] text-sea"><span data-count="200">200</span> m</p>
+        <Icon name={surf.icon} class="size-6 text-teal" />
+        <p class="stat mt-auto pt-6 text-[clamp(2rem,3vw,2.6rem)] text-teal"><span data-count="200">200</span> m</p>
         <h3 class="mt-1.5">Surf Club</h3>
       </li>
       <li class="tile tile-delta col-span-2" style="--i:3">
-        <Icon name={delta.icon} class="size-6 text-turquoise" />
+        <Icon name={delta.icon} class="size-6 text-ink/80" />
         <div class="mt-auto pt-6">
-          <h3 class="text-white">{delta.title}</h3>
-          <p class="mt-1 text-[0.92rem] text-white/80">{delta.text}</p>
+          <h3>{delta.title}</h3>
+          <p class="mt-1 text-[0.92rem] text-ink/75">{delta.text}</p>
         </div>
       </li>
       {rest.map((it, n) => (
         <li class="tile tile-sm" style={`--i:${(n % 4) + 1}`}>
-          <Icon name={it.icon} class="size-6 text-sea" />
+          <Icon name={it.icon} class="size-6 text-teal" />
           <h3 class="mt-auto pt-6">{it.title}</h3>
           {it.text && <p class="mt-1 text-[0.86rem] leading-snug text-ink-muted">{it.text}</p>}
         </li>

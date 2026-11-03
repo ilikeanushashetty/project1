@@ -26,7 +26,7 @@ type Item = (typeof row)[number];
               <li class="m-card glass-card relative w-[260px] md:w-[300px] shrink-0 p-6" aria-hidden={copy === 1 ? 'true' : undefined}>
                 <span class="absolute top-3 right-5 font-display text-6xl leading-none text-gold/25" aria-hidden="true">“</span>
                 <div class="flex items-center gap-3">
-                  <span class="grid size-10 shrink-0 place-items-center rounded-full bg-teal text-sm font-bold text-shell" aria-hidden="true">{initials(it.r.name)}</span>
+                  <span class="grid size-10 shrink-0 place-items-center rounded-full bg-sea text-sm font-bold text-ink" aria-hidden="true">{initials(it.r.name)}</span>
                   <span>
                     <span class="block text-sm font-bold text-ink">{it.r.name}</span>
                     <span class="eyebrow block text-[0.75rem] text-clay">{it.r.from}</span>
@@ -36,13 +36,13 @@ type Item = (typeof row)[number];
               </li>
             ) : (
               <li class="m-card w-[260px] md:w-[300px] shrink-0" aria-hidden={copy === 1 ? 'true' : undefined}>
-                <a href={url} target="_blank" rel="noopener" class="flex h-full flex-col justify-between rounded-[22px] bg-sea p-6 text-paper transition-colors hover:bg-sea-deep" tabindex={copy === 1 ? -1 : undefined}>
+                <a href={url} target="_blank" rel="noopener" class="flex h-full flex-col justify-between rounded-[22px] bg-sea p-6 text-ink transition-colors hover:bg-sea-deep" tabindex={copy === 1 ? -1 : undefined}>
                   <span class="flex items-center gap-3">
                     <span class="font-display text-4xl leading-none">{rating.toFixed(1)}</span>
-                    <span class="flex gap-0.5 text-gold" aria-hidden="true">{[0, 1, 2, 3, 4].map(() => <svg viewBox="0 0 24 24" class="size-4 fill-current"><path d={starPath} /></svg>)}</span>
+                    <span class="flex gap-0.5 text-ink" aria-hidden="true">{[0, 1, 2, 3, 4].map(() => <svg viewBox="0 0 24 24" class="size-4 fill-current"><path d={starPath} /></svg>)}</span>
                   </span>
-                  <span class="mt-3 block text-sm text-paper/80">{count} reviews on Google</span>
-                  <span class="eyebrow mt-4 inline-flex items-center gap-2 text-paper">Read more reviews <Icon name="arrow" class="size-4" /></span>
+                  <span class="mt-3 block text-sm text-ink/75">{count} reviews on Google</span>
+                  <span class="eyebrow mt-4 inline-flex items-center gap-2 text-ink">Read more reviews <Icon name="arrow" class="size-4" /></span>
                 </a>
               </li>
             ),
