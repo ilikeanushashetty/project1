@@ -1,6 +1,6 @@
 ---
 /**
- * Slide-in booking panel, available on every page. Anything with [data-book] opens it
+ * Booking box, available on every page: a square frosted-glass box centred on the screen. Anything with [data-book] opens it
  * (data-book="slug" preselects a stay or event; data-book="" leaves the choice open).
  * Links keep href="/contact#enquire" so booking still works without JavaScript.
  */
@@ -14,28 +14,30 @@ import { site } from '@/data/site';
     <div class="flex items-start justify-between gap-4">
       <div>
         <h2 id="book-title">Plan <em>your escape</em></h2>
-        <p class="mt-2 text-[0.95rem] leading-relaxed text-ink/70">Send your dates on WhatsApp for the quickest reply, or by email. Prefer to talk? Call <a href={site.phoneHref} class="font-semibold text-teal">{site.phone}</a>.</p>
+        <p class="mt-2 text-[0.95rem] leading-relaxed text-ink/70">Send your dates on WhatsApp for the quickest reply, or by email. Prefer to talk? Call <a href={site.phoneHref} class="font-semibold whitespace-nowrap text-teal">{site.phone}</a>.</p>
       </div>
-      <button type="button" class="grid size-11 shrink-0 place-items-center border border-ink/20 transition-colors hover:bg-mangrove hover:text-shell" data-book-close aria-label="Close booking panel"><Icon name="close" class="size-5" /></button>
+      <button type="button" class="grid size-11 shrink-0 place-items-center rounded-[2px] border border-ink/20 transition-colors hover:bg-white/70" data-book-close aria-label="Close booking panel"><Icon name="close" class="size-5" /></button>
     </div>
     <div class="mt-7"><EnquiryForm compact /></div>
   </div>
 </dialog>
 
 <style>
-  .book-panel { margin: 0 0 0 auto; width: min(100%, 30rem); max-width: none; height: 100%; max-height: none; padding: 0; border: 0; background: var(--color-shell); color: var(--color-ink); box-shadow: -30px 0 80px -30px rgb(22 32 38 / 0.45); }
-  .book-panel::backdrop { background: rgb(22 32 38 / 0.5); backdrop-filter: blur(4px); }
-  .book-sheet { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.5rem, 4vw, 2.5rem); }
-  .book-panel[open] { animation: book-in 0.55s var(--ease-out-expo); }
-  @keyframes book-in { from { transform: translateX(100%); } }
-  /* phones: a sheet that rises from the bottom */
-  @media (max-width: 639px) {
-    .book-panel { margin: auto 0 0; width: 100%; height: auto; max-height: 92svh; overflow: hidden; box-shadow: 0 -30px 80px -30px rgb(22 32 38 / 0.45); }
-    .book-sheet { max-height: 92svh; }
-    .book-panel[open] { animation-name: book-up; }
-    @keyframes book-up { from { transform: translateY(100%); } }
+  /* centred, square frosted glass: the page shows softly through it */
+  .book-panel {
+    margin: auto; width: min(calc(100% - 2rem), 34rem); max-width: none; max-height: min(88svh, 52rem); padding: 0; overflow: hidden;
+    border-radius: 2px; border: 1px solid rgb(255 255 255 / 0.75); color: var(--color-ink);
+    background: linear-gradient(150deg, rgb(255 255 255 / 0.82) 0%, rgb(255 255 255 / 0.68) 100%);
+    backdrop-filter: blur(26px) saturate(1.3); -webkit-backdrop-filter: blur(26px) saturate(1.3);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.95), 0 40px 90px -30px rgb(22 32 38 / 0.55);
   }
-  @media (prefers-reduced-motion: reduce) { .book-panel[open] { animation: none; } }
+  .book-panel::backdrop { background: rgb(22 32 38 / 0.32); backdrop-filter: blur(3px); }
+  .book-sheet { max-height: min(88svh, 52rem); overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.5rem, 4vw, 2.5rem); }
+  .book-panel[open] { animation: book-in 0.5s var(--ease-out-expo); }
+  .book-panel[open]::backdrop { animation: book-fade 0.4s ease; }
+  @keyframes book-in { from { opacity: 0; transform: translateY(18px) scale(0.97); } }
+  @keyframes book-fade { from { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .book-panel[open], .book-panel[open]::backdrop { animation: none; } }
 </style>
 
 <script>

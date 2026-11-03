@@ -78,6 +78,7 @@ No script, no italics; square cards, round header icons only.
   it (`--hh-now`) and mark the section in view.
 - **Repeated row buttons are outlined** (feature rows); solid Turquoise is kept for the
   main action of a section.
+- **Booking box ("Check Availability", "Book"):** opens centred on the screen as a square frosted-glass box over a lightly dimmed page; fades and rises in; closes with ×, Esc or a click outside.
 - **Six text styles only, on every page:** Montserrat 300 (menu), 400 (text), 500 (buttons, labels), 600 (bold); Playfair 400 (headings), 500 (card titles). No condensed type.
 - **Body text is Montserrat 400** (was 350) for easier reading on phones.
 - **Icons sit on pale Sand discs** with Sand Gold strokes everywhere (no dark squares).

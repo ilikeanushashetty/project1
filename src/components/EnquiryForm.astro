@@ -68,7 +68,7 @@ const full = compact ? '' : 'sm:col-span-2';
   .field:global(.invalid) :is(input, textarea, select) { border-color: #b3261e; border-bottom-width: 2px; }
   .field:global(.invalid) > span { color: #b3261e; }
   /* in the panel the send buttons stay in view at the bottom */
-  .actions.is-sticky { position: sticky; bottom: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); z-index: 2; margin-inline: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); padding: 0.9rem clamp(1.5rem, 4vw, 2.5rem) calc(0.9rem + env(safe-area-inset-bottom)); background: var(--color-shell); box-shadow: 0 -12px 24px -18px rgb(22 32 38 / 0.3); }
+  .actions.is-sticky { position: sticky; bottom: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); z-index: 2; margin-inline: calc(-1 * clamp(1.5rem, 4vw, 2.5rem)); padding: 0.9rem clamp(1.5rem, 4vw, 2.5rem) calc(0.9rem + env(safe-area-inset-bottom)); background: rgb(255 255 255 / 0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 -12px 24px -18px rgb(22 32 38 / 0.3); }
   .actions.is-sticky :global(.btn) { flex: 1 1 auto; justify-content: center; }
   .btn-wa { background: var(--color-sea); color: var(--color-ink); }
   .btn-wa:hover { background: var(--color-sea-deep); }
