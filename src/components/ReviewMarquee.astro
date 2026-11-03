@@ -24,7 +24,7 @@ type Item = (typeof row)[number];
             it.kind === 'review' ? (
               <li class="m-card glass-card relative w-[260px] md:w-[300px] shrink-0 p-6" aria-hidden={copy === 1 ? 'true' : undefined}>
                 <span class="absolute top-3 right-5 font-display text-6xl leading-none text-ink/15" aria-hidden="true">“</span>
-                <span class="block text-sm font-bold text-ink">{it.r.name}</span>
+                <span class="block text-sm font-semibold text-ink">{it.r.name}</span>
                 <blockquote class="mt-4 font-display text-[1.15rem] leading-snug text-ink">{it.r.quote}</blockquote>
               </li>
             ) : (

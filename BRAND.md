@@ -78,6 +78,7 @@ No script, no italics; square cards, round header icons only.
   it (`--hh-now`) and mark the section in view.
 - **Repeated row buttons are outlined** (feature rows); solid Turquoise is kept for the
   main action of a section.
+- **Six text styles only, on every page:** Montserrat 300 (menu), 400 (text), 500 (buttons, labels), 600 (bold); Playfair 400 (headings), 500 (card titles). No condensed type.
 - **Body text is Montserrat 400** (was 350) for easier reading on phones.
 - **Icons sit on pale Sand discs** with Sand Gold strokes everywhere (no dark squares).
 - **Square corners everywhere (2px):** tiles, cards, photos, buttons, icon squares,
@@ -105,7 +106,7 @@ Free fonts (SIL Open Font License), matched to munjoh.com.
 |---|---|---|
 | Headings | **Playfair Display** 400/500 | All headlines, sentence case, one colour. |
 | Heading sizes | One scale, site-wide (`--fs-h1/2/3` in global.css) | Page title (H1) 38→68px · section title (H2) 30→48px · card title (H3) 18→20px. No per-heading sizes; one-line headings shrink only where the screen is too narrow. |
-| Body, labels, navigation | **Montserrat** (variable, body at 350) | Paragraphs, buttons, forms. Navigation in light (300) capitals with ~0.08em spacing; labels in capitals with ~0.14em. |
+| Body, labels, navigation | **Montserrat** (variable; regular width only, never condensed) | Paragraphs, buttons, forms. Navigation in light (300) capitals with ~0.08em spacing; labels in capitals with ~0.14em. |
 
 Minimum sizes on phones: 12px for labels, 14px for anything to be read, tap
 areas about 44px.
@@ -131,6 +132,7 @@ areas about 44px.
 - **Hero badge:** thin-framed TIERRA / CAMPSITE wordmark over the video, tagline
   "Where River Meets Sea, Luxury Finds Its Home", small leaf-green bird perched
   on the frame. Sits a little below the middle of the video (60%).
+- **Home hero is a still picture** (resort-overview.webp, the A-frames and pool from above) instead of the drone video, at the user's request (3 Nov 2026). It is 1024px wide, so it looks slightly soft on large screens; a larger version would sharpen it.
 - **No booking bar on the home video** (removed at the user's request); booking is via Check Availability, WhatsApp and the phone bar.
 - **Framed titles:** thin white frame around uppercase serif words over photos
   (hero badge, "Your Coastal Retreat Awaits").

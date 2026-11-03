@@ -2,6 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import AwaitsBento from '@/components/AwaitsBento.astro';
 import VideoHero from '@/components/VideoHero.astro';
+import Photo from '@/components/Photo.astro';
 import ReviewMarquee from '@/components/ReviewMarquee.astro';
 import BeachArt from '@/components/BeachArt.astro';
 import CategoryBand from '@/components/CategoryBand.astro';
@@ -15,10 +16,11 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
 <Base>
   <!-- ============ HERO ============ -->
   <section data-hero class="relative h-[calc(100svh-var(--hh))] min-h-[560px] overflow-hidden bg-night text-paper">
-    <!-- video shown almost untouched: shade only at the top (nav) and bottom (badge) -->
-    <VideoHero poster={img.heroPoster} alt="Aerial view of Tierra's A-frame cottages, pool and palms beside the backwaters"
-      desktop="/videos/hero-1080.mp4" mobile="/videos/hero-720.mp4" priority
-      overlay="linear-gradient(180deg,rgb(16 24 28/0.35) 0%,rgb(16 24 28/0.12) 30%,rgb(16 24 28/0.28) 55%,rgb(16 24 28/0.1) 80%,rgb(16 24 28/0.4) 100%)" />
+    <!-- the resort from above: A-frames, pool and palms (settles in slowly) -->
+    <div class="absolute inset-0" data-hero-media>
+      <Photo src={img.resortOverview} alt="Tierra from above: the blue A-frame cottages, the pool and the palms" priority sizes="100vw" class="h-full" imgClass="object-[50%_55%]" />
+    </div>
+    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_24_28/0.35)_0%,rgb(16_24_28/0.12)_30%,rgb(16_24_28/0.3)_55%,rgb(16_24_28/0.12)_80%,rgb(16_24_28/0.4)_100%)]"></div>
 
     <!-- small framed badge + tracked tagline, just below the middle -->
     <div class="absolute inset-x-0 top-[60%] z-[3] flex -translate-y-1/2 flex-col items-center px-5 text-center">

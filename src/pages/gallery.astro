@@ -37,7 +37,7 @@ const photos = await Promise.all(
           <li class="g-item" data-tag={g.tag}>
             <button type="button" class="g-open" data-photo={i} aria-label={`Open photo: ${g.alt}`}>
               <Photo src={g.image} alt={g.alt} sizes="(min-width: 768px) 50vw, 100vw" class="h-full" imgClass={g.focus} priority={i < 3} />
-              <span class="g-cap" aria-hidden="true"><span class="block text-[0.78rem] font-semibold tracking-[0.12em] uppercase opacity-85">{g.tag}</span>{g.alt}</span>
+              <span class="g-cap" aria-hidden="true"><span class="block font-sans text-[0.75rem] font-medium tracking-[0.14em] uppercase opacity-85">{g.tag}</span>{g.alt}</span>
             </button>
           </li>
         ))}
