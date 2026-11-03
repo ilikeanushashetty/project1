@@ -84,7 +84,7 @@ const nearby = [['Beach', '2 min walk'], ['Surf Club', '200 m'], ['Blue Flag Bea
           <!-- pulse rings over the pin (the map is centred on Tierra) -->
           <span class="map-pulse" aria-hidden="true"><i></i><i></i></span>
           <a href={site.mapsUrl} target="_blank" rel="noopener" class="map-card absolute bottom-4 left-4 flex items-center gap-3 bg-white px-4 py-3 shadow-[0_14px_30px_-18px_rgb(34_48_46/0.5)]">
-            <span class="grid size-9 place-items-center rounded-full bg-sea text-ink"><Icon name="pin" class="size-4" /></span>
+            <span class="grid size-9 place-items-center rounded-[2px] bg-sea text-ink"><Icon name="pin" class="size-4" /></span>
             <span><span class="block font-display text-[1.05rem] leading-tight text-ink">Tierra Resort &amp; Villas</span><span class="block text-[0.8rem] text-ink-muted">Hejamadi, Karnataka</span></span>
           </a>
         </div>
@@ -100,7 +100,7 @@ const nearby = [['Beach', '2 min walk'], ['Surf Club', '200 m'], ['Blue Flag Bea
   /* contact boxes: gold hairline frames, centred, after munjoh.com */
   .cbox { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 2.2rem 1.5rem 2rem; text-align: center; border: 1px solid var(--color-sand-light); background: #fff; transition: border-color 0.5s, transform 0.6s var(--ease-out-expo), box-shadow 0.6s; }
   .cbox:hover { border-color: var(--color-sea); transform: translateY(-4px); box-shadow: 0 24px 40px -32px rgb(42 118 128 / 0.35); }
-  .cbox-icon { display: grid; width: 3rem; height: 3rem; margin-bottom: 0.6rem; place-items: center; border-radius: 999px; background: var(--color-sand); color: var(--color-gold-deep); transition: background-color 0.4s, color 0.4s; }
+  .cbox-icon { display: grid; width: 3rem; height: 3rem; margin-bottom: 0.6rem; place-items: center; border-radius: 2px; background: var(--color-sand); color: var(--color-gold-deep); transition: background-color 0.4s, color 0.4s; }
   .cbox:hover .cbox-icon { background: var(--color-sea); color: var(--color-ink); }
   .cbox-main { margin-top: 0.35rem; font-size: 1.05rem; font-weight: 500; color: var(--color-ink); }
   .cbox-sub { font-size: 0.92rem; color: var(--color-ink-muted); }

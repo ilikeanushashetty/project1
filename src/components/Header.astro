@@ -41,7 +41,7 @@ const icons = [
       {icons.map((i) => (
         <li class:list={[i.icon !== 'phone' && 'hidden xl:block']}>
           <a href={i.href} aria-label={i.label} target={i.external ? '_blank' : undefined} rel={i.external ? 'noopener' : undefined}
-            class="hdr-icon grid size-11 place-items-center rounded-full">
+            class="hdr-icon grid size-11 place-items-center rounded-[2px]">
             <Icon name={i.icon} class="size-[1.1rem]" />
           </a>
         </li>

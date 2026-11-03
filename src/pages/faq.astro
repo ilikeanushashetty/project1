@@ -18,7 +18,7 @@ import { img, faqs, waLink } from '@/data/site';
             <h3>
               <button class="flex w-full items-center justify-between gap-6 py-6 text-left transition-colors hover:text-teal" aria-expanded="false" aria-controls={`faq-${i}`}>
                 {f.q}
-                <span class="faq-icon grid size-9 shrink-0 place-items-center rounded-full bg-sand text-gold-deep transition-transform duration-500"><Icon name="plus" class="size-4" /></span>
+                <span class="faq-icon grid size-9 shrink-0 place-items-center rounded-[2px] bg-sand text-gold-deep transition-transform duration-500"><Icon name="plus" class="size-4" /></span>
               </button>
             </h3>
             <div id={`faq-${i}`} class="faq-body grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-[var(--ease-out-expo)]">

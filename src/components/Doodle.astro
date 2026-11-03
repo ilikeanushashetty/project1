@@ -1,7 +1,7 @@
 ---
 /**
  * Small hand-drawn line illustrations for the "Everything for a Perfect Escape"
- * tiles, kept black and white (Apple-like) with one touch of the beach palette:
+ * tiles, kept to Ink lines (minimal) with one touch of the beach palette:
  * turquoise for water and shade, sand gold for sun and fire.
  * tone="dark" draws white lines for the black tile. Decorative: hidden from screen readers.
  * Every shape draws itself in when its tile appears (AwaitsBento sets pathLength).
@@ -10,7 +10,7 @@ interface Props { name: string; class?: string; tone?: 'light' | 'dark' }
 const { name, class: cls = '', tone = 'light' } = Astro.props;
 
 const dark = tone === 'dark';
-const ink = dark ? '#ffffff' : '#1d1d1f';
+const ink = dark ? '#ffffff' : '#22302e';
 const paper = dark ? 'none' : '#ffffff'; // "white" fills
 const tq = '#86c9c4';   // turquoise accent lines
 const tql = dark ? 'rgb(134 201 196 / 0.35)' : '#bfe3df'; // turquoise accent fills (water, canopy)

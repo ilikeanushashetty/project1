@@ -26,7 +26,7 @@ type Item = (typeof row)[number];
               <li class="m-card glass-card relative w-[260px] md:w-[300px] shrink-0 p-6" aria-hidden={copy === 1 ? 'true' : undefined}>
                 <span class="absolute top-3 right-5 font-display text-6xl leading-none text-gold/25" aria-hidden="true">“</span>
                 <div class="flex items-center gap-3">
-                  <span class="grid size-10 shrink-0 place-items-center rounded-full bg-sea text-sm font-bold text-ink" aria-hidden="true">{initials(it.r.name)}</span>
+                  <span class="grid size-10 shrink-0 place-items-center rounded-[2px] bg-sea text-sm font-bold text-ink" aria-hidden="true">{initials(it.r.name)}</span>
                   <span>
                     <span class="block text-sm font-bold text-ink">{it.r.name}</span>
                     <span class="eyebrow block text-[0.75rem] text-clay">{it.r.from}</span>
@@ -36,7 +36,7 @@ type Item = (typeof row)[number];
               </li>
             ) : (
               <li class="m-card w-[260px] md:w-[300px] shrink-0" aria-hidden={copy === 1 ? 'true' : undefined}>
-                <a href={url} target="_blank" rel="noopener" class="flex h-full flex-col justify-between rounded-[22px] bg-sea p-6 text-ink transition-colors hover:bg-sea-deep" tabindex={copy === 1 ? -1 : undefined}>
+                <a href={url} target="_blank" rel="noopener" class="flex h-full flex-col justify-between rounded-[2px] bg-sea p-6 text-ink transition-colors hover:bg-sea-deep" tabindex={copy === 1 ? -1 : undefined}>
                   <span class="flex items-center gap-3">
                     <span class="font-display text-4xl leading-none">{rating.toFixed(1)}</span>
                     <span class="flex gap-0.5 text-ink" aria-hidden="true">{[0, 1, 2, 3, 4].map(() => <svg viewBox="0 0 24 24" class="size-4 fill-current"><path d={starPath} /></svg>)}</span>
@@ -62,7 +62,7 @@ type Item = (typeof row)[number];
   /* iPhone-style glass: translucent fill with a specular highlight at the top, bright rim
      light on the top edge, a faint shade on the bottom edge, and a floating shadow */
   .glass-card {
-    border-radius: 22px;
+    border-radius: 2px;
     background:
       radial-gradient(120% 60% at 30% 0%, rgb(255 255 255 / 0.7), transparent 60%),
       linear-gradient(160deg, rgb(255 255 255 / 0.85) 0%, rgb(255 255 255 / 0.35) 45%, rgb(255 255 255 / 0.55) 100%),

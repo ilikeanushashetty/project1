@@ -63,9 +63,9 @@ No script, no italics; square cards, round header icons only.
   photo that drifts with scroll; "The Tierra Way" as white cards on the pale
   turquoise wave band; location with drawn-in distances beside the delta map.
 - **"Everything for a Perfect Escape" (home):** awareness of how much the resort
-  offers, Apple-like and mostly black and white. Light grey tiles (#F5F5F4, 24px
-  corners), black type, generous gaps. Colour only in three places: the full-bleed
-  garden-path photo tile ("2 min"), one black tile ("Backwater meets sea"), and
+  offers, Apple-like and mostly black and white. Square warm Sand tiles, Ink type,
+  generous gaps. Colour only in three places: the full-bleed
+  garden-path photo tile ("2 min"), one Ink tile ("Backwater meets sea"), and
   turquoise / sand-gold touches in the line drawings (Doodle.astro) and the units
   (km, m). Drawings draw themselves in as tiles rise; numbers count up. Closing line:
   "12 reasons to stay" + See all experiences. Phones: small features become compact
@@ -80,6 +80,10 @@ No script, no italics; square cards, round header icons only.
   main action of a section.
 - **Body text is Montserrat 400** (was 350) for easier reading on phones.
 - **Icons sit on pale Sand discs** with Sand Gold strokes everywhere (no dark squares).
+- **Square corners everywhere (2px):** tiles, cards, photos, buttons, icon squares,
+  review cards, the WhatsApp button. The only round shapes are the iPhone-style
+  photo viewer in the Gallery and the pulse rings on the Contact map.
+- **Earth over grey:** surfaces use Sand and Ink, never neutral grey or pure black.
 - **Headings and paragraphs** never leave a single word on the last line.
 - **Footer:** white and compact, a hairline above it; the Sand band sits above.
 - **Home reviews:** plain white section; the review cards are iPhone-style
