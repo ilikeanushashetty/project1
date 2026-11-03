@@ -62,12 +62,14 @@ No script, no italics; square cards, round header icons only.
   pair, a pull quote and three key facts (2020 · 2 min · 3 km); a wide backwater
   photo that drifts with scroll; "The Tierra Way" as white cards on the pale
   turquoise wave band; location with drawn-in distances beside the delta map.
-- **"What Awaits You" (home):** Apple-style and minimal on white: big centred
-  headline, a sentence that lights up word by word with scroll, and a bento grid
-  of rounded tiles (20px), compact, max 68rem wide, that rise in one after another. Large beach tile keeps
-  the original shoreline gradient with a drifting wave and a "2 min" stat; "3 km"
-  (Sand) and "200 m" (Mist) count up; "Backwater meets sea" is the one Turquoise
-  tile; eight small pale tiles for the rest.
+- **"Everything for a Perfect Escape" (home):** awareness of how much the resort
+  offers, Apple-like and mostly black and white. Light grey tiles (#F5F5F4, 24px
+  corners), black type, generous gaps. Colour only in three places: the full-bleed
+  garden-path photo tile ("2 min"), one black tile ("Backwater meets sea"), and
+  turquoise / sand-gold touches in the line drawings (Doodle.astro) and the units
+  (km, m). Drawings draw themselves in as tiles rise; numbers count up. Closing line:
+  "12 reasons to stay" + See all experiences. Phones: small features become compact
+  rows with the drawing on the left.
 - **One hero for every inner page** (PageHero): full photo, centred title and
   line over an even shade, the drifting wave edge into white. About, Stay,
   Experiences, Weddings, FAQ and Contact all use it; Gallery has no visible title

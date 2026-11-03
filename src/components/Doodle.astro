@@ -1,0 +1,120 @@
+---
+/**
+ * Small hand-drawn line illustrations for the "Everything for a Perfect Escape"
+ * tiles, kept black and white (Apple-like) with one touch of the beach palette:
+ * turquoise for water and shade, sand gold for sun and fire.
+ * tone="dark" draws white lines for the black tile. Decorative: hidden from screen readers.
+ * Every shape draws itself in when its tile appears (AwaitsBento sets pathLength).
+ */
+interface Props { name: string; class?: string; tone?: 'light' | 'dark' }
+const { name, class: cls = '', tone = 'light' } = Astro.props;
+
+const dark = tone === 'dark';
+const ink = dark ? '#ffffff' : '#1d1d1f';
+const paper = dark ? 'none' : '#ffffff'; // "white" fills
+const tq = '#86c9c4';   // turquoise accent lines
+const tql = dark ? 'rgb(134 201 196 / 0.35)' : '#bfe3df'; // turquoise accent fills (water, canopy)
+const sand = paper;     // shapes stay white: black and white first
+const gold = '#d9c49a'; // sand gold: sun, flame
+const warm = '#d9c49a'; // sand gold: hearts, embers
+const leaf = paper;     // foliage as plain outlines
+
+const art: Record<string, string> = {
+  // beach umbrella over a little sandcastle
+  umbrella: `
+    <path d="M14 38 C 20 14, 66 10, 76 34 Z" fill="${tql}"/>
+    <path d="M14 38 C 18 30, 26 30, 30 36 C 36 28, 46 28, 50 35 C 55 27, 66 27, 76 34" fill="none"/>
+    <path d="M30 36 C 32 24, 40 16, 46 13 M50 35 C 52 25, 50 17, 46 13" fill="none"/>
+    <path d="M46 13 L 45 70"/>
+    <path d="M34 72 C 50 68, 74 68, 94 72" fill="none"/>
+    <path d="M64 70 V 56 H 68 V 52 H 72 V 56 H 76 V 52 H 80 V 56 H 84 V 70 Z" fill="${sand}"/>
+    <path d="M72 52 V 44 L 78 46 L 72 48" fill="${gold}"/>
+    <path d="M71 70 V 63 H 77 V 70" fill="none"/>`,
+  // a smiling surfboard
+  surfboard: `
+    <path d="M50 6 C 68 18, 70 54, 58 74 C 54 78, 46 78, 42 74 C 30 54, 32 18, 50 6 Z" fill="${paper}"/>
+    <path d="M37 50 C 46 47, 56 47, 64 50 C 63 60, 61 68, 58 74 C 54 78, 46 78, 42 74 C 39 68, 37 60, 37 50 Z" fill="${tql}" stroke="none"/>
+    <path d="M50 6 C 68 18, 70 54, 58 74 C 54 78, 46 78, 42 74 C 30 54, 32 18, 50 6 Z" fill="none"/>
+    <circle cx="45" cy="34" r="1.6" fill="${ink}"/><circle cx="55" cy="34" r="1.6" fill="${ink}"/>
+    <path d="M46 39 C 48 42, 52 42, 54 39" fill="none"/>
+    <circle cx="41" cy="40" r="2.4" fill="${warm}" opacity=".35" stroke="none"/><circle cx="59" cy="40" r="2.4" fill="${warm}" opacity=".35" stroke="none"/>`,
+  // the backwater: mangroves on both banks, a rowing boat and the sun
+  backwater: `
+    <path d="M4 60 C 26 50, 40 64, 60 54 C 76 46, 88 52, 116 46 L 116 80 L 4 80 Z" fill="${tql}" stroke="none"/>
+    <path d="M4 60 C 26 50, 40 64, 60 54 C 76 46, 88 52, 116 46" fill="none"/>
+    <path d="M30 70 C 46 66, 62 70, 78 64" fill="none" stroke="${tq}"/>
+    <path d="M14 56 V 36 M10 56 C 12 50, 16 50, 18 56" fill="none"/>
+    <path d="M14 36 C 2 36, 2 22, 12 22 C 12 12, 26 12, 26 22 C 34 22, 32 36, 22 36 Z" fill="${leaf}"/>
+    <path d="M100 48 V 28 M96 48 C 98 42, 102 42, 104 48" fill="none"/>
+    <path d="M100 28 C 88 28, 88 14, 98 14 C 98 4, 112 4, 112 14 C 120 14, 118 28, 108 28 Z" fill="${leaf}"/>
+    <path d="M44 60 C 50 66, 66 66, 72 58 Z" fill="${paper}"/>
+    <path d="M58 60 L 70 46" fill="none"/>
+    <circle cx="66" cy="18" r="6" fill="${gold}"/>
+    <path d="M66 6 V 9 M66 27 V 30 M54 18 H 57 M75 18 H 78 M57.5 9.5 L 59.5 11.5 M72.5 24.5 L 74.5 26.5 M74.5 9.5 L 72.5 11.5 M59.5 24.5 L 57.5 26.5" fill="none"/>
+    <path d="M36 14 c 2 -2 4 -2 6 0 c 2 -2 4 -2 6 0 M84 30 c 2 -2 4 -2 6 0 c 2 -2 4 -2 6 0" fill="none"/>`,
+  // pool ladder going into rippling water
+  pool: `
+    <path d="M10 48 C 30 40, 70 40, 90 48 L 90 74 L 10 74 Z" fill="${tql}" stroke="none"/>
+    <path d="M36 52 V 16 C 36 8, 46 8, 46 16 M60 52 V 16 C 60 8, 70 8, 70 16" fill="none"/>
+    <path d="M36 26 H 60 M36 36 H 60 M36 46 H 60" fill="none"/>
+    <path d="M14 56 c 6 -4 12 -4 18 0 c 6 4 12 4 18 0 c 6 -4 12 -4 18 0 c 6 4 12 4 18 0" fill="none"/>
+    <path d="M20 66 c 6 -4 12 -4 18 0 c 6 4 12 4 18 0 c 6 -4 12 -4 18 0" fill="none" stroke="${tq}"/>`,
+  // coffee cup with a heart and steam
+  cup: `
+    <path d="M26 30 H 70 V 56 C 70 68, 60 74, 48 74 C 36 74, 26 68, 26 56 Z" fill="${paper}"/>
+    <path d="M70 36 C 84 36, 84 54, 70 54" fill="none"/>
+    <path d="M48 58 C 40 52, 40 44, 44 43 C 46 42, 48 44, 48 46 C 48 44, 50 42, 52 43 C 56 44, 56 52, 48 58 Z" fill="${warm}" stroke="none" opacity=".75"/>
+    <path d="M38 22 c -4 -4 4 -8 0 -12 M48 22 c -4 -4 4 -8 0 -12 M58 22 c -4 -4 4 -8 0 -12" fill="none"/>`,
+  // breakfast: toast popping out of a toaster
+  plate: `
+    <path d="M32 42 V 22 C 32 15, 48 15, 48 22 V 42" fill="${sand}"/>
+    <path d="M52 42 V 18 C 52 11, 68 11, 68 18 V 42" fill="${sand}"/>
+    <path d="M24 40 H 76 C 80 40, 82 44, 82 48 V 66 C 82 70, 78 72, 74 72 H 26 C 22 72, 18 70, 18 66 V 48 C 18 44, 20 40, 24 40 Z" fill="${paper}"/>
+    <path d="M28 54 H 72" fill="none" stroke="${tq}"/>
+    <path d="M82 52 H 90" fill="none"/>
+    <path d="M24 72 V 76 M76 72 V 76" fill="none"/>`,
+  // a crackling campfire
+  campfire: `
+    <path d="M22 70 L 78 58 M22 58 L 78 70" stroke-width="6" stroke="${sand}"/>
+    <path d="M22 70 L 78 58 M22 58 L 78 70" fill="none"/>
+    <path d="M50 8 C 62 22, 72 32, 68 46 C 66 56, 58 62, 50 62 C 40 62, 32 56, 32 46 C 32 36, 40 32, 42 22 C 46 28, 48 30, 50 30 C 52 24, 50 16, 50 8 Z" fill="${gold}"/>
+    <path d="M50 30 C 58 38, 60 46, 56 54 C 54 58, 46 58, 44 54 C 42 48, 46 42, 50 30 Z" fill="${warm}"/>`,
+  // a figure sitting cross-legged, with a leaf
+  yoga: `
+    <circle cx="50" cy="26" r="7" fill="${paper}"/>
+    <path d="M40 54 C 40 36, 60 36, 60 54 Z" fill="${paper}"/>
+    <path d="M43 40 C 33 44, 29 50, 34 56 M57 40 C 67 44, 71 50, 66 56" fill="none"/>
+    <path d="M22 64 C 32 52, 68 52, 78 64 C 68 72, 32 72, 22 64 Z" fill="${sand}"/>
+    <path d="M70 22 C 70 10, 84 6, 90 8 C 90 18, 82 26, 70 22 Z" fill="${leaf}"/>
+    <path d="M70 22 L 84 12" fill="none"/>`,
+  // a flower arch over the couple
+  arch: `
+    <path d="M18 76 V 34 C 18 10, 82 10, 82 34 V 76" fill="none"/>
+    <circle cx="24" cy="24" r="4" fill="${warm}" opacity=".6"/><circle cx="36" cy="14" r="4" fill="${paper}"/><circle cx="50" cy="11" r="4" fill="${gold}" opacity=".7"/><circle cx="64" cy="14" r="4" fill="${paper}"/><circle cx="76" cy="24" r="4" fill="${warm}" opacity=".6"/>
+    <circle cx="40" cy="40" r="5" fill="${paper}"/><path d="M40 45 V 62 M34 76 L 40 62 L 46 76 M33 52 H 47" fill="none"/>
+    <circle cx="60" cy="40" r="5" fill="${paper}"/><path d="M60 45 L 52 76 H 68 Z" fill="${paper}"/><path d="M54 54 H 66" fill="none"/>
+    <path d="M10 76 H 90" fill="none"/>`,
+  // a laptop and a coconut drink: work, by the water
+  meeting: `
+    <path d="M18 56 H 66 L 72 66 H 12 Z" fill="${sand}"/>
+    <path d="M22 56 V 28 H 62 V 56" fill="${paper}"/>
+    <path d="M30 38 H 54 M30 46 H 46" fill="none" stroke="${tq}"/>
+    <circle cx="84" cy="54" r="10" fill="${leaf}"/>
+    <path d="M84 44 L 90 30 M88 36 H 94" fill="none"/>
+    <path d="M6 70 H 96" fill="none"/>`,
+  // a happy sitting dog with floppy ears
+  dog: `
+    <path d="M36 52 C 32 72, 68 72, 64 52 Z" fill="${paper}"/>
+    <path d="M42 64 V 74 M58 64 V 74" fill="none"/>
+    <path d="M64 62 C 74 58, 76 50, 72 46" fill="none"/>
+    <circle cx="50" cy="36" r="16" fill="${paper}"/>
+    <path d="M35 28 C 26 30, 26 46, 33 48 C 36 42, 36 34, 35 28 Z" fill="${sand}"/>
+    <path d="M65 28 C 74 30, 74 46, 67 48 C 64 42, 64 34, 65 28 Z" fill="${sand}"/>
+    <circle cx="44" cy="34" r="1.8" fill="${ink}"/><circle cx="56" cy="34" r="1.8" fill="${ink}"/>
+    <ellipse cx="50" cy="41" rx="3" ry="2.2" fill="${ink}"/>
+    <path d="M46 45 C 48 48, 52 48, 54 45" fill="none"/>
+    <path d="M84 20 c -3 -3 -7 0 -4 4 l 4 4 l 4 -4 c 3 -4 -1 -7 -4 -4 z" fill="${warm}" opacity=".7"/>`,
+};
+---
+
+<svg viewBox={name === 'backwater' ? '0 0 120 80' : '0 0 100 80'} class={cls} aria-hidden="true" fill="none" stroke={ink} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={art[name] ?? ''} />

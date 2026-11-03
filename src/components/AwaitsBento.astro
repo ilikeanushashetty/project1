@@ -1,104 +1,160 @@
 ---
 /**
- * "What Awaits You", Apple style: a big centred headline, a sentence that
- * lights up word by word as you scroll (motion.ts data-words), and a minimal
- * bento grid whose tiles rise in one after another (distances count up via
- * motion.ts data-count). The large beach tile keeps
- * the original shoreline colours. Everything is static for reduced motion.
+ * "Everything for a Perfect Escape": shows at a glance how much the resort offers.
+ * Apple-like and mostly black and white: a centred headline, a sentence that lights
+ * up word by word (motion.ts data-words), then a calm bento grid of light grey tiles
+ * with black type. Colour is used sparingly: the garden photo, one black tile, and
+ * turquoise / sand-gold touches in the line drawings (Doodle).
+ * Motion: tiles rise in one after another, drawings draw themselves, distances count
+ * up (motion.ts data-count). Everything is still for reduced motion.
  */
 import Icon from './Icon.astro';
-import WaveEdge from './WaveEdge.astro';
+import Photo from './Photo.astro';
+import Doodle from './Doodle.astro';
+import { img } from '@/data/site';
 
 interface Item { title: string; icon: string; text?: string }
 interface Props { items: Item[]; /** section name, not shown */ eyebrow?: string; title: string; text: string; cta: { label: string; href: string; book?: string }; link?: { label: string; href: string } }
 const { items, title, text, cta, link } = Astro.props;
 
-// the four headline features get their own tiles; the rest fill the small grid
+// the four location highlights get their own tiles; the rest fill the grid below
 const pick = (t: string) => items.find((i) => i.title === t)!;
 const beach = pick('Walk to the beach');
 const blueFlag = pick('Blue Flag Beach');
-const surf = pick('Surfing');
 const delta = pick('Backwater meets sea');
+const surf = pick('Surfing');
 const rest = items.filter((i) => ![beach, blueFlag, surf, delta].includes(i));
+
+// shorter tile titles where the full name is long; the line below carries the detail
+const short: Record<string, string> = { 'Café & coastal kitchen': 'Café', 'Campfire evenings': 'Campfire', 'Yoga sessions': 'Yoga', 'Destination weddings': 'Weddings' };
+// one drawing per feature
+const doodle: Record<string, string> = { pool: 'pool', utensils: 'cup', cup: 'plate', fire: 'campfire', yoga: 'yoga', ring: 'arch', briefcase: 'meeting', paw: 'dog' };
 ---
 
-<div class="awaits py-[clamp(4.5rem,9vw,8rem)]" data-awaits>
+<div class="awaits py-[clamp(4rem,8vw,7rem)]" data-awaits>
   <div class="container-x">
     <!-- headline -->
     <div class="mx-auto max-w-[56rem] text-center">
       <!-- one line at every width: the type scales with the screen instead of wrapping -->
       <h2 class="text-[clamp(1.15rem,5.9vw,3rem)] whitespace-nowrap" data-split set:html={title} />
-      <p class="aw-lead mx-auto mt-6 max-w-[52rem] text-[clamp(1.1rem,1.6vw,1.4rem)] leading-[1.55] text-ink" data-words>{text}</p>
-      <div class="mt-9 flex flex-wrap items-center justify-center gap-x-8 gap-y-4" data-fade>
+      <p class="aw-lead mx-auto mt-5 max-w-[50rem] text-[clamp(1.02rem,1.4vw,1.25rem)] leading-[1.55] text-ink" data-words>{text}</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3" data-fade>
         <a href={cta.href} data-book={cta.book} class="btn btn-fill">{cta.label} <Icon name="arrow" class="size-4" /></a>
         {link && <a href={link.href} class="link-u inline-flex items-center gap-2 py-3 text-[0.95rem] font-medium text-teal">{link.label} <Icon name="arrow" class="size-4" /></a>}
       </div>
     </div>
 
-    <!-- bento grid -->
-    <ul class="mx-auto mt-[clamp(2.5rem,5vw,4rem)] grid max-w-[68rem] grid-cols-2 gap-3 lg:grid-cols-4">
-      <li class="tile tile-beach col-span-2 lg:row-span-2" style="--i:0">
-        <Icon name={beach.icon} class="size-6 text-ink/80" />
-        <div class="relative z-[1] mt-auto pt-8">
-          <p class="stat text-[clamp(2.8rem,5vw,4.4rem)]"><span data-count="2">2</span> min</p>
-          <h3 class="mt-2">{beach.title}</h3>
-          <p class="mt-1 text-[0.92rem] text-ink/70">{beach.text}</p>
-        </div>
-        <WaveEdge fill="rgb(255 255 255 / 0.55)" />
-      </li>
-      <li class="tile bg-sand" style="--i:1">
-        <Icon name={blueFlag.icon} class="size-6 text-teal" />
-        <p class="stat mt-auto pt-6 text-[clamp(2rem,3vw,2.6rem)] text-teal"><span data-count="3">3</span> km</p>
-        <h3 class="mt-1.5">{blueFlag.title}</h3>
-      </li>
-      <li class="tile bg-mist" style="--i:2">
-        <Icon name={surf.icon} class="size-6 text-teal" />
-        <p class="stat mt-auto pt-6 text-[clamp(2rem,3vw,2.6rem)] text-teal"><span data-count="200">200</span> m</p>
-        <h3 class="mt-1.5">Surf Club</h3>
-      </li>
-      <li class="tile tile-delta col-span-2" style="--i:3">
-        <Icon name={delta.icon} class="size-6 text-ink/80" />
-        <div class="mt-auto pt-6">
-          <h3>{delta.title}</h3>
-          <p class="mt-1 text-[0.92rem] text-ink/75">{delta.text}</p>
+    <ul class="bento mx-auto mt-[clamp(2.75rem,5vw,4rem)] grid max-w-[76rem] grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+      <!-- the photo tile -->
+      <li class="tile tile-photo col-span-2 lg:row-span-2" style="--i:0">
+        <div class="absolute inset-0"><Photo src={img.garden} alt="The palm-lined garden path at Tierra" sizes="(min-width:1024px) 40vw, 92vw" class="h-full" imgClass="object-[50%_62%] transition-transform duration-[1.6s] ease-[var(--ease-out-expo)]" /></div>
+        <div class="relative z-[1] mt-auto text-white">
+          <p class="stat text-[clamp(3rem,5vw,4.5rem)]"><span data-count="2">2</span><span class="unit">min</span></p>
+          <h3 class="mt-2 text-white">{beach.title}</h3>
+          <p class="mt-1 text-[0.95rem] text-white/85">{beach.text}</p>
         </div>
       </li>
+
+      <!-- distances -->
+      <li class="tile" style="--i:1">
+        <p class="stat mt-auto text-[clamp(2.4rem,3.4vw,3.1rem)]"><span data-count="3">3</span><span class="unit">km</span></p>
+        <h3 class="mt-2">{blueFlag.title}</h3>
+        <Doodle name="umbrella" class="doodle doodle-corner" />
+      </li>
+      <li class="tile" style="--i:2">
+        <p class="stat mt-auto text-[clamp(2.4rem,3.4vw,3.1rem)]"><span data-count="200">200</span><span class="unit">m</span></p>
+        <h3 class="mt-2">Surf Club</h3>
+        <Doodle name="surfboard" class="doodle doodle-corner" />
+      </li>
+
+      <!-- the one black tile -->
+      <li class="tile tile-dark col-span-2" style="--i:3">
+        <div class="relative z-[1] mt-auto max-w-[60%]">
+          <h3 class="text-white">{delta.title}</h3>
+          <p class="mt-1.5 text-[0.95rem] text-white/75">{delta.text}, where the river slips into the Arabian Sea.</p>
+        </div>
+        <Doodle name="backwater" tone="dark" class="doodle doodle-wide" />
+      </li>
+
+      <!-- everything else at the resort -->
       {rest.map((it, n) => (
-        <li class="tile tile-sm" style={`--i:${(n % 4) + 1}`}>
-          <Icon name={it.icon} class="size-6 text-teal" />
-          <h3 class="mt-auto pt-6">{it.title}</h3>
-          {it.text && <p class="mt-1 text-[0.86rem] leading-snug text-ink-muted">{it.text}</p>}
+        <li class="tile tile-row" style={`--i:${(n % 4) + 1}`}>
+          <Doodle name={doodle[it.icon]} class="doodle doodle-top" />
+          <h3 class="max-sm:self-end sm:mt-auto">{short[it.title] ?? it.title}</h3>
+          {it.text && <p class="mt-1 max-sm:self-start text-[0.9rem] leading-snug text-ink-muted">{it.text}</p>}
         </li>
       ))}
     </ul>
+
+    <!-- the takeaway -->
+    <p class="mt-[clamp(2rem,4vw,3rem)] text-center text-[0.98rem] text-ink-muted" data-fade>
+      <strong class="font-semibold text-ink">{items.length} reasons to stay,</strong> from your doorstep to the delta.
+      <a href="/experiences" class="link-u ml-1 inline-flex items-center gap-1.5 font-medium whitespace-nowrap text-teal">See all experiences <Icon name="arrow" class="size-4" /></a>
+    </p>
   </div>
 </div>
 
 <style>
-  /* tiles: soft rounded panels, no borders (Apple-like) */
-  .tile { position: relative; display: flex; min-height: 9.5rem; flex-direction: column; overflow: hidden; border-radius: 20px; padding: clamp(1.1rem, 1.7vw, 1.6rem); color: var(--color-ink); }
-  .tile-sm { min-height: 8.5rem; background: #f4f7f6; }
-  .tile-beach { min-height: 19rem; background: linear-gradient(165deg, #86c9c4 0%, #a6d9d3 35%, #cfeae5 68%, #f2e8d6 100%); }
-  .tile-delta { background: var(--color-sea); }
-  .stat { font-family: var(--font-display); font-weight: 400; line-height: 0.95; letter-spacing: -0.01em; }
+  /* calm grid: light grey tiles, black type, generous space */
+  .bento { grid-auto-rows: minmax(10.5rem, auto); }
+  .tile { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; padding: clamp(1.25rem, 2vw, 1.85rem); background: #f5f5f4; color: #1d1d1f; transition: background-color 0.5s; }
+  .tile:hover { background: #efefed; }
+  .tile h3 { color: inherit; }
+  .stat { font-family: var(--font-display); font-weight: 400; line-height: 0.95; letter-spacing: -0.02em; }
   .stat span { font-variant-numeric: tabular-nums; }
-  @media (max-width: 639px) { .tile { min-height: 8.5rem; border-radius: 16px; } .tile-beach { min-height: 15rem; } }
+  /* the unit sits smaller, in the deep turquoise: the one touch of theme colour */
+  .stat .unit { margin-left: 0.18em; font-size: 0.5em; letter-spacing: 0; color: var(--color-sea-ink); }
+
+  /* photo tile: the garden path, words on a soft shade */
+  .tile-photo { min-height: 22rem; padding: clamp(1.5rem, 2.6vw, 2.25rem); background: #1d1d1f; }
+  .tile-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / 0) 30%, rgb(0 0 0 / 0.35) 60%, rgb(0 0 0 / 0.75) 100%); }
+  .tile-photo .unit { color: #fff; }
+  .tile-photo:hover :global(img) { transform: scale(1.04); }
+
+  /* the black tile */
+  .tile-dark { background: #1d1d1f; color: #fff; }
+  .tile-dark:hover { background: #26262a; }
+
+  /* drawings */
+  .tile :global(.doodle) { pointer-events: none; transition: transform 0.7s var(--ease-out-expo); }
+  .tile :global(.doodle-top) { height: clamp(3.6rem, 5vw, 4.4rem); width: auto; align-self: flex-start; margin-bottom: 1.25rem; }
+  .tile :global(.doodle-corner) { position: absolute; right: clamp(1rem, 1.8vw, 1.6rem); top: clamp(1rem, 1.8vw, 1.6rem); height: clamp(3.6rem, 5vw, 4.6rem); width: auto; }
+  .tile :global(.doodle-wide) { position: absolute; right: clamp(1rem, 2vw, 1.75rem); top: 50%; translate: 0 -50%; height: 72%; width: auto; }
+  .tile:hover :global(.doodle) { transform: translateY(-4px) rotate(-2deg); }
+  @media (max-width: 639px) {
+    .bento { grid-auto-rows: auto; }
+    .tile { border-radius: 18px; min-height: 9.5rem; }
+    /* small features: one compact row each, drawing on the left */
+    .tile-row { grid-column: span 2; min-height: 0; display: grid; grid-template-columns: 3.4rem 1fr; column-gap: 1rem; align-items: center; padding: 1rem 1.15rem; }
+    .tile-row :global(.doodle-top) { grid-row: span 2; height: 2.9rem; margin: 0; justify-self: center; }
+    .tile-row h3 { margin-top: 0; }
+    .tile-photo { min-height: 17rem; }
+    .tile :global(.doodle-corner) { height: 3.2rem; }
+    .tile-dark { min-height: 11rem; }
+    .tile-dark > div { max-width: 100%; }
+    .tile :global(.doodle-wide) { top: 1rem; right: 1rem; translate: none; height: 3.6rem; }
+  }
 
   /* the split words are inline-blocks; drop the descender room headlines need so lines stay even */
   .aw-lead :global(.split-line) { padding-bottom: 0; margin-bottom: 0; vertical-align: top; }
 
-  /* tiles rise, sharpen and settle, one after another */
-  :global(.js:not(.reduced)) .tile { opacity: 0; transform: translateY(48px) scale(0.96); filter: blur(6px);
-    transition: opacity 0.9s ease, transform 1.2s var(--ease-out-expo), filter 0.9s ease; transition-delay: calc(var(--i) * 0.09s); }
+  /* motion: tiles rise and sharpen one after another, then their drawings draw themselves */
+  :global(.js:not(.reduced)) .tile { opacity: 0; transform: translateY(40px) scale(0.97); filter: blur(6px);
+    transition: opacity 0.9s ease, transform 1.2s var(--ease-out-expo), filter 0.9s ease, background-color 0.5s; transition-delay: calc(var(--i) * 0.08s); }
   :global(.js:not(.reduced)) .tile.is-in { opacity: 1; transform: none; filter: none; }
+  :global(.js:not(.reduced)) .tile :global(.doodle :is(path, circle, ellipse)) { stroke-dasharray: 1; stroke-dashoffset: 1; fill-opacity: 0;
+    transition: stroke-dashoffset 1.6s var(--ease-in-out-quart), fill-opacity 0.8s ease; transition-delay: calc(var(--i) * 0.08s + 0.35s), calc(var(--i) * 0.08s + 1.2s); }
+  :global(.js:not(.reduced)) .tile.is-in :global(.doodle :is(path, circle, ellipse)) { stroke-dashoffset: 0; fill-opacity: 1; }
   .tile:hover { transform: translateY(-4px) !important; transition-delay: 0s !important; }
   @media (hover: none) { .tile:hover { transform: none !important; } }
 </style>
 
 <script>
-  // tiles rise in the first time they scroll into view
   const root = document.querySelector<HTMLElement>('[data-awaits]');
   if (root) {
+    // let every stroke of the drawings draw itself in (dash length = the whole path)
+    root.querySelectorAll('.doodle :is(path, circle, ellipse)').forEach((el) => el.setAttribute('pathLength', '1'));
+    // tiles rise in the first time they scroll into view
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
     }, { threshold: 0.2 });
