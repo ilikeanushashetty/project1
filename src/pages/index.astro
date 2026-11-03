@@ -3,6 +3,7 @@ import Base from '@/layouts/Base.astro';
 import AwaitsBento from '@/components/AwaitsBento.astro';
 import VideoHero from '@/components/VideoHero.astro';
 import ReviewMarquee from '@/components/ReviewMarquee.astro';
+import BeachArt from '@/components/BeachArt.astro';
 import CategoryBand from '@/components/CategoryBand.astro';
 import Icon from '@/components/Icon.astro';
 import { site, img, essentials, reviews, reviewSummary, faqs, waLink, homeStay, homeDining, homeActivities, homeEvents } from '@/data/site';
@@ -67,9 +68,11 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     tiles={homeEvents} cta={{ label: 'Plan Your Event', href: '/contact#enquire', book: 'event' }} />
 
   <!-- ============ GUEST REVIEWS (real Google reviews, drifting boxes) ============ -->
-  <section class="reviews relative overflow-hidden bg-white pt-[clamp(3.5rem,7vw,5.5rem)] pb-[clamp(1.5rem,3.5vw,2.5rem)]">
+  <section class="reviews relative overflow-hidden pt-[clamp(3.5rem,7vw,5.5rem)] pb-[clamp(4.5rem,8vw,6.5rem)]">
+    <!-- illustrated aerial beach behind the frosted glass cards -->
+    <BeachArt />
     <div class="container-x relative mb-8 text-center">
-      <h2 data-split>What Our <em>Guests Say</em></h2>
+      <h2 class="text-white [text-shadow:0_2px_18px_rgb(22_32_38/0.25)]" data-split>What Our <em>Guests Say</em></h2>
     </div>
     <ReviewMarquee reviews={reviews} rating={reviewSummary.rating} count={reviewSummary.count} url={reviewSummary.url} />
   </section>

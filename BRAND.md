@@ -86,10 +86,11 @@ No script, no italics; square cards, round header icons only.
 - **Earth over grey:** surfaces use Sand and Ink, never neutral grey or pure black.
 - **Headings and paragraphs** never leave a single word on the last line.
 - **Footer:** white and compact, a hairline above it; the Sand band sits above.
-- **Home reviews:** plain white section (the user tried glows and an animated sea
-  behind the cards and chose plain white). Square clear-glass cards with a fine edge
-  and soft shadow; initials in white squares with a sand-gold edge; the Google card
-  is Sand.
+- **Home reviews:** an original flat illustration of an aerial beach (BeachArt.astro):
+  layered turquoise sea with white contour lines, a white foam band, speckled sand, a
+  rowing boat with ripples, a beach umbrella, sparkles; the water drifts gently.
+  Heading in white over the deep sea. Cards are square clear frosted glass with ALL
+  text in Ink (black): no initials box, no colour (8:1 at the weakest point).
 - **No small labels above headings** ("No. 01", "Our Story", "Stay" and so
   on): the heading stands alone, with its paragraph below.
 - The band above the footer is Sand; the footer is white, so they never merge.
