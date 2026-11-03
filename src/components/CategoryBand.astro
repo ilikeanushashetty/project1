@@ -18,11 +18,13 @@ interface Props {
   cta?: { label: string; href: string; book?: string };
   reverse?: boolean;
   tone?: 'shell' | 'champagne';
+  /** follows a white section directly: less space on top */
+  tight?: boolean;
 }
-const { id, title, text, tiles, cta, reverse = false, tone = 'shell' } = Astro.props;
+const { id, title, text, tiles, cta, reverse = false, tone = 'shell', tight = false } = Astro.props;
 ---
 
-<section id={id} class:list={['band scroll-mt-28 py-[clamp(3rem,6vw,5rem)]', tone === 'champagne' && 'bg-champagne']}>
+<section id={id} class:list={['band scroll-mt-28 pb-[clamp(3rem,6vw,5rem)]', tight ? 'pt-[clamp(1.5rem,3vw,2.5rem)]' : 'pt-[clamp(3rem,6vw,5rem)]', tone === 'champagne' && 'bg-champagne']}>
   <div class="container-x grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
     <div class:list={['lg:col-span-4', reverse && 'lg:order-2 lg:col-start-9']}>
       <h2 data-split set:html={title} />

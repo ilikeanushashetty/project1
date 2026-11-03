@@ -3,7 +3,7 @@
  * "Everything for a Perfect Escape": shows at a glance how much the resort offers.
  * Apple-like and mostly black and white: a centred headline, a sentence that lights
  * up word by word (motion.ts data-words), then a calm bento grid of light grey tiles
- * with black type. Colour is used sparingly: the garden photo, one black tile, and
+ * with black type. Colour is used sparingly: the dusk sea photo, one Ink tile, and
  * turquoise / sand-gold touches in the line drawings (Doodle).
  * Motion: tiles rise in one after another, drawings draw themselves, distances count
  * up (motion.ts data-count). Everything is still for reduced motion.
@@ -31,7 +31,7 @@ const short: Record<string, string> = { 'Café & coastal kitchen': 'Café', 'Cam
 const doodle: Record<string, string> = { pool: 'pool', utensils: 'cup', cup: 'plate', fire: 'campfire', yoga: 'yoga', ring: 'arch', briefcase: 'meeting', paw: 'dog' };
 ---
 
-<div class="awaits py-[clamp(4rem,8vw,7rem)]" data-awaits>
+<div class="awaits pt-[clamp(4rem,8vw,7rem)] pb-[clamp(1rem,2vw,1.5rem)]" data-awaits>
   <div class="container-x">
     <!-- headline -->
     <div class="mx-auto max-w-[56rem] text-center">
@@ -47,7 +47,7 @@ const doodle: Record<string, string> = { pool: 'pool', utensils: 'cup', cup: 'pl
     <ul class="bento mx-auto mt-[clamp(2.75rem,5vw,4rem)] grid max-w-[76rem] grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
       <!-- the photo tile -->
       <li class="tile tile-photo col-span-2 lg:row-span-2" style="--i:0">
-        <div class="absolute inset-0"><Photo src={img.garden} alt="The palm-lined garden path at Tierra" sizes="(min-width:1024px) 40vw, 92vw" class="h-full" imgClass="object-[50%_62%] transition-transform duration-[1.6s] ease-[var(--ease-out-expo)]" /></div>
+        <div class="absolute inset-0"><Photo src={img.contactDusk} alt="The Arabian Sea and the beach beyond Tierra at dusk" sizes="(min-width:1024px) 40vw, 92vw" class="h-full" imgClass="object-[50%_22%] transition-transform duration-[1.6s] ease-[var(--ease-out-expo)]" /></div>
         <div class="relative z-[1] mt-auto text-white">
           <p class="stat text-[clamp(3rem,5vw,4.5rem)]"><span data-count="2">2</span><span class="unit">min</span></p>
           <h3 class="mt-2 text-white">{beach.title}</h3>
