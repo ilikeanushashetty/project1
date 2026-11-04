@@ -152,7 +152,7 @@ areas about 44px.
 - **Hero badge:** thin-framed TIERRA / CAMPSITE wordmark over the video, tagline
   "Where River Meets Sea, Luxury Finds Its Home", small leaf-green bird perched
   on the frame. Sits a little below the middle of the video (60%).
-- **Home hero is a still picture** (resort-dusk.webp: the resort at dusk with the sea beyond; bottom strip cropped to remove the Gemini sparkle) instead of the drone video, at the user's request (3 Nov 2026). It is 1124px wide, so it looks slightly soft on large screens; a larger version would sharpen it.
+- **Home hero is a still picture** (resort-pool.webp: from about-sunset.webp, cropped to the A-frames, pool and gardens so the neighbouring building on the right is out of frame; the Gemini sparkle patched; upscaled 2x) instead of the drone video, at the user's request (3 Nov 2026). It is 1124px wide, so it looks slightly soft on large screens; a larger version would sharpen it.
 - **No booking bar on the home video** (removed at the user's request); booking is via Check Availability, WhatsApp and the phone bar.
 - **Framed titles:** thin white frame around uppercase serif words over photos
   (hero badge, "Your Coastal Retreat Awaits").
