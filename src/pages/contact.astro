@@ -84,7 +84,7 @@ const nearby = [['Beach', '2 min walk'], ['Surf Club', '200 m'], ['Blue Flag Bea
           <!-- pulse rings over the pin (the map is centred on Tierra) -->
           <span class="map-pulse" aria-hidden="true"><i></i><i></i></span>
           <a href={site.mapsUrl} target="_blank" rel="noopener" class="map-card absolute bottom-4 left-4 flex items-center gap-3 bg-white px-4 py-3 shadow-[0_14px_30px_-18px_rgb(34_48_46/0.5)]">
-            <span class="grid size-9 place-items-center rounded-[2px] bg-sea text-ink"><Icon name="pin" class="size-4" /></span>
+            <span class="grid size-9 place-items-center rounded-[2px] bg-sea text-white"><Icon name="pin" class="size-4" /></span>
             <span><span class="block font-display text-[1.05rem] leading-tight text-ink">Tierra Resort &amp; Villas</span><span class="block text-[0.8rem] text-ink-muted">Hejamadi, Karnataka</span></span>
           </a>
         </div>
@@ -99,9 +99,9 @@ const nearby = [['Beach', '2 min walk'], ['Surf Club', '200 m'], ['Blue Flag Bea
 <style>
   /* contact boxes: gold hairline frames, centred, after munjoh.com */
   .cbox { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 2.2rem 1.5rem 2rem; text-align: center; border: 1px solid var(--color-sand-light); background: #fff; transition: border-color 0.5s, transform 0.6s var(--ease-out-expo), box-shadow 0.6s; }
-  .cbox:hover { border-color: var(--color-sea); transform: translateY(-4px); box-shadow: 0 24px 40px -32px rgb(42 118 128 / 0.35); }
+  .cbox:hover { border-color: var(--color-sea); transform: translateY(-4px); box-shadow: 0 24px 40px -32px rgb(184 90 53 / 0.3); }
   .cbox-icon { display: grid; width: 3rem; height: 3rem; margin-bottom: 0.6rem; place-items: center; border-radius: 2px; background: var(--color-sand); color: var(--color-gold-deep); transition: background-color 0.4s, color 0.4s; }
-  .cbox:hover .cbox-icon { background: var(--color-sea); color: var(--color-ink); }
+  .cbox:hover .cbox-icon { background: var(--color-sea); color: #fff; }
   .cbox-main { margin-top: 0.35rem; font-size: 1.05rem; font-weight: 500; color: var(--color-ink); }
   .cbox-sub { font-size: 0.92rem; color: var(--color-ink-muted); }
   a.cbox-main:hover, a.cbox-sub:hover { color: var(--color-sea-ink); }
@@ -130,7 +130,7 @@ const nearby = [['Beach', '2 min walk'], ['Surf Club', '200 m'], ['Blue Flag Bea
   .map-iframe { filter: saturate(0.8); transition: filter 0.6s; }
   .map-frame:hover .map-iframe { filter: none; }
   .map-pulse { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; }
-  .map-pulse i { position: absolute; left: -40px; top: -40px; width: 80px; height: 80px; border-radius: 999px; border: 2px solid var(--color-sea); background: rgb(134 201 196 / 0.3); opacity: 0; animation: map-ping 2.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite; }
+  .map-pulse i { position: absolute; left: -40px; top: -40px; width: 80px; height: 80px; border-radius: 999px; border: 2px solid var(--color-sea); background: rgb(184 90 53 / 0.18); opacity: 0; animation: map-ping 2.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite; }
   .map-pulse i + i { animation-delay: 1.4s; }
   @keyframes map-ping { 0% { transform: scale(0.2); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
   :global(.js:not(.reduced)) .map-frame { clip-path: inset(0 100% 0 0); transition: clip-path 1.4s var(--ease-in-out-quart); }

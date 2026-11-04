@@ -17,8 +17,8 @@ No script, no italics; square cards, round header icons only.
 | Some | **Sand** | `#F6F1E7` | Alternate sections, the band above the footer, header icon discs |
 | Some | **Mist** | `#E6F4F1` | Palest turquoise: cards, gallery filter bar |
 | Text | **Ink** | `#22302E` | Headings and text; the few dark panels |
-| Action | **Turquoise** | `#86C9C4` | Every button and active fill, always with Ink text (hover `#6FB9B3`) |
-| Action text | **Deep Turquoise** | `#2A7680` | Links, icons, outline buttons and accent numbers on light backgrounds |
+| Action | **Sunset Terracotta** | `#B85A35` | Every button and active fill, always with white text, 4.6:1 (hover `#9E4C27`) |
+| Action text | **Deep Sunset** | `#9A4A22` | Links, icons, outline buttons and accent numbers on light backgrounds (6.2:1) |
 | Accent | **Sand Gold** | `#84693F` | Small labels (contact details, reviewers), current page in the menu |
 
 ### Supporting
@@ -36,8 +36,8 @@ No script, no italics; square cards, round header icons only.
 | Pairing | Ratio | Result |
 |---|---|---|
 | Ink on White / Sand / Mist | 13.7 / 12.2 / 12.1 :1 | AAA |
-| Ink on Turquoise (button) | 7.30:1 | AAA |
-| Deep Turquoise on White / Sand | 5.25 / 4.6 :1 | AA |
+| White on Sunset Terracotta (button) | 4.61:1 | AA |
+| Deep Sunset on White / Sand | 6.22 / 5.52 :1 | AA |
 | Sand Gold on White / Sand | 5.16 / 4.58 :1 | AA |
 | Ink Muted on White / Sand | 6.35 / 5.64 :1 | AA |
 | Ink on Turquoise (button on dark) | 7.30:1 | AAA |
@@ -45,7 +45,7 @@ No script, no italics; square cards, round header icons only.
 
 ### Rules of use
 
-- **One action colour (3 Nov 2026):** primary button = Turquoise + Ink everywhere; secondary = Deep Turquoise outline. No dark green anywhere; shades over photos are neutral slate, not green.
+- **One action colour (4 Nov 2026):** primary button = Sunset Terracotta + white, semibold labels; secondary = Deep Sunset outline. Turquoise stays only as a theme accent (drawings, bands), never on actions. No dark green anywhere; shades over photos are neutral slate, not green.
 - **Dark panels and photos:** primary button = Turquoise + Ink.
 - **Headlines are one colour** (Ink on light, white on photos): no gold
   words, no italics, script or cursive.
@@ -86,7 +86,7 @@ No script, no italics; square cards, round header icons only.
   home page it is transparent over the photo (white type) and turns white on scroll.
 - **Home hero:** the resort photo fills the whole screen behind the header. Headline
   "Barefoot luxury at the edge of the delta", line "Palm-shaded villas between the backwaters
-  and the Arabian Sea, two minutes from the sand.", stars + "4.8 · 356 Google reviews" (real).
+  and the Arabian Sea, two minutes from the sand.", no rating on the hero (removed at the user's request). Hero text is bold and white (headline Playfair 600, line and note Montserrat 600; header links 600 white over the photo).
   Wide screens: a square frosted availability bar along the bottom (check-in, check-out,
   guests, stay, Check availability) that prefills the booking box; phones: "Select your dates".
   Under it: "Breakfast included · We reply within the hour" (also under the booking form and

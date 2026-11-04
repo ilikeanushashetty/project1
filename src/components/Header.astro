@@ -96,11 +96,11 @@ const right = links.slice(3);
   .hdr-link.is-active { color: var(--color-gold-deep); }
 
   .hdr-icon { background: var(--color-sand); color: var(--color-gold-deep); transition: background-color 0.3s, color 0.3s; }
-  .hdr-icon:hover { background: var(--color-sea); color: var(--color-ink); }
+  .hdr-icon:hover { background: var(--color-sea); color: #fff; }
 
   /* home page: transparent over the photo until the visitor scrolls (or opens the menu) */
   #site-header[data-overlay]:not(.is-solid):not(.menu-open) { background: transparent; color: #fff; }
-  #site-header[data-overlay]:not(.is-solid):not(.menu-open) .hdr-link { text-shadow: 0 1px 12px rgb(16 24 28 / 0.45); }
+  #site-header[data-overlay]:not(.is-solid):not(.menu-open) .hdr-link { font-weight: 600; color: #fff; text-shadow: 0 1px 12px rgb(16 24 28 / 0.5); }
   #site-header[data-overlay]:not(.is-solid):not(.menu-open) .hdr-link:hover { color: #fff; }
   #site-header[data-overlay]:not(.is-solid):not(.menu-open) .hdr-icon { background: rgb(255 255 255 / 0.18); color: #fff; backdrop-filter: blur(8px); }
   #site-header[data-overlay]:not(.is-solid):not(.menu-open) .logo-disc { box-shadow: 0 10px 30px -12px rgb(16 24 28 / 0.55); }

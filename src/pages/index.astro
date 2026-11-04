@@ -23,16 +23,12 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_24_28/0.5)_0%,rgb(16_24_28/0)_24%,rgb(16_24_28/0)_62%,rgb(16_24_28/0.55)_100%),linear-gradient(90deg,rgb(16_24_28/0.55)_0%,rgb(16_24_28/0.18)_50%,rgb(16_24_28/0)_78%)]"></div>
 
     <div class="container-x relative z-[3] flex flex-1 flex-col justify-center pt-[var(--hh)] pb-6">
-      <h1 class="max-w-[14ch] [text-shadow:0_2px_30px_rgb(16_24_28/0.4)]" data-split>Barefoot luxury at the edge of the delta</h1>
-      <p class="mt-6 max-w-md text-[1.05rem] leading-relaxed text-paper/90 md:text-lg" data-fade>Palm-shaded villas between the backwaters and the Arabian Sea, two minutes from the sand.</p>
-      <a href={reviewSummary.url} target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-3 self-start text-[0.92rem] text-paper/90 hover:text-paper" data-fade>
-        <span class="flex gap-0.5 text-sand-light" aria-hidden="true">{[0, 1, 2, 3, 4].map(() => <svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" /></svg>)}</span>
-        {reviewSummary.rating.toFixed(1)} · {reviewSummary.count} Google reviews
-      </a>
+      <h1 class="max-w-[14ch] font-semibold text-white [text-shadow:0_2px_30px_rgb(16_24_28/0.45)]" data-split>Barefoot luxury at the edge of the delta</h1>
+      <p class="mt-6 max-w-md text-[1.05rem] leading-relaxed font-semibold text-white [text-shadow:0_1px_14px_rgb(16_24_28/0.5)] md:text-lg" data-fade>Palm-shaded villas between the backwaters and the Arabian Sea, two minutes from the sand.</p>
       <!-- phones and tablets: one button opens the booking box -->
       <div class="mt-9 lg:hidden" data-fade>
         <a href="/contact#enquire" data-book="" class="btn btn-fill">Select your dates <Icon name="arrow" class="size-4" /></a>
-        <p class="mt-3 text-[0.85rem] text-paper/85">Breakfast included · We reply within the hour</p>
+        <p class="mt-3 text-[0.88rem] font-semibold text-white [text-shadow:0_1px_10px_rgb(16_24_28/0.5)]">Breakfast included · We reply within the hour</p>
       </div>
     </div>
 
@@ -49,7 +45,7 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
         </label>
         <button type="submit" class="btn btn-fill m-2 !px-7">Check availability <Icon name="arrow" class="size-4" /></button>
       </form>
-      <p class="mt-3 text-center text-[0.85rem] text-paper/85">Breakfast included · We reply within the hour</p>
+      <p class="mt-3 text-center text-[0.88rem] font-semibold text-white [text-shadow:0_1px_10px_rgb(16_24_28/0.5)]">Breakfast included · We reply within the hour</p>
     </div>
   </section>
 
