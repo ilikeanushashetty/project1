@@ -94,6 +94,15 @@ No script, no italics; square cards, round header icons only.
 - **Warmer section titles:** Your Sanctuaries · The Coastal Table · Sea, River & Sky ·
   Celebrations, Shaped by the Tide · In Our Guests' Words · Find Your Way to the Delta ·
   Before You Arrive · The Tide Is Calling (the closing Reserve band).
+- **One font, whole site (4 Nov 2026, the user's choice):** Playfair Display for headings,
+  subtitles, body, labels, buttons and menu (weights 400 / 500 / 600). Montserrat is removed.
+- **No mint anywhere:** the pale surfaces (gallery filter bar, Contact and About bands) are Sand
+  `#F6F1E7`; their wave lines are sand-gold.
+- **Home headline:** centred, exactly two lines ("Barefoot luxury" / "at the edge of the delta"),
+  scaling with the screen; subtitle, button and note centred under it.
+- **Home reviews (after the reference the user liked):** cream section `#FDF7F2`, square Sand cards
+  with a hairline, the quote in quotation marks, the guest's name in small capitals underneath.
+  No per-review stars: the data has no individual ratings.
 - **Six text styles only, on every page:** Montserrat 300 (menu), 400 (text), 500 (buttons, labels), 600 (bold); Playfair 400 (headings), 500 (card titles). No condensed type.
 - **Body text is Montserrat 400** (was 350) for easier reading on phones.
 - **Icons sit on pale Sand discs** with Sand Gold strokes everywhere (no dark squares).
@@ -103,11 +112,6 @@ No script, no italics; square cards, round header icons only.
 - **Earth over grey:** surfaces use Sand and Ink, never neutral grey or pure black.
 - **Headings and paragraphs** never leave a single word on the last line.
 - **Footer:** white and compact, a hairline above it; the Sand band sits above.
-- **Home reviews:** an original flat illustration of an aerial beach (BeachArt.astro):
-  layered turquoise sea with white contour lines, a white foam band, speckled sand, a
-  rowing boat with ripples, a beach umbrella, sparkles; the water drifts gently.
-  Heading in white over the deep sea. Cards are square clear frosted glass with ALL
-  text in Ink (black): no initials box, no colour (8:1 at the weakest point).
 - **No small labels above headings** ("No. 01", "Our Story", "Stay" and so
   on): the heading stands alone, with its paragraph below.
 - The band above the footer is Sand; the footer is white, so they never merge.

@@ -4,7 +4,6 @@ import AwaitsBento from '@/components/AwaitsBento.astro';
 import VideoHero from '@/components/VideoHero.astro';
 import Photo from '@/components/Photo.astro';
 import ReviewMarquee from '@/components/ReviewMarquee.astro';
-import BeachArt from '@/components/BeachArt.astro';
 import CategoryBand from '@/components/CategoryBand.astro';
 import Icon from '@/components/Icon.astro';
 import { site, img, essentials, reviews, reviewSummary, faqs, waLink, homeStay, homeDining, homeActivities, homeEvents, stays } from '@/data/site';
@@ -20,11 +19,12 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
       <Photo src={img.resortDusk} alt="Tierra at dusk: the A-frame cottages, the pool and the palms, with the Arabian Sea beyond" priority sizes="100vw" class="h-full" imgClass="object-[50%_50%] max-md:object-[62%_50%]" />
     </div>
     <!-- shade: top (for the header), left (for the words), bottom (for the booking bar) -->
-    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_24_28/0.5)_0%,rgb(16_24_28/0)_24%,rgb(16_24_28/0)_62%,rgb(16_24_28/0.55)_100%),linear-gradient(90deg,rgb(16_24_28/0.55)_0%,rgb(16_24_28/0.18)_50%,rgb(16_24_28/0)_78%)]"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_24_28/0.5)_0%,rgb(16_24_28/0)_24%,rgb(16_24_28/0)_62%,rgb(16_24_28/0.55)_100%),radial-gradient(60%_50%_at_50%_48%,rgb(16_24_28/0.42),rgb(16_24_28/0)_75%)]"></div>
 
-    <div class="container-x relative z-[3] flex flex-1 flex-col justify-center pt-[var(--hh)] pb-6">
-      <h1 class="max-w-[14ch] font-semibold text-white [text-shadow:0_2px_30px_rgb(16_24_28/0.45)]" data-split>Barefoot luxury at the edge of the delta</h1>
-      <p class="mt-6 max-w-md text-[1.05rem] leading-relaxed font-semibold text-white [text-shadow:0_1px_14px_rgb(16_24_28/0.5)] md:text-lg" data-fade>Palm-shaded villas between the backwaters and the Arabian Sea, two minutes from the sand.</p>
+    <div class="container-x relative z-[3] flex flex-1 flex-col items-center justify-center pt-[var(--hh)] pb-6 text-center">
+      <!-- two lines at every width: each line keeps together, the type scales with the screen -->
+      <h1 class="text-[clamp(1.6rem,7.4vw,4.25rem)] font-semibold text-white [text-shadow:0_2px_30px_rgb(16_24_28/0.45)]" data-split><span class="block whitespace-nowrap">Barefoot luxury</span><span class="block whitespace-nowrap">at the edge of the delta</span></h1>
+      <p class="mx-auto mt-6 max-w-lg text-[1.05rem] leading-relaxed font-semibold text-white [text-shadow:0_1px_14px_rgb(16_24_28/0.5)] md:text-lg" data-fade>Palm-shaded villas between the backwaters and the Arabian Sea, two minutes from the sand.</p>
       <!-- phones and tablets: one button opens the booking box -->
       <div class="mt-9 lg:hidden" data-fade>
         <a href="/contact#enquire" data-book="" class="btn btn-fill">Select your dates <Icon name="arrow" class="size-4" /></a>
@@ -71,11 +71,9 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     tiles={homeEvents} cta={{ label: 'Plan Your Event', href: '/contact#enquire', book: 'event' }} />
 
   <!-- ============ GUEST REVIEWS (real Google reviews, drifting boxes) ============ -->
-  <section class="reviews relative overflow-hidden pt-[clamp(3.5rem,7vw,5.5rem)] pb-[clamp(4.5rem,8vw,6.5rem)]">
-    <!-- illustrated aerial beach behind the frosted glass cards -->
-    <BeachArt />
-    <div class="container-x relative mb-8 text-center">
-      <h2 class="text-white [text-shadow:0_2px_18px_rgb(22_32_38/0.25)]" data-split>In Our Guests' Words</h2>
+  <section class="reviews relative overflow-hidden bg-[#fdf7f2] pt-[clamp(3.5rem,7vw,5.5rem)] pb-[clamp(2.5rem,5vw,4rem)]">
+    <div class="container-x relative mb-10 text-center">
+      <h2 data-split>In Our Guests' Words</h2>
     </div>
     <ReviewMarquee reviews={reviews} rating={reviewSummary.rating} count={reviewSummary.count} url={reviewSummary.url} />
   </section>

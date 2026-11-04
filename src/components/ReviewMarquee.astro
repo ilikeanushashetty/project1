@@ -22,14 +22,13 @@ type Item = (typeof row)[number];
         {[0, 1].map((copy) =>
           row.map((it: Item) =>
             it.kind === 'review' ? (
-              <li class="m-card glass-card relative w-[260px] md:w-[300px] shrink-0 p-6" aria-hidden={copy === 1 ? 'true' : undefined}>
-                <span class="absolute top-3 right-5 font-display text-6xl leading-none text-ink/15" aria-hidden="true">“</span>
-                <span class="block text-sm font-semibold text-ink">{it.r.name}</span>
-                <blockquote class="mt-4 font-display text-[1.15rem] leading-snug text-ink">{it.r.quote}</blockquote>
+              <li class="m-card review-card flex w-[300px] shrink-0 flex-col md:w-[420px]" aria-hidden={copy === 1 ? 'true' : undefined}>
+                <blockquote class="text-[1.2rem] leading-[1.5] text-ink md:text-[1.35rem]">“{it.r.quote}”</blockquote>
+                <p class="mt-auto pt-8 text-[0.78rem] tracking-[0.14em] text-ink-muted uppercase">{it.r.name}</p>
               </li>
             ) : (
-              <li class="m-card w-[260px] md:w-[300px] shrink-0" aria-hidden={copy === 1 ? 'true' : undefined}>
-                <a href={url} target="_blank" rel="noopener" class="glass-card flex h-full flex-col justify-between p-6 text-ink transition-colors" tabindex={copy === 1 ? -1 : undefined}>
+              <li class="m-card w-[300px] shrink-0 md:w-[340px]" aria-hidden={copy === 1 ? 'true' : undefined}>
+                <a href={url} target="_blank" rel="noopener" class="review-card flex h-full flex-col justify-between text-ink transition-colors hover:bg-[#f1e9da]" tabindex={copy === 1 ? -1 : undefined}>
                   <span class="flex items-center gap-3">
                     <span class="font-display text-4xl leading-none">{rating.toFixed(1)}</span>
                     <span class="flex gap-0.5 text-ink" aria-hidden="true">{[0, 1, 2, 3, 4].map(() => <svg viewBox="0 0 24 24" class="size-4 fill-current"><path d={starPath} /></svg>)}</span>
@@ -46,27 +45,17 @@ type Item = (typeof row)[number];
 </div>
 
 <style>
-  /* no edge mask: a mask would stop the glass from blurring the beach behind it */
-  .marquee { display: grid; gap: 1.25rem; }
+  .marquee { display: grid; gap: 1.25rem; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
   .m-row { overflow: hidden; }
-  .m-track { display: flex; gap: 1.25rem; width: max-content; animation: m-scroll 55s linear infinite; padding-block: 1rem 3rem; } /* room for the glass shadows */
+  .m-track { --m-gap: clamp(1.25rem, 3vw, 3rem); display: flex; gap: var(--m-gap); width: max-content; animation: m-scroll 60s linear infinite; padding-block: 0.5rem 1.5rem; }
   .marquee:hover .m-track, .marquee:focus-within .m-track { animation-play-state: paused; }
   .m-card { transition: transform 0.5s var(--ease-out-expo); }
   .m-card:hover { transform: translateY(-4px); }
-  /* clear frosted glass over the illustrated beach: a light white veil, strong blur so the water
-     softens behind it, a bright edge and a soft shadow; square corners */
-  .glass-card {
-    border-radius: 2px;
-    background: linear-gradient(150deg, rgb(255 255 255 / 0.45) 0%, rgb(255 255 255 / 0.28) 100%);
-    backdrop-filter: blur(20px) saturate(1.2); -webkit-backdrop-filter: blur(20px) saturate(1.2);
-    border: 1px solid rgb(255 255 255 / 0.7);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.95),
-      0 22px 44px -26px rgb(22 32 38 / 0.4);
-  }
-  a.glass-card:hover { background: rgb(255 255 255 / 0.55); }
+  /* review cards (after the reference the user liked): a quiet sand panel with a hairline,
+     the quote in the site serif and the guest's name in small capitals; square corners */
+  .review-card { border-radius: 2px; background: var(--color-sand); border: 1px solid rgb(217 196 154 / 0.55); padding: clamp(1.75rem, 3vw, 2.6rem); }
   /* the track holds two copies, so moving it by half loops perfectly */
-  @keyframes m-scroll { to { transform: translateX(calc(-50% - 0.625rem)); } }
+  @keyframes m-scroll { to { transform: translateX(calc(-50% - var(--m-gap) / 2)); } }
   @media (prefers-reduced-motion: reduce) {
     .m-track { animation: none; }
     .m-row { overflow-x: auto; }

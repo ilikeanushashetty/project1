@@ -2,17 +2,17 @@
 
 /* ---------- Design tokens ---------- */
 @theme {
-  /* Typography in the style of munjoh.com (SIL OFL): Playfair Display headlines,
-     Montserrat for body, labels, buttons and navigation. */
+  /* One font for the whole site (the user's choice, 4 Nov 2026): Playfair Display (SIL OFL)
+     for headings, subtitles, body, labels, buttons and navigation. */
   --font-display: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
   --font-editorial: 'Playfair Display Variable', Georgia, serif;  /* big statement words */
-  --font-sans: 'Montserrat Variable', 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: 'Montserrat Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;  /* the whole site is one font */
+  --font-mono: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
 
   /* Beach palette (see BRAND.md), sampled from the "What Awaits" shoreline:
      white most of the page, turquoise shallows, sand; Lagoon for actions, Sand Gold for labels. */
   --color-shell: #ffffff;        /* white: page background (most of the site) */
-  --color-mist: #e6f4f1;         /* palest turquoise: the band above the footer, cards (ink 12:1) */
+  --color-mist: #f6f1e7;         /* pale bands and cards: Sand, no mint (the user asked for no green shade) */
   --color-sand: #f6f1e7;         /* pale sand: alternate sections (ink 12.2:1) */
   --color-turquoise: #86c9c4;    /* the shallows: lines, decoration, actions on dark (7.3:1 on ink) */
   --color-sea: #b85a35;          /* Sunset terracotta: every action fill (buttons, active states); white text on it 4.6:1 */
@@ -106,7 +106,7 @@ html.lenis, html.lenis body { height: auto; }
   padding-inline: clamp(1.25rem, 4vw, 3.5rem);
 }
 
-/* labels: Montserrat capitals, same width and family as every other line of text */
+/* labels: small capitals in the site font */
 @utility eyebrow {
   font-family: var(--font-sans);
   font-size: 0.78rem;
