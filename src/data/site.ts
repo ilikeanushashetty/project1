@@ -51,7 +51,7 @@ export const img = {
 export const site = {
   name: 'Tierra Campsite',
   fullName: 'Tierra Resort & Villas',
-  title: 'Tierra Resort & Villas | Luxury Eco-Resort in Coastal Karnataka',
+  title: 'Tierra Resort & Villas | Luxury Beach Resort & Campsite, Hejamady',
   description:
     'Experience coastal luxury at Tierra Resort & Villas. Premium eco-friendly villas, swimming pool, and serene nature retreat near Padubidri, Karnataka. Book your escape today.',
   footerTagline: 'Experience the art of slow luxury at the Udupi-Mangalore coastal delta.',

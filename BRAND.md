@@ -84,9 +84,7 @@ No script, no italics; square cards, round header icons only.
   white logo badge in the centre (the one round shape besides the Gallery viewer and map
   pulse), Gallery · About · Contact and a turquoise **Reserve** button on the right. On the
   home page it is transparent over the photo (white type) and turns white on scroll.
-- **Home hero:** the resort photo fills the whole screen behind the header. Headline
-  "Barefoot luxury at the edge of the delta", line "Palm-shaded villas between the backwaters
-  and the Arabian Sea, two minutes from the sand.", no rating on the hero (removed at the user's request). Hero text is bold and white (headline Playfair 600, line and note Montserrat 600; header links 600 white over the photo).
+- **Home hero:** the resort photo fills the whole screen behind the header. Headline (see "Home headline" below), no rating on the hero (removed at the user's request). Hero text is bold and white (headline Playfair 600, line and note Montserrat 600; header links 600 white over the photo).
   Wide screens: a square frosted availability bar along the bottom (check-in, check-out,
   guests, stay, Check availability) that prefills the booking box; phones: "Select your dates".
   Under it: "Breakfast included · We reply within the hour" (also under the booking form and
@@ -98,8 +96,10 @@ No script, no italics; square cards, round header icons only.
   subtitles, body, labels, buttons and menu (weights 400 / 500 / 600). Montserrat is removed.
 - **No mint anywhere:** the pale surfaces (gallery filter bar, Contact and About bands) are Sand
   `#F6F1E7`; their wave lines are sand-gold.
-- **Home headline:** centred, exactly two lines ("Barefoot luxury" / "at the edge of the delta"),
-  scaling with the screen; subtitle, button and note centred under it.
+- **Home headline (minimal, 4 Nov 2026):** centred, two lines: "LUXURY BEACH RESORT & CAMPSITE"
+  (capitals) / "where the river meets the sea", then four keywords: Beach · Campsite · Backwaters ·
+  Nature. No subtitle: the user wants little text on the landing page. Then the booking bar
+  (phones: Select your dates) and "Breakfast included · We reply within the hour".
 - **Home reviews (after the reference the user liked):** cream section `#FDF7F2`, square Sand cards
   with a hairline, the quote in quotation marks, the guest's name in small capitals underneath.
   No per-review stars: the data has no individual ratings.

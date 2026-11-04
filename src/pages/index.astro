@@ -22,9 +22,15 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_24_28/0.5)_0%,rgb(16_24_28/0)_24%,rgb(16_24_28/0)_62%,rgb(16_24_28/0.55)_100%),radial-gradient(60%_50%_at_50%_48%,rgb(16_24_28/0.42),rgb(16_24_28/0)_75%)]"></div>
 
     <div class="container-x relative z-[3] flex flex-1 flex-col items-center justify-center pt-[var(--hh)] pb-6 text-center">
-      <!-- two lines at every width: each line keeps together, the type scales with the screen -->
-      <h1 class="text-[clamp(1.6rem,7.4vw,4.25rem)] font-semibold text-white [text-shadow:0_2px_30px_rgb(16_24_28/0.45)]" data-split><span class="block whitespace-nowrap">Barefoot luxury</span><span class="block whitespace-nowrap">at the edge of the delta</span></h1>
-      <p class="mx-auto mt-6 max-w-lg text-[1.05rem] leading-relaxed font-semibold text-white [text-shadow:0_1px_14px_rgb(16_24_28/0.5)] md:text-lg" data-fade>Palm-shaded villas between the backwaters and the Arabian Sea, two minutes from the sand.</p>
+      <!-- what Tierra is, in plain words, then where: two lines at every width (each keeps together, the type scales) -->
+      <h1 class="font-semibold text-white [text-shadow:0_2px_30px_rgb(16_24_28/0.45)]" data-split>
+        <span class="block text-[clamp(0.85rem,4.4vw,3rem)] leading-[1.15] tracking-[0.02em] whitespace-nowrap uppercase md:tracking-[0.06em]">Luxury Beach Resort &amp; Campsite</span>
+        <span class="mt-2 block text-[clamp(1.15rem,6.2vw,4rem)] leading-[1.1] whitespace-nowrap">where the river meets the sea</span>
+      </h1>
+      <!-- the four things people come for, at a glance -->
+      <ul class="hero-keys mt-7 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-2 text-[0.76rem] font-semibold tracking-[0.08em] text-white uppercase sm:gap-x-4 md:text-[0.85rem] md:tracking-[0.2em]" data-fade aria-label="At Tierra">
+        {['Beach', 'Campsite', 'Backwaters', 'Nature'].map((k, i) => <li class="flex items-center gap-2.5 sm:gap-4">{i > 0 && <span class="size-1 rotate-45 bg-sand-light" aria-hidden="true"></span>}{k}</li>)}
+      </ul>
       <!-- phones and tablets: one button opens the booking box -->
       <div class="mt-9 lg:hidden" data-fade>
         <a href="/contact#enquire" data-book="" class="btn btn-fill">Select your dates <Icon name="arrow" class="size-4" /></a>
@@ -148,6 +154,7 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
   .avail-field :is(input, select) { width: 100%; background: transparent; border: 0; padding: 0; font-size: 0.95rem; color: var(--color-ink); }
   .avail-field :is(input, select):focus { outline: none; }
   .avail-field:focus-within { background: rgb(255 255 255 / 0.6); }
+  .hero-keys { text-shadow: 0 1px 10px rgb(16 24 28 / 0.55); }
   /* the bar rises in after the headline (it sits too low for a scroll trigger) */
   :global(.js:not(.reduced)) .avail-wrap { opacity: 0; transform: translateY(24px); animation: avail-in 1.1s var(--ease-out-expo) 1.1s forwards; }
   @keyframes avail-in { to { opacity: 1; transform: none; } }
