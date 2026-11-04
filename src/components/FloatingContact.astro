@@ -9,7 +9,7 @@ const WA_PATH = 'M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.1-
 ---
 
 <!-- larger screens: floating WhatsApp -->
-<a href={waLink()} target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp"
+<a href={waLink()} target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp" data-wa-float
    class="wa-float fixed right-8 bottom-8 z-40 hidden size-14 place-items-center rounded-[2px] bg-sea text-ink shadow-[0_10px_30px_-8px_rgb(0_0_0/0.4)] transition-transform duration-500 ease-[var(--ease-out-expo)] hover:scale-110 md:grid">
   <svg viewBox="0 0 24 24" class="size-7 fill-current" aria-hidden="true"><path d={WA_PATH} /></svg>
 </a>
@@ -26,5 +26,13 @@ const WA_PATH = 'M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.1-
   .mbar { padding-bottom: env(safe-area-inset-bottom); }
   .mbar-item { display: flex; height: 3.6rem; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
   .mbar-item + .mbar-item { border-left: 1px solid rgb(22 32 38 / 0.1); }
-  .wa-float { transition: transform 0.5s var(--ease-out-expo); }
+  .wa-float { transition: transform 0.5s var(--ease-out-expo), bottom 0.5s var(--ease-out-expo); }
+  .wa-float.is-lifted { bottom: 8.5rem; }
 </style>
+
+<script>
+  // lift the floating button while the home page's booking bar is on screen
+  const bar = document.querySelector('[data-avail]');
+  const fab = document.querySelector('[data-wa-float]');
+  if (bar && fab) new IntersectionObserver(([e]) => fab.classList.toggle('is-lifted', e.isIntersecting)).observe(bar);
+</script>

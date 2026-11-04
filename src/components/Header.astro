@@ -1,12 +1,14 @@
 ---
 /**
- * White header in the style of munjoh.com: Check Availability on the left, the logo
- * centred, round contact icons on the right, and the page links centred on a second row.
- * Below 1280px: menu button left, logo centre, call icon right (links move into the menu).
+ * One slim row: the page links split either side of a round logo badge in the
+ * centre, and Reserve (opens the booking box) on the right.
+ * On the home page it starts transparent over the full-screen photo (white type)
+ * and turns white once the visitor scrolls. Below 1280px: menu button left, logo
+ * centre, call icon right (the links move into the menu).
  * The header is fixed; Base pads the page by --hh (its height) so nothing hides under it.
  */
 import { Image } from 'astro:assets';
-import { nav, site, img, waLink } from '@/data/site';
+import { nav, site, img } from '@/data/site';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -14,52 +16,44 @@ interface Props {
   theme?: 'light' | 'dark';
 }
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const icons = [
-  { label: 'Chat on WhatsApp', icon: 'whatsapp', href: waLink(), external: true },
-  { label: 'Instagram', icon: 'instagram', href: site.instagram, external: true },
-  { label: `Call ${site.phone}`, icon: 'phone', href: site.phoneHref },
-].filter((i) => i.href !== '#');
+const overlay = path === '/';
+const links = nav.filter((l) => l.href !== '/');
+const left = links.slice(0, 3);
+const right = links.slice(3);
 ---
 
-<header id="site-header" class="fixed inset-x-0 top-0 z-50 bg-white text-ink transition-shadow duration-500">
-  <!-- top row -->
-  <div class="hdr-top container-x relative z-10 grid h-[4.5rem] grid-cols-[1fr_auto_1fr] items-center gap-4 bg-white xl:h-[6.5rem]">
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 bg-white text-ink transition-[background-color,color,box-shadow] duration-500" data-overlay={overlay ? '' : undefined}>
+  <div class="hdr-row container-x relative z-10 grid h-[4.5rem] grid-cols-[1fr_auto_1fr] items-center gap-4 xl:h-[5.5rem]">
     <div class="flex items-center">
       <button id="menu-toggle" class="relative -ml-2 grid size-11 place-items-center xl:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
         <span class="menu-bar absolute h-[1.5px] w-6 -translate-y-[6px] bg-current transition-all duration-500"></span>
         <span class="menu-bar menu-mid absolute h-[1.5px] w-6 bg-current transition-all duration-500"></span>
         <span class="menu-bar absolute h-[1.5px] w-6 translate-y-[6px] bg-current transition-all duration-500"></span>
       </button>
-      <a href="/contact#enquire" data-book="" class="header-cta btn btn-line on-light hidden !px-7 !py-3 xl:inline-flex">Check Availability</a>
+      <nav class="hidden xl:block" aria-label="Main">
+        <ul class="flex items-center gap-9">
+          {left.map((l) => <li><a href={l.href} class:list={['hdr-link', path === l.href && 'is-active']} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>)}
+        </ul>
+      </nav>
     </div>
 
-    <a href="/" class="logo flex items-center" aria-label={`${site.fullName}, home`}>
-      <Image src={img.logo} alt="" widths={[120, 240]} sizes="120px" loading="eager" class="h-12 w-auto object-contain xl:h-[4.6rem]" />
+    <!-- round logo badge -->
+    <a href="/" class="logo grid place-items-center" aria-label={`${site.fullName}, home`}>
+      <span class="logo-disc grid place-items-center rounded-full bg-white">
+        <Image src={img.logo} alt="" widths={[120, 240]} sizes="96px" loading="eager" class="w-[74%] object-contain" />
+      </span>
     </a>
 
-    <ul class="flex items-center justify-end gap-2.5 xl:gap-3">
-      {icons.map((i) => (
-        <li class:list={[i.icon !== 'phone' && 'hidden xl:block']}>
-          <a href={i.href} aria-label={i.label} target={i.external ? '_blank' : undefined} rel={i.external ? 'noopener' : undefined}
-            class="hdr-icon grid size-11 place-items-center rounded-[2px]">
-            <Icon name={i.icon} class="size-[1.1rem]" />
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div class="flex items-center justify-end gap-9">
+      <nav class="hidden xl:block" aria-label="More">
+        <ul class="flex items-center gap-9">
+          {right.map((l) => <li><a href={l.href} class:list={['hdr-link', path === l.href && 'is-active']} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+      <a href="/contact#enquire" data-book="" class="btn btn-fill hidden !px-6 !py-3 xl:inline-flex">Reserve</a>
+      <a href={site.phoneHref} aria-label={`Call ${site.phone}`} class="hdr-icon grid size-11 place-items-center rounded-[2px] xl:hidden"><Icon name="phone" class="size-[1.1rem]" /></a>
+    </div>
   </div>
-
-  <!-- page links (wide screens) -->
-  <nav class="hidden border-t border-ink/10 xl:block" aria-label="Main">
-    <ul class="container-x flex h-12 items-center justify-center gap-10">
-      {nav.map((l) => {
-        const active = path === l.href;
-        return (
-          <li><a href={l.href} class:list={['hdr-link', active && 'is-active']} aria-current={active ? 'page' : undefined}>{l.label}</a></li>
-        );
-      })}
-    </ul>
-  </nav>
 
   <!-- menu (below 1280px), opens under the header -->
   <div id="mobile-menu" class="fixed inset-x-0 top-[var(--hh)] bottom-0 overflow-y-auto border-t border-ink/10 bg-white text-ink opacity-0 [visibility:hidden]" aria-hidden="true">
@@ -75,34 +69,41 @@ const icons = [
         <a href={site.phoneAltHref} class="mm-link">{site.phoneAlt}</a>
         <a href={`mailto:${site.email}`} class="mm-link">{site.email}</a>
         <p class="mm-link mt-2">{site.address[0]} {site.address[1]}</p>
-        <a href="/contact#enquire" data-book="" class="mm-link btn btn-fill mt-6 self-start">Check Availability</a>
+        <a href="/contact#enquire" data-book="" class="mm-link btn btn-fill mt-6 self-start">Reserve</a>
       </div>
     </div>
   </div>
 </header>
 
 <style>
-  /* after scrolling: a soft shadow under the white bar */
+  /* after scrolling: a soft shadow under the white bar; on wide screens the row slims down */
   #site-header.is-solid { box-shadow: 0 10px 30px -22px rgb(34 48 46 / 0.45); }
-  /* wide screens: the top row slims down after scrolling, giving the page more room */
-  .hdr-top, .logo img { transition: height 0.5s var(--ease-out-expo); }
+  .hdr-row, .logo-disc { transition: height 0.5s var(--ease-out-expo), width 0.5s var(--ease-out-expo), box-shadow 0.5s; }
+  @media (min-width: 1280px) { #site-header.is-solid .hdr-row { height: 4.75rem; } }
+
+  /* the round logo badge */
+  .logo-disc { width: 3.4rem; height: 3.4rem; box-shadow: 0 0 0 1px rgb(217 196 154 / 0.6), 0 8px 22px -12px rgb(22 32 38 / 0.35); }
   @media (min-width: 1280px) {
-    #site-header.is-solid .hdr-top { height: 5rem; }
-    #site-header.is-solid .logo img { height: 3.4rem; }
+    .logo-disc { width: 4.4rem; height: 4.4rem; }
+    #site-header.is-solid .logo-disc { width: 3.7rem; height: 3.7rem; }
   }
 
   /* links: Montserrat light capitals, sand gold for the current page */
-  .hdr-link { position: relative; display: inline-block; padding: 0.4rem 0; font-size: 0.86rem; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.3s; }
+  .hdr-link { position: relative; display: inline-block; padding: 0.4rem 0; font-size: 0.82rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; transition: color 0.3s; }
   .hdr-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transition: transform 0.5s var(--ease-out-expo); }
   .hdr-link:hover { color: var(--color-sea-ink); }
   .hdr-link:hover::after { transform: scaleX(1); }
-  .hdr-link.is-active { color: var(--color-gold-deep); font-weight: 400; }
+  .hdr-link.is-active { color: var(--color-gold-deep); }
 
-  /* round contact icons on a pale sand disc */
   .hdr-icon { background: var(--color-sand); color: var(--color-gold-deep); transition: background-color 0.3s, color 0.3s; }
   .hdr-icon:hover { background: var(--color-sea); color: var(--color-ink); }
 
-  .header-cta { font-weight: 500; letter-spacing: 0.16em; }
+  /* home page: transparent over the photo until the visitor scrolls (or opens the menu) */
+  #site-header[data-overlay]:not(.is-solid):not(.menu-open) { background: transparent; color: #fff; }
+  #site-header[data-overlay]:not(.is-solid):not(.menu-open) .hdr-link { text-shadow: 0 1px 12px rgb(16 24 28 / 0.45); }
+  #site-header[data-overlay]:not(.is-solid):not(.menu-open) .hdr-link:hover { color: #fff; }
+  #site-header[data-overlay]:not(.is-solid):not(.menu-open) .hdr-icon { background: rgb(255 255 255 / 0.18); color: #fff; backdrop-filter: blur(8px); }
+  #site-header[data-overlay]:not(.is-solid):not(.menu-open) .logo-disc { box-shadow: 0 10px 30px -12px rgb(16 24 28 / 0.55); }
 
   #site-header.menu-open .menu-bar { translate: 0 0; }
   #site-header.menu-open .menu-bar:first-child { transform: rotate(45deg); }

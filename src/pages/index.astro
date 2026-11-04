@@ -7,48 +7,53 @@ import ReviewMarquee from '@/components/ReviewMarquee.astro';
 import BeachArt from '@/components/BeachArt.astro';
 import CategoryBand from '@/components/CategoryBand.astro';
 import Icon from '@/components/Icon.astro';
-import { site, img, essentials, reviews, reviewSummary, faqs, waLink, homeStay, homeDining, homeActivities, homeEvents } from '@/data/site';
+import { site, img, essentials, reviews, reviewSummary, faqs, waLink, homeStay, homeDining, homeActivities, homeEvents, stays } from '@/data/site';
 
 // Good to know: the answers people look for before booking
 const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport/i.test(f.q));
 ---
 
 <Base>
-  <!-- ============ HERO ============ -->
-  <section data-hero class="relative h-[calc(100svh-var(--hh))] min-h-[560px] overflow-hidden bg-night text-paper">
-    <!-- the resort at dusk from above: A-frames, pool, palms and the sea (settles in slowly) -->
+  <!-- ============ HERO: the resort fills the screen, the promise, and booking right there ============ -->
+  <section data-hero class="relative -mt-[var(--hh)] flex h-[100svh] min-h-[620px] flex-col overflow-hidden bg-night text-paper">
     <div class="absolute inset-0" data-hero-media>
       <Photo src={img.resortDusk} alt="Tierra at dusk: the A-frame cottages, the pool and the palms, with the Arabian Sea beyond" priority sizes="100vw" class="h-full" imgClass="object-[50%_50%] max-md:object-[62%_50%]" />
     </div>
-    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_24_28/0.35)_0%,rgb(16_24_28/0.12)_30%,rgb(16_24_28/0.3)_55%,rgb(16_24_28/0.12)_80%,rgb(16_24_28/0.4)_100%)]"></div>
+    <!-- shade: top (for the header), left (for the words), bottom (for the booking bar) -->
+    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_24_28/0.5)_0%,rgb(16_24_28/0)_24%,rgb(16_24_28/0)_62%,rgb(16_24_28/0.55)_100%),linear-gradient(90deg,rgb(16_24_28/0.55)_0%,rgb(16_24_28/0.18)_50%,rgb(16_24_28/0)_78%)]"></div>
 
-    <!-- small framed badge + tracked tagline, just below the middle -->
-    <div class="absolute inset-x-0 top-[60%] z-[3] flex -translate-y-1/2 flex-col items-center px-5 text-center">
-      <div class="wordmark relative">
-        <!-- border draws itself in -->
-        <svg class="wordmark-frame pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-          <rect x="0.5" y="0.5" width="100%" height="100%" pathLength="1" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" style="width:calc(100% - 1px);height:calc(100% - 1px)" />
-        </svg>
-        <!-- small bird perched on the frame, after the bird on the line in the Tierra logo -->
-        <svg class="wordmark-bird absolute top-0 right-[14%] w-[clamp(18px,1.7vw,26px)] -translate-y-[86%]" viewBox="0 0 40 40" aria-hidden="true">
-          <path d="M9 30 L14 25.5 C 12.5 19 18 13.5 25 14.5 C 27.5 10.5 33 10.5 35 14 L 39 14.8 L 35.2 16.6 C 35 23.5 29 28.5 21.5 28.2 Z" fill="var(--color-leaf)" />
-          <path d="M17 22.5 C 21 19.2 26.5 19.2 29.5 21.4 C 26.5 25.4 20.6 26.2 17 22.5 Z" fill="#5e9a2e" />
-          <circle cx="31.6" cy="14.4" r="1.15" fill="var(--color-mangrove)" />
-          <path d="M22 28 L21 39.5 M25 27.6 L25.5 39.5" stroke="var(--color-shell)" stroke-width="1.1" stroke-linecap="round" />
-        </svg>
-        <h1 class="px-[clamp(1.1rem,1.6vw,1.6rem)] py-[clamp(0.8rem,1.3vw,1.25rem)] font-semibold tracking-normal normal-case">
-          <span class="wm-line block text-[clamp(2.15rem,3.6vw,3.4rem)] leading-[0.95] tracking-[0.14em] uppercase [margin-right:-0.14em]">Tierra</span>
-          <span class="wm-line block text-[clamp(1.42rem,2.38vw,2.25rem)] leading-[1.05] tracking-[0.16em] uppercase [margin-right:-0.16em]">Campsite</span>
-        </h1>
+    <div class="container-x relative z-[3] flex flex-1 flex-col justify-center pt-[var(--hh)] pb-6">
+      <h1 class="max-w-[14ch] [text-shadow:0_2px_30px_rgb(16_24_28/0.4)]" data-split>Barefoot luxury at the edge of the delta</h1>
+      <p class="mt-6 max-w-md text-[1.05rem] leading-relaxed text-paper/90 md:text-lg" data-fade>Palm-shaded villas between the backwaters and the Arabian Sea, two minutes from the sand.</p>
+      <a href={reviewSummary.url} target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-3 self-start text-[0.92rem] text-paper/90 hover:text-paper" data-fade>
+        <span class="flex gap-0.5 text-sand-light" aria-hidden="true">{[0, 1, 2, 3, 4].map(() => <svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" /></svg>)}</span>
+        {reviewSummary.rating.toFixed(1)} · {reviewSummary.count} Google reviews
+      </a>
+      <!-- phones and tablets: one button opens the booking box -->
+      <div class="mt-9 lg:hidden" data-fade>
+        <a href="/contact#enquire" data-book="" class="btn btn-fill">Select your dates <Icon name="arrow" class="size-4" /></a>
+        <p class="mt-3 text-[0.85rem] text-paper/85">Breakfast included · We reply within the hour</p>
       </div>
-      <p class="tagline mt-[clamp(1.1rem,2.4vh,1.8rem)] font-sans text-[clamp(0.7rem,0.95vw,0.88rem)] leading-[1.9] font-medium text-paper uppercase">
-        Where River Meets Sea, <br class="sm:hidden" />Luxury Finds Its Home
-      </p>
     </div>
 
+    <!-- wide screens: the availability bar sits along the bottom and hands the dates to the booking box -->
+    <div class="avail-wrap container-x relative z-[3] hidden pb-[clamp(1.5rem,3vh,2.25rem)] lg:block">
+      <form class="avail grid grid-cols-[1fr_1fr_0.8fr_1.2fr_auto] items-stretch" data-avail>
+        <label class="avail-field"><span>Check-in</span><input type="date" name="checkin" /></label>
+        <label class="avail-field"><span>Check-out</span><input type="date" name="checkout" /></label>
+        <label class="avail-field"><span>Guests</span>
+          <select name="guests">{['1', '2', '3', '4', '5', '6', '8', '10+'].map((g) => <option value={g} selected={g === '2'}>{g} {g === '1' ? 'guest' : 'guests'}</option>)}</select>
+        </label>
+        <label class="avail-field"><span>Looking for</span>
+          <select name="stay"><option value="">Any stay</option>{stays.map((st) => <option value={st.slug}>{st.name}</option>)}</select>
+        </label>
+        <button type="submit" class="btn btn-fill m-2 !px-7">Check availability <Icon name="arrow" class="size-4" /></button>
+      </form>
+      <p class="mt-3 text-center text-[0.85rem] text-paper/85">Breakfast included · We reply within the hour</p>
+    </div>
   </section>
 
-  <!-- ============ WHAT AWAITS YOU (straight after the video) ============ -->
+  <!-- ============ WHAT AWAITS YOU (straight after the hero) ============ -->
   <section class="relative">
     <AwaitsBento items={essentials} eyebrow="What Awaits You" title="Everything for a Perfect Escape"
       text="A nature and beachside campsite resort in Hejamady, between Udupi and Mangalore, where the backwaters meet the Arabian Sea."
@@ -56,17 +61,17 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
   </section>
 
   <!-- ============ STAY / DINING / EXPERIENCES / EVENTS (text + labelled photo tiles) ============ -->
-  <CategoryBand eyebrow="Stay" tight title="Campsite <em>Villas</em>"
-    text="Air-conditioned A-frame cottages, semi A-frames and luxury rooms, each with a private sit-out and views of the pool and backwaters."
+  <CategoryBand eyebrow="Stay" tight title="Your Sanctuaries"
+    text="Cool, air-conditioned A-frame cottages, semi A-frames and luxury rooms, each with its own private sit-out looking over the pool and the backwaters."
     tiles={homeStay} cta={{ label: 'View Stays', href: '/accommodation' }} />
-  <CategoryBand eyebrow="Dining & Amenities" title="Café &amp; <em>Coastal Kitchen</em>" tone="champagne" reverse
-    text="Breakfast is included. Lunch and dinner are made to order by our in-house chef: fresh seafood, coastal favourites and cuisines from everywhere, served by the pool or on the lawn."
+  <CategoryBand eyebrow="Dining & Amenities" title="The Coastal Table" tone="champagne" reverse
+    text="Mornings start with breakfast on the lawn, on us. Later, our chef cooks to order: the day's catch, coastal Karnataka classics and favourites from further afield, served by the pool or under the palms."
     tiles={homeDining} cta={{ label: 'Explore Amenities', href: '/experiences#dining' }} />
   <CategoryBand eyebrow="Experiences" title="Sea, River <em>&amp; Sky</em>"
-    text="Morning yoga by the water, surfing at the club 200 m away, kayaking the backwaters and campfires under the stars, with the beach just a short walk away."
+    text="Greet the sun with yoga by the water. Paddle the backwaters, catch a wave 200 m away, then let the day end around a crackling fire beneath the stars."
     tiles={homeActivities} cta={{ label: 'All Experiences', href: '/experiences' }} />
-  <CategoryBand eyebrow="Weddings & Events" title="Celebrate <em>by the Sea</em>" tone="champagne" reverse
-    text="Destination weddings, birthdays, anniversaries, corporate retreats and photoshoots, set between the backwaters and the Arabian Sea. We take care of every detail."
+  <CategoryBand eyebrow="Weddings & Events" title="Celebrations, Shaped by the Tide" tone="champagne" reverse
+    text="Say your vows on palm-lined lawns, gather your team by the water, or mark a milestone at golden hour. Between the backwaters and the sea, every detail is quietly taken care of."
     tiles={homeEvents} cta={{ label: 'Plan Your Event', href: '/contact#enquire', book: 'event' }} />
 
   <!-- ============ GUEST REVIEWS (real Google reviews, drifting boxes) ============ -->
@@ -74,7 +79,7 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     <!-- illustrated aerial beach behind the frosted glass cards -->
     <BeachArt />
     <div class="container-x relative mb-8 text-center">
-      <h2 class="text-white [text-shadow:0_2px_18px_rgb(22_32_38/0.25)]" data-split>What Our <em>Guests Say</em></h2>
+      <h2 class="text-white [text-shadow:0_2px_18px_rgb(22_32_38/0.25)]" data-split>In Our Guests' Words</h2>
     </div>
     <ReviewMarquee reviews={reviews} rating={reviewSummary.rating} count={reviewSummary.count} url={reviewSummary.url} />
   </section>
@@ -87,8 +92,8 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     <div class="container-x relative z-[3] py-24 text-center">
       <!-- framed white title + tracked tagline (same language as the hero badge) -->
       <h2 class="retreat-box mx-auto inline-block border border-white px-[clamp(1.1rem,2vw,1.8rem)] py-[clamp(0.9rem,1.6vw,1.4rem)] text-white uppercase" data-fade>
-        <span class="block leading-[1] tracking-[0.12em] [margin-right:-0.12em]">Your Coastal</span>
-        <span class="mt-1 block leading-[1] tracking-[0.12em] [margin-right:-0.12em]">Retreat Awaits</span>
+        <span class="block leading-[1] tracking-[0.12em] [margin-right:-0.12em]">Find Your Way</span>
+        <span class="mt-1 block leading-[1] tracking-[0.12em] [margin-right:-0.12em]">to the Delta</span>
       </h2>
       <p class="mx-auto mt-7 max-w-3xl font-sans text-[clamp(0.8rem,0.95vw,0.9rem)] leading-[2] font-medium tracking-[0.2em] text-white uppercase" data-fade>Hejamady, on the coastal delta between Udupi and Mangalore</p>
       <ul class="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-px border border-white/25 bg-white/25 text-white md:grid-cols-5" data-fade>
@@ -97,7 +102,7 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
         ))}
       </ul>
       <div class="mt-10 flex flex-wrap justify-center gap-3" data-fade>
-        <a href="/contact#enquire" data-book="" class="btn btn-lime">Book Your Stay <Icon name="arrow" class="size-4" /></a>
+        <a href="/contact#enquire" data-book="" class="btn btn-lime">Reserve <Icon name="arrow" class="size-4" /></a>
         <a href={site.mapsUrl} target="_blank" rel="noopener" class="btn btn-line">Get Directions</a>
       </div>
     </div>
@@ -107,7 +112,8 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
   <section class="py-[clamp(3rem,6vw,5rem)]">
     <div class="container-x grid gap-8 lg:grid-cols-12">
       <div class="lg:col-span-4">
-        <h2 data-split>Good <em>to Know</em></h2>
+        <h2 data-split>Before You Arrive</h2>
+        <p class="mt-4 max-w-sm leading-relaxed text-ink/75" data-fade>Check-in from 2 PM, check-out by 11 AM, breakfast included. Anything else, just ask.</p>
         <a href="/faq" class="link-u mt-6 inline-block text-sm font-semibold tracking-[0.12em] text-teal uppercase">All questions →</a>
       </div>
       <div class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-8">
@@ -121,16 +127,17 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     </div>
   </section>
 
-  <!-- ============ BOOK ============ -->
-  <section class="border-t border-gold/40 bg-champagne py-[clamp(3.5rem,7vw,5.5rem)] text-center text-ink">
+  <!-- ============ RESERVE: the strongest call to action on the page ============ -->
+  <section id="reserve" class="scroll-mt-28 border-t border-gold/40 bg-champagne py-[clamp(4rem,8vw,6.5rem)] text-center text-ink">
     <div class="container-x">
-      <h2 data-split>Your Escape <em>Starts Here</em></h2>
-      <p class="mx-auto mt-4 max-w-xl text-ink/75" data-fade>Message us on WhatsApp for the quickest reply, send an enquiry, or simply call.</p>
+      <h2 data-split>The Tide Is Calling</h2>
+      <p class="mx-auto mt-4 max-w-xl leading-relaxed text-ink/75" data-fade>Tell us your dates and we'll take care of the rest. WhatsApp is quickest, but we're always happy to talk.</p>
       <div class="mt-9 flex flex-wrap justify-center gap-3" data-fade>
-        <a href={waLink()} target="_blank" rel="noopener" class="btn btn-fill"><Icon name="whatsapp" class="size-4" /> WhatsApp</a>
-        <a href="/contact#enquire" data-book="" class="btn btn-line on-light">Send Enquiry</a>
+        <a href={waLink()} target="_blank" rel="noopener" class="btn btn-fill"><Icon name="whatsapp" class="size-4" /> Message us on WhatsApp</a>
+        <a href="/contact#enquire" data-book="" class="btn btn-line on-light">Send an enquiry</a>
         <a href={site.phoneHref} class="btn btn-line on-light">Call {site.phone}</a>
       </div>
+      <p class="mt-6 text-[0.88rem] text-ink-muted" data-fade>Breakfast included · We reply within the hour</p>
     </div>
   </section>
 </Base>
@@ -140,31 +147,30 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
   .gtk summary::-webkit-details-marker { display: none; }
   @keyframes scrollcue { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
 
-  /* ---- hero wordmark ---- */
-  .wordmark { color: var(--color-shell); }
-  .wordmark-frame rect { stroke-dasharray: 1; stroke-dashoffset: 0; opacity: 0.85; }
-  .tagline { letter-spacing: 0.2em; text-shadow: 0 1px 18px rgb(16 24 28 / 0.5); }
-  @media (min-width: 640px) { .tagline { letter-spacing: 0.32em; } }
-  .wordmark h1 { text-shadow: 0 2px 30px rgb(16 24 28 / 0.35); }
-
-  /* entrance sequence: frame draws, words rise, tagline tracks in, bird hops on */
-  :global(.js:not(.reduced)) .wordmark-frame rect { stroke-dashoffset: 1; animation: frame-draw 1.8s var(--ease-in-out-quart) 0.3s forwards; }
-  :global(.js:not(.reduced)) .wm-line { opacity: 0; transform: translateY(35%); animation: wm-rise 1.4s var(--ease-out-expo) forwards; }
-  :global(.js:not(.reduced)) .wm-line:nth-child(1) { animation-delay: 0.9s; }
-  :global(.js:not(.reduced)) .wm-line:nth-child(2) { animation-delay: 1.1s; }
-  :global(.js:not(.reduced)) .tagline { opacity: 0; animation: track-in 2s var(--ease-out-expo) 1.6s forwards; }
-  :global(.js:not(.reduced)) .wordmark-bird { opacity: 0; animation: bird-hop 1s var(--ease-out-expo) 2.4s forwards; }
-  :global(.js:not(.reduced)) .scroll-cue { opacity: 0; animation: fade-in 1s ease 2.8s forwards; }
-
-  @keyframes frame-draw { to { stroke-dashoffset: 0; } }
-  @keyframes wm-rise { to { opacity: 1; transform: none; } }
-  @keyframes track-in { from { opacity: 0; letter-spacing: 0.55em; } to { opacity: 1; letter-spacing: 0.32em; } }
-  @keyframes bird-hop {
-    0% { opacity: 0; transform: translate(18px, -70%) rotate(-10deg); }
-    55% { opacity: 1; transform: translate(0, 8%) rotate(3deg); }
-    100% { opacity: 1; transform: none; }
-  }
-  @keyframes fade-in { to { opacity: 1; } }
-  /* small screens: no letter-spacing animation (avoids re-wrapping mid-animation) */
-  @media (max-width: 639px) { @keyframes track-in { from { opacity: 0; } to { opacity: 1; } } }
+  /* ---- hero availability bar: square frosted glass ---- */
+  .avail { border-radius: 2px; background: rgb(255 255 255 / 0.86); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgb(255 255 255 / 0.7); box-shadow: 0 24px 50px -30px rgb(16 24 28 / 0.6); color: var(--color-ink); }
+  .avail-field { display: flex; flex-direction: column; justify-content: center; gap: 0.25rem; padding: 0.85rem 1.4rem; border-right: 1px solid rgb(34 48 46 / 0.1); }
+  .avail-field span { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-gold-deep); }
+  .avail-field :is(input, select) { width: 100%; background: transparent; border: 0; padding: 0; font-size: 0.95rem; color: var(--color-ink); }
+  .avail-field :is(input, select):focus { outline: none; }
+  .avail-field:focus-within { background: rgb(255 255 255 / 0.6); }
+  /* the bar rises in after the headline (it sits too low for a scroll trigger) */
+  :global(.js:not(.reduced)) .avail-wrap { opacity: 0; transform: translateY(24px); animation: avail-in 1.1s var(--ease-out-expo) 1.1s forwards; }
+  @keyframes avail-in { to { opacity: 1; transform: none; } }
 </style>
+
+<script>
+  // hero bar -> booking box, with the dates already filled in
+  document.querySelectorAll<HTMLFormElement>('[data-avail]').forEach((f) => {
+    const ci = f.elements.namedItem('checkin') as HTMLInputElement;
+    const co = f.elements.namedItem('checkout') as HTMLInputElement;
+    const iso = (d: Date) => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    ci.min = iso(new Date());
+    ci.addEventListener('change', () => { const n = new Date(ci.value); n.setDate(n.getDate() + 1); co.min = iso(n); if (!co.value || co.value <= ci.value) co.value = iso(n); });
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(f)) as Record<string, string>;
+      dispatchEvent(new CustomEvent('book:open', { detail: { checkin: d.checkin, checkout: d.checkout, guests: d.guests, stay: d.stay || undefined } }));
+    });
+  });
+</script>

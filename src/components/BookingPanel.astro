@@ -19,6 +19,7 @@ import { site } from '@/data/site';
       <button type="button" class="grid size-11 shrink-0 place-items-center rounded-[2px] border border-ink/20 transition-colors hover:bg-white/70" data-book-close aria-label="Close booking panel"><Icon name="close" class="size-5" /></button>
     </div>
     <div class="mt-7"><EnquiryForm compact /></div>
+    <p class="mt-4 text-center text-[0.84rem] text-ink-muted">Breakfast included · We reply within the hour</p>
   </div>
 </dialog>
 
@@ -55,6 +56,8 @@ import { site } from '@/data/site';
     e.preventDefault();
     open({ stay: t.dataset.book || undefined });
   });
+  // the home page's availability bar hands over its dates
+  addEventListener('book:open', ((e: CustomEvent<Record<string, string | undefined>>) => open(e.detail)) as EventListener);
   dlg.querySelector('[data-book-close]')!.addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
   dlg.addEventListener('close', () => dispatchEvent(new Event('lenis:start')));

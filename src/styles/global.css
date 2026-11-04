@@ -71,7 +71,7 @@
   /* the white header is fixed; content starts below it (--hh = header height) */
   /* --hh-now: the header's height right now (it slims down on wide screens after scrolling) */
   :root { --hh: 4.5rem; --hh-now: var(--hh); scroll-padding-top: calc(var(--hh-now) + 1rem); }
-  @media (min-width: 1280px) { :root { --hh: 9.5rem; } :root:has(#site-header.is-solid) { --hh-now: 8rem; } }
+  @media (min-width: 1280px) { :root { --hh: 5.5rem; } :root:has(#site-header.is-solid) { --hh-now: 4.75rem; } }
   ::selection { background: var(--color-gold); color: var(--color-mangrove); }
 
   /* Headlines: Playfair Display in sentence case, regular weight (munjoh.com style).

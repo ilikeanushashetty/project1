@@ -79,6 +79,21 @@ No script, no italics; square cards, round header icons only.
 - **Repeated row buttons are outlined** (feature rows); solid Turquoise is kept for the
   main action of a section.
 - **Booking box ("Check Availability", "Book"):** opens centred on the screen as a square frosted-glass box over a lightly dimmed page; fades and rises in; closes with ×, Esc or a click outside.
+- **Header (4 Nov 2026, from the Rebuilding_web reference the user liked):** one slim row
+  (88px, 76px after scrolling): Stay · Experiences · Weddings & Events on the left, a round
+  white logo badge in the centre (the one round shape besides the Gallery viewer and map
+  pulse), Gallery · About · Contact and a turquoise **Reserve** button on the right. On the
+  home page it is transparent over the photo (white type) and turns white on scroll.
+- **Home hero:** the resort photo fills the whole screen behind the header. Headline
+  "Barefoot luxury at the edge of the delta", line "Palm-shaded villas between the backwaters
+  and the Arabian Sea, two minutes from the sand.", stars + "4.8 · 356 Google reviews" (real).
+  Wide screens: a square frosted availability bar along the bottom (check-in, check-out,
+  guests, stay, Check availability) that prefills the booking box; phones: "Select your dates".
+  Under it: "Breakfast included · We reply within the hour" (also under the booking form and
+  the Reserve band) — the reply time must be confirmed with the client.
+- **Warmer section titles:** Your Sanctuaries · The Coastal Table · Sea, River & Sky ·
+  Celebrations, Shaped by the Tide · In Our Guests' Words · Find Your Way to the Delta ·
+  Before You Arrive · The Tide Is Calling (the closing Reserve band).
 - **Six text styles only, on every page:** Montserrat 300 (menu), 400 (text), 500 (buttons, labels), 600 (bold); Playfair 400 (headings), 500 (card titles). No condensed type.
 - **Body text is Montserrat 400** (was 350) for easier reading on phones.
 - **Icons sit on pale Sand discs** with Sand Gold strokes everywhere (no dark squares).
