@@ -185,9 +185,9 @@ areas about 44px.
 
 ## Hosting
 
-- **Netlify** (`tierra-campsite.netlify.app`): uploaded with `npx netlify-cli@17 deploy --prod --dir dist`.
-  Builds for the root of its domain. Free monthly credits ran out on 5 Nov 2026.
-- **GitHub Pages** (`ilikeanushashetty.github.io/project1`): `.github/workflows/pages.yml` builds on
+- **Netlify:** the `tierra-campsite` project was deleted on 5 Nov 2026 (its free credits had run out).
+  `netlify.toml` is kept in case the site moves back to Netlify later (it would bring the enquiry form back).
+- **GitHub Pages — the live site** (`ilikeanushashetty.github.io/project1`): `.github/workflows/pages.yml` builds on
   every push to `main` with `SITE_BASE=/project1`, then `scripts/prefix-base.mjs` points the site's
   own links into `/project1`. The enquiry form cannot send there (it needs Netlify); WhatsApp and
   Call work, and the form offers WhatsApp instead.
