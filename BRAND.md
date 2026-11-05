@@ -180,3 +180,14 @@ areas about 44px.
 - The brushed-gold version is retired with the gold palette.
 - Clear space at least the height of the bird.
 - A vector file (SVG / AI / PDF) from the artist is still needed for print.
+
+---
+
+## Hosting
+
+- **Netlify** (`tierra-campsite.netlify.app`): uploaded with `npx netlify-cli@17 deploy --prod --dir dist`.
+  Builds for the root of its domain. Free monthly credits ran out on 5 Nov 2026.
+- **GitHub Pages** (`ilikeanushashetty.github.io/project1`): `.github/workflows/pages.yml` builds on
+  every push to `main` with `SITE_BASE=/project1`, then `scripts/prefix-base.mjs` points the site's
+  own links into `/project1`. The enquiry form cannot send there (it needs Netlify); WhatsApp and
+  Call work, and the form offers WhatsApp instead.
