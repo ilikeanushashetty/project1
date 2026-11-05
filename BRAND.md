@@ -96,10 +96,13 @@ No script, no italics; square cards, round header icons only.
   subtitles, body, labels, buttons and menu (weights 400 / 500 / 600). Montserrat is removed.
 - **No mint anywhere:** the pale surfaces (gallery filter bar, Contact and About bands) are Sand
   `#F6F1E7`; their wave lines are sand-gold.
-- **Home headline (minimal, 4 Nov 2026):** centred, two lines: "LUXURY BEACH RESORT & CAMPSITE"
-  (capitals) / "where the river meets the sea", then four keywords: Beach · Campsite · Backwaters ·
-  Nature. No subtitle: the user wants little text on the landing page. Then the booking bar
-  (phones: Select your dates) and "Breakfast included · We reply within the hour".
+- **Home first screen (5 Nov 2026, after manthanbeachresort.com which the user liked):** the photo
+  under an even shade, a small line "WHERE THE RIVER MEETS THE SEA", the title "Luxury Beach Resort /
+  & Campsite" (Playfair 500, two lines at every width), and one outlined button "Discover Tierra".
+  Nothing else: no keywords, no booking bar.
+- **Home second screen:** a short centred welcome paragraph on cream `#FBF8F2`, then the Sand
+  availability bar (phones: 2×2 fields + full-width button) and "Breakfast included · We reply
+  within the hour". The bar prefills the booking box.
 - **Home reviews (after the reference the user liked):** cream section `#FDF7F2`, square Sand cards
   with a hairline, the quote in quotation marks, the guest's name in small capitals underneath.
   No per-review stars: the data has no individual ratings.
