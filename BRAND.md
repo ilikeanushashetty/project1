@@ -100,6 +100,11 @@ No script, no italics; square cards, round header icons only.
   under an even shade, a small line "WHERE THE RIVER MEETS THE SEA", the title "Luxury Beach Resort /
   & Campsite" (Playfair 500, two lines at every width), and one outlined button "Discover Tierra".
   Nothing else: no keywords, no booking bar.
+- **Home page order (5 Nov 2026, trimmed like Manthan):** hero → welcome + availability → Your
+  Sanctuaries → The Coastal Table → Sea, River & Sky → Celebrations, Shaped by the Tide → In Our
+  Guests' Words → Find Your Way to the Delta → The Tide Is Calling. "Everything for a Perfect
+  Escape" and "Before You Arrive" are no longer on the home page (their components stay in the
+  project; the FAQ page still has every question).
 - **Home second screen:** a short centred welcome paragraph on cream `#FBF8F2`, then the Sand
   availability bar (phones: 2×2 fields + full-width button) and "Breakfast included · We reply
   within the hour". The bar prefills the booking box.

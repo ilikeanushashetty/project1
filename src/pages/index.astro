@@ -1,19 +1,16 @@
 ---
 import Base from '@/layouts/Base.astro';
-import AwaitsBento from '@/components/AwaitsBento.astro';
 import VideoHero from '@/components/VideoHero.astro';
 import Photo from '@/components/Photo.astro';
 import ReviewMarquee from '@/components/ReviewMarquee.astro';
 import CategoryBand from '@/components/CategoryBand.astro';
 import Icon from '@/components/Icon.astro';
-import { site, img, essentials, reviews, reviewSummary, faqs, waLink, homeStay, homeDining, homeActivities, homeEvents, stays } from '@/data/site';
+import { site, img, reviews, reviewSummary, waLink, homeStay, homeDining, homeActivities, homeEvents, stays } from '@/data/site';
 
-// Good to know: the answers people look for before booking
-const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport/i.test(f.q));
 ---
 
 <Base>
-  <!-- ============ HERO: the resort fills the screen, the promise, and booking right there ============ -->
+  <!-- ============ HERO: the resort fills the screen, and the promise ============ -->
   <section data-hero class="relative -mt-[var(--hh)] flex h-[100svh] min-h-[560px] flex-col overflow-hidden bg-night text-paper">
     <div class="absolute inset-0" data-hero-media>
       <Photo src={img.resortPool} alt="Tierra at dusk: the row of A-frame cottages, the lit pool and the palm gardens" priority sizes="100vw" class="h-full" imgClass="object-[50%_50%] max-md:object-[58%_50%]" />
@@ -57,15 +54,8 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     </div>
   </section>
 
-  <!-- ============ WHAT AWAITS YOU ============ -->
-  <section class="relative">
-    <AwaitsBento items={essentials} eyebrow="What Awaits You" title="Everything for a Perfect Escape"
-      text="A nature and beachside campsite resort in Hejamady, between Udupi and Mangalore, where the backwaters meet the Arabian Sea."
-      cta={{ label: 'Book Your Stay', href: '/contact#enquire', book: '' }} link={{ label: 'Discover our story', href: '/about' }} />
-  </section>
-
   <!-- ============ STAY / DINING / EXPERIENCES / EVENTS (text + labelled photo tiles) ============ -->
-  <CategoryBand eyebrow="Stay" tight title="Your Sanctuaries"
+  <CategoryBand eyebrow="Stay" title="Your Sanctuaries"
     text="Cool, air-conditioned A-frame cottages, semi A-frames and luxury rooms, each with its own private sit-out looking over the pool and the backwaters."
     tiles={homeStay} cta={{ label: 'View Stays', href: '/accommodation' }} />
   <CategoryBand eyebrow="Dining & Amenities" title="The Coastal Table" tone="champagne" reverse
@@ -110,25 +100,6 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
     </div>
   </section>
 
-  <!-- ============ GOOD TO KNOW ============ -->
-  <section class="py-[clamp(3rem,6vw,5rem)]">
-    <div class="container-x grid gap-8 lg:grid-cols-12">
-      <div class="lg:col-span-4">
-        <h2 data-split>Before You Arrive</h2>
-        <p class="mt-4 max-w-sm leading-relaxed text-ink/75" data-fade>Check-in from 2 PM, check-out by 11 AM, breakfast included. Anything else, just ask.</p>
-        <a href="/faq" class="link-u mt-6 inline-block text-sm font-semibold tracking-[0.12em] text-teal uppercase">All questions →</a>
-      </div>
-      <div class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-8">
-        {goodToKnow.map((f) => (
-          <details class="gtk group">
-            <summary class="flex cursor-pointer items-center justify-between gap-6 py-5 font-display text-[1.12rem] text-ink">{f.q}<Icon name="plus" class="size-5 shrink-0 text-teal transition-transform duration-300 group-open:rotate-45" /></summary>
-            <p class="pb-6 leading-relaxed text-ink/75">{f.a}</p>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- ============ RESERVE: the strongest call to action on the page ============ -->
   <section id="reserve" class="scroll-mt-28 border-t border-gold/40 bg-champagne py-[clamp(4rem,8vw,6.5rem)] text-center text-ink">
     <div class="container-x">
@@ -145,8 +116,6 @@ const goodToKnow = faqs.filter((f) => /meals|check-in|pet|parking|WiFi|transport
 </Base>
 
 <style>
-  .gtk summary { list-style: none; }
-  .gtk summary::-webkit-details-marker { display: none; }
   @keyframes scrollcue { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
 
   /* ---- availability bar (second screen): square Sand panel with a hairline ---- */
